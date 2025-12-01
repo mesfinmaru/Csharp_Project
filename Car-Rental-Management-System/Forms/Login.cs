@@ -11,12 +11,12 @@ namespace Car_Rental_Management_System
 
         private void Login_Load(object sender, EventArgs e)
         {
-      
+
             panel1.Left = (this.ClientSize.Width - panel1.Width) / 2;
             panel1.Top = (this.ClientSize.Height - panel1.Height) / 2;
         }
 
-        
+
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
@@ -68,28 +68,44 @@ namespace Car_Rental_Management_System
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var url = "https://localhost:7100/api/auth/login";
+            MessageBox.Show("Button was clicked!");
+           
+            // Use this Handler to bypass SSL certificate errors locally
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
 
-            var login = new
+            using (HttpClient client = new HttpClient(handler))
             {
-                Username = txtbUsername.Text,
-                Password = txtbPassword.Text
-            };
+                try
+                {
+                    // Make sure this port matches your Swagger page (7209)
+                    string apiUrl = $"https://localhost:7209/api/Auth/login?username={txtbUsername.Text}&password={txtbPassword.Text}";
 
-            var response = await client.PostAsJsonAsync(url, login);
+                    var response = await client.PostAsync(apiUrl, null);
 
-            if (response.IsSuccessStatusCode)
-            {
-                MessageBox.Show("Login Successful!");
-                new Dashboard().Show();
-                this.Hide();
-            }
-            else
-            {
-                MessageBox.Show("Invalid Username or Password!");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Login Successful!");
+
+                        // Open Dashboard
+                        Dashboard dash = new Dashboard();
+                        dash.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        // This happens if username/password is wrong (401 error)
+                        MessageBox.Show("Invalid Username or Password.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Connection Failed: " + ex.Message);
+                }
             }
         }
-    }
 
+    }
 }
+
+

@@ -35,7 +35,6 @@
             btnClose = new FontAwesome.Sharp.IconButton();
             panel1 = new Panel();
             pictureBox1 = new PictureBox();
-            lblMessage = new Label();
             lblPassword = new Label();
             lblUsername = new Label();
             btnLogin = new FontAwesome.Sharp.IconButton();
@@ -113,7 +112,6 @@
             // panel1
             // 
             panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(lblMessage);
             panel1.Controls.Add(lblPassword);
             panel1.Controls.Add(lblUsername);
             panel1.Controls.Add(btnLogin);
@@ -137,19 +135,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 17;
             pictureBox1.TabStop = false;
-            // 
-            // lblMessage
-            // 
-            lblMessage.Anchor = AnchorStyles.None;
-            lblMessage.AutoSize = true;
-            lblMessage.FlatStyle = FlatStyle.Flat;
-            lblMessage.ForeColor = Color.IndianRed;
-            lblMessage.Location = new Point(788, 794);
-            lblMessage.Name = "lblMessage";
-            lblMessage.Size = new Size(165, 32);
-            lblMessage.TabIndex = 17;
-            lblMessage.Text = "error message";
-            lblMessage.TextAlign = ContentAlignment.BottomCenter;
             // 
             // lblPassword
             // 
@@ -190,6 +175,7 @@
             btnLogin.TabIndex = 13;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = true;
+          
             // 
             // txtbPassword
             // 
@@ -256,7 +242,6 @@
         private FontAwesome.Sharp.IconButton btnMax;
         private FontAwesome.Sharp.IconButton btnClose;
         private Panel panel1;
-        private Label lblMessage;
         private Label lblPassword;
         private Label lblUsername;
         private FontAwesome.Sharp.IconButton btnLogin;

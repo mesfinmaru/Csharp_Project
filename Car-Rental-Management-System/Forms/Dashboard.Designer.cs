@@ -417,7 +417,9 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 2, 4, 2);
             Name = "Dashboard";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Dashboard";
+            WindowState = FormWindowState.Maximized;
             Load += Dashboard_Load;
             panelMenu.ResumeLayout(false);
             panel1.ResumeLayout(false);
