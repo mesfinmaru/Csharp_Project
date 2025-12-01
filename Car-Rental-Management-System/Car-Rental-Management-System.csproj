@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CRMclassLibrary\CRMdataLayer.csproj" />
+    <ProjectReference Include="..\CRMdataLayer\CRMdataLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
