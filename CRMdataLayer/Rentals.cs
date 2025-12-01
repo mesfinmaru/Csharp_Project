@@ -11,10 +11,10 @@ namespace CRMdataLayer
             public int RentalId { get; set; }
 
             public int CustomerId { get; set; }
-            public Customers Customer { get; set; }
+            public required Customers Customer { get; set; }
 
             public int Id { get; set; }
-            public Vehicles Vehicle { get; set; }
+            public required Vehicles Vehicle { get; set; }
 
             public DateTime RentDate { get; set; }
             public DateTime ReturnDate { get; set; }

@@ -18,18 +18,17 @@ namespace Car_Rental_Management_System
     public partial class Dashboard : Form
     {
         // Active form inside panelDesktop
-        private Form activeForm = null;
+        private Form? activeForm = null;
 
         // Active button
-        private IconButton activeButton = null;
+        private IconButton? activeButton = null;
 
         // Default colors
         private Color defaultButtonColor = Color.FromArgb(108, 92, 231);
         private Color defaultButtonText = Color.White;
         private Color defaultTitleBarColor;
 
-        // Slide menu variables
-        private bool menuExpanded = true;
+     
 
 
         public Dashboard()

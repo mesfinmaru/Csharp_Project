@@ -2,7 +2,7 @@
 {
     public class AuthResponseVM
     {
-        public string Message { get; set; }
-        public string Response { get; set; }
+        public required string Message { get; set; }
+        public required string Response { get; set; }
     }
 }

@@ -1,23 +1,29 @@
-﻿using CRM_API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using CRMdataLayer;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Linq;
 
-
-[ApiController]
-[Route("api/[controller]")]
-public class AuthController : ControllerBase
+namespace CRM_API.Controllers
 {
-    [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginVM model)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        UsersService service = new UsersService();
-
-        if (service.Validate(model.Username, model.Password))
+        [HttpPost("login")]
+        public IActionResult Login(string username, string password)
         {
-            return Ok(new { success = true });
-        }
+            // 1. Connect to the database
+            using var db = new AppDBContext();
+            // 2. Check if a user exists with this username AND password
+            var user = db.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
 
-        return Unauthorized(new { success = false, message = "Invalid login" });
+            if (user != null)
+            {
+                return Ok("Login Successful!");
+            }
+            else
+            {
+                return Unauthorized("Invalid Username or Password.");
+            }
+        }
     }
 }

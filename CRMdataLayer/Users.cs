@@ -1,11 +1,14 @@
-﻿using CRMdataLayer;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class UsersService
+namespace CRMdataLayer
 {
-    public bool Validate(string username, string password)
+    public class Users
     {
-        using var db = new AppDBContext();
+        [Key]
+        public int Id { get; set; }
 
-        return db.Users.Any(u => u.Username == username && u.Password == password);
+        // These are required for Login
+        public string? Username { get; set; }
+        public string? Password { get; set; }
     }
 }
