@@ -175,7 +175,7 @@
             btnLogin.TabIndex = 13;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = true;
-          
+            btnLogin.Click += btnLogin_Click_1;
             // 
             // txtbPassword
             // 
