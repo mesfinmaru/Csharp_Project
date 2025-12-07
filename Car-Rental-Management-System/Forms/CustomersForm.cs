@@ -49,7 +49,7 @@ namespace Car_Rental_Management_System.Forms
             dgvCustomers.RowTemplate.Height = 36;
 
             // Header
-            lblHeader.ForeColor = lightText;
+
         }
 
         private void WireEvents()
@@ -74,6 +74,16 @@ namespace Car_Rental_Management_System.Forms
         }
 
         private void dgvCustomers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CustomersForm_Load(object sender, EventArgs e)
         {
 
         }

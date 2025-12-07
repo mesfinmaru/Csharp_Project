@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             panelMenu = new Panel();
+            btnUsersMgmt = new FontAwesome.Sharp.IconButton();
             btnLogout = new FontAwesome.Sharp.IconButton();
             btnReports = new FontAwesome.Sharp.IconButton();
             btnMaintenances = new FontAwesome.Sharp.IconButton();
@@ -40,6 +41,7 @@
             btnVehicles = new FontAwesome.Sharp.IconButton();
             btnDashboard = new FontAwesome.Sharp.IconButton();
             panel1 = new Panel();
+            lblUser = new Label();
             pictureBoxStaff = new PictureBox();
             panelTitleBar = new Panel();
             panel2 = new Panel();
@@ -62,6 +64,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(108, 92, 231);
+            panelMenu.Controls.Add(btnUsersMgmt);
             panelMenu.Controls.Add(btnLogout);
             panelMenu.Controls.Add(btnReports);
             panelMenu.Controls.Add(btnMaintenances);
@@ -75,8 +78,32 @@
             panelMenu.Location = new Point(0, 0);
             panelMenu.Margin = new Padding(4, 2, 4, 2);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(310, 973);
+            panelMenu.Size = new Size(395, 973);
             panelMenu.TabIndex = 0;
+            panelMenu.Paint += panelMenu_Paint;
+            // 
+            // btnUsersMgmt
+            // 
+            btnUsersMgmt.Dock = DockStyle.Top;
+            btnUsersMgmt.FlatAppearance.BorderSize = 0;
+            btnUsersMgmt.FlatStyle = FlatStyle.Flat;
+            btnUsersMgmt.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
+            btnUsersMgmt.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
+            btnUsersMgmt.ForeColor = Color.FromArgb(15, 255, 255, 255);
+            btnUsersMgmt.IconChar = FontAwesome.Sharp.IconChar.UserPen;
+            btnUsersMgmt.IconColor = SystemColors.Highlight;
+            btnUsersMgmt.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnUsersMgmt.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUsersMgmt.Location = new Point(0, 803);
+            btnUsersMgmt.Name = "btnUsersMgmt";
+            btnUsersMgmt.Padding = new Padding(30, 0, 0, 0);
+            btnUsersMgmt.Size = new Size(395, 70);
+            btnUsersMgmt.TabIndex = 9;
+            btnUsersMgmt.Text = "Users Management";
+            btnUsersMgmt.TextAlign = ContentAlignment.MiddleRight;
+            btnUsersMgmt.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnUsersMgmt.UseVisualStyleBackColor = true;
+            btnUsersMgmt.Click += btnUsersMgmt_Click;
             // 
             // btnLogout
             // 
@@ -84,7 +111,7 @@
             btnLogout.FlatAppearance.BorderSize = 0;
             btnLogout.FlatStyle = FlatStyle.Flat;
             btnLogout.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnLogout.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            btnLogout.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             btnLogout.ForeColor = Color.White;
             btnLogout.IconChar = FontAwesome.Sharp.IconChar.ArrowUpRightFromSquare;
             btnLogout.IconColor = Color.Brown;
@@ -92,8 +119,8 @@
             btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
             btnLogout.Location = new Point(0, 903);
             btnLogout.Name = "btnLogout";
-            btnLogout.Padding = new Padding(30, 0, 0, 0);
-            btnLogout.Size = new Size(310, 70);
+            btnLogout.Padding = new Padding(35, 0, 0, 0);
+            btnLogout.Size = new Size(395, 70);
             btnLogout.TabIndex = 8;
             btnLogout.Text = "Logout";
             btnLogout.TextAlign = ContentAlignment.MiddleRight;
@@ -107,16 +134,16 @@
             btnReports.FlatAppearance.BorderSize = 0;
             btnReports.FlatStyle = FlatStyle.Flat;
             btnReports.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnReports.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            btnReports.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             btnReports.ForeColor = Color.FromArgb(15, 255, 255, 255);
             btnReports.IconChar = FontAwesome.Sharp.IconChar.FileInvoice;
             btnReports.IconColor = SystemColors.Highlight;
             btnReports.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnReports.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReports.Location = new Point(0, 695);
+            btnReports.Location = new Point(0, 733);
             btnReports.Name = "btnReports";
             btnReports.Padding = new Padding(30, 0, 0, 0);
-            btnReports.Size = new Size(310, 70);
+            btnReports.Size = new Size(395, 70);
             btnReports.TabIndex = 7;
             btnReports.Text = "Reports";
             btnReports.TextAlign = ContentAlignment.MiddleRight;
@@ -130,16 +157,16 @@
             btnMaintenances.FlatAppearance.BorderSize = 0;
             btnMaintenances.FlatStyle = FlatStyle.Flat;
             btnMaintenances.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnMaintenances.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            btnMaintenances.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             btnMaintenances.ForeColor = Color.FromArgb(15, 255, 255, 255);
             btnMaintenances.IconChar = FontAwesome.Sharp.IconChar.Tools;
             btnMaintenances.IconColor = SystemColors.Highlight;
             btnMaintenances.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaintenances.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMaintenances.Location = new Point(0, 625);
+            btnMaintenances.Location = new Point(0, 663);
             btnMaintenances.Name = "btnMaintenances";
             btnMaintenances.Padding = new Padding(30, 0, 0, 0);
-            btnMaintenances.Size = new Size(310, 70);
+            btnMaintenances.Size = new Size(395, 70);
             btnMaintenances.TabIndex = 6;
             btnMaintenances.Text = "Maintenances";
             btnMaintenances.TextAlign = ContentAlignment.MiddleRight;
@@ -153,16 +180,16 @@
             btnReturns.FlatAppearance.BorderSize = 0;
             btnReturns.FlatStyle = FlatStyle.Flat;
             btnReturns.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnReturns.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            btnReturns.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             btnReturns.ForeColor = Color.FromArgb(15, 255, 255, 255);
             btnReturns.IconChar = FontAwesome.Sharp.IconChar.ArrowCircleDown;
             btnReturns.IconColor = SystemColors.Highlight;
             btnReturns.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnReturns.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReturns.Location = new Point(0, 555);
+            btnReturns.Location = new Point(0, 593);
             btnReturns.Name = "btnReturns";
             btnReturns.Padding = new Padding(30, 0, 0, 0);
-            btnReturns.Size = new Size(310, 70);
+            btnReturns.Size = new Size(395, 70);
             btnReturns.TabIndex = 5;
             btnReturns.Text = "Returns";
             btnReturns.TextAlign = ContentAlignment.MiddleRight;
@@ -176,16 +203,16 @@
             btnRentals.FlatAppearance.BorderSize = 0;
             btnRentals.FlatStyle = FlatStyle.Flat;
             btnRentals.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnRentals.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            btnRentals.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             btnRentals.ForeColor = Color.FromArgb(15, 255, 255, 255);
             btnRentals.IconChar = FontAwesome.Sharp.IconChar.Key;
             btnRentals.IconColor = SystemColors.Highlight;
             btnRentals.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnRentals.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRentals.Location = new Point(0, 485);
+            btnRentals.Location = new Point(0, 523);
             btnRentals.Name = "btnRentals";
             btnRentals.Padding = new Padding(30, 0, 0, 0);
-            btnRentals.Size = new Size(310, 70);
+            btnRentals.Size = new Size(395, 70);
             btnRentals.TabIndex = 4;
             btnRentals.Text = "Rentals";
             btnRentals.TextAlign = ContentAlignment.MiddleRight;
@@ -199,16 +226,16 @@
             btnCustomers.FlatAppearance.BorderSize = 0;
             btnCustomers.FlatStyle = FlatStyle.Flat;
             btnCustomers.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnCustomers.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            btnCustomers.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             btnCustomers.ForeColor = Color.FromArgb(15, 255, 255, 255);
             btnCustomers.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
             btnCustomers.IconColor = SystemColors.Highlight;
             btnCustomers.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnCustomers.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCustomers.Location = new Point(0, 415);
+            btnCustomers.Location = new Point(0, 453);
             btnCustomers.Name = "btnCustomers";
             btnCustomers.Padding = new Padding(30, 0, 0, 0);
-            btnCustomers.Size = new Size(310, 70);
+            btnCustomers.Size = new Size(395, 70);
             btnCustomers.TabIndex = 3;
             btnCustomers.Text = "Customers";
             btnCustomers.TextAlign = ContentAlignment.MiddleRight;
@@ -222,16 +249,16 @@
             btnVehicles.FlatAppearance.BorderSize = 0;
             btnVehicles.FlatStyle = FlatStyle.Flat;
             btnVehicles.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnVehicles.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            btnVehicles.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             btnVehicles.ForeColor = Color.FromArgb(15, 255, 255, 255);
             btnVehicles.IconChar = FontAwesome.Sharp.IconChar.Car;
             btnVehicles.IconColor = SystemColors.Highlight;
             btnVehicles.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnVehicles.ImageAlign = ContentAlignment.MiddleLeft;
-            btnVehicles.Location = new Point(0, 345);
+            btnVehicles.Location = new Point(0, 383);
             btnVehicles.Name = "btnVehicles";
             btnVehicles.Padding = new Padding(30, 0, 0, 0);
-            btnVehicles.Size = new Size(310, 70);
+            btnVehicles.Size = new Size(395, 70);
             btnVehicles.TabIndex = 2;
             btnVehicles.Text = "Vehicles";
             btnVehicles.TextAlign = ContentAlignment.MiddleRight;
@@ -246,16 +273,16 @@
             btnDashboard.FlatAppearance.BorderSize = 0;
             btnDashboard.FlatStyle = FlatStyle.Flat;
             btnDashboard.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnDashboard.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            btnDashboard.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             btnDashboard.ForeColor = Color.FromArgb(15, 255, 255, 255);
             btnDashboard.IconChar = FontAwesome.Sharp.IconChar.HomeLg;
             btnDashboard.IconColor = SystemColors.Highlight;
             btnDashboard.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnDashboard.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDashboard.Location = new Point(0, 275);
+            btnDashboard.Location = new Point(0, 313);
             btnDashboard.Name = "btnDashboard";
             btnDashboard.Padding = new Padding(30, 0, 0, 0);
-            btnDashboard.Size = new Size(310, 70);
+            btnDashboard.Size = new Size(395, 70);
             btnDashboard.TabIndex = 1;
             btnDashboard.Text = "Dashboard";
             btnDashboard.TextAlign = ContentAlignment.MiddleRight;
@@ -265,24 +292,38 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(lblUser);
             panel1.Controls.Add(pictureBoxStaff);
             panel1.Dock = DockStyle.Top;
-            panel1.Font = new Font("Trebuchet MS", 9F, FontStyle.Bold);
+            panel1.Font = new Font("Trebuchet MS", 11F, FontStyle.Bold);
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(4, 2, 4, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(310, 275);
+            panel1.Size = new Size(395, 313);
             panel1.TabIndex = 0;
+            // 
+            // lblUser
+            // 
+            lblUser.Anchor = AnchorStyles.None;
+            lblUser.AutoSize = true;
+            lblUser.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
+            lblUser.ForeColor = Color.FromArgb(30, 30, 47);
+            lblUser.Location = new Point(47, 265);
+            lblUser.Name = "lblUser";
+            lblUser.Size = new Size(90, 35);
+            lblUser.TabIndex = 3;
+            lblUser.Text = "Hello!";
+            lblUser.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pictureBoxStaff
             // 
             pictureBoxStaff.BackColor = Color.FromArgb(108, 92, 231);
             pictureBoxStaff.Image = Properties.Resources.Untitled__1_1;
             pictureBoxStaff.ImageLocation = "";
-            pictureBoxStaff.Location = new Point(0, 11);
+            pictureBoxStaff.Location = new Point(13, 11);
             pictureBoxStaff.Margin = new Padding(4, 2, 4, 2);
             pictureBoxStaff.Name = "pictureBoxStaff";
-            pictureBoxStaff.Size = new Size(310, 252);
+            pictureBoxStaff.Size = new Size(342, 252);
             pictureBoxStaff.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxStaff.TabIndex = 0;
             pictureBoxStaff.TabStop = false;
@@ -293,10 +334,10 @@
             panelTitleBar.Controls.Add(panel2);
             panelTitleBar.Controls.Add(lblTitle);
             panelTitleBar.Dock = DockStyle.Top;
-            panelTitleBar.Location = new Point(310, 0);
+            panelTitleBar.Location = new Point(395, 0);
             panelTitleBar.Margin = new Padding(4, 2, 4, 2);
             panelTitleBar.Name = "panelTitleBar";
-            panelTitleBar.Size = new Size(1377, 125);
+            panelTitleBar.Size = new Size(1292, 125);
             panelTitleBar.TabIndex = 1;
             // 
             // panel2
@@ -309,7 +350,7 @@
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1377, 40);
+            panel2.Size = new Size(1292, 40);
             panel2.TabIndex = 1;
             // 
             // btnMin
@@ -320,7 +361,7 @@
             btnMin.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
             btnMin.IconColor = Color.Black;
             btnMin.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnMin.Location = new Point(1257, 0);
+            btnMin.Location = new Point(1172, 0);
             btnMin.Margin = new Padding(10);
             btnMin.Name = "btnMin";
             btnMin.Padding = new Padding(30, 10, 30, 10);
@@ -337,7 +378,7 @@
             btnMax.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
             btnMax.IconColor = Color.Black;
             btnMax.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnMax.Location = new Point(1297, 0);
+            btnMax.Location = new Point(1212, 0);
             btnMax.Margin = new Padding(10);
             btnMax.Name = "btnMax";
             btnMax.Padding = new Padding(30, 10, 30, 10);
@@ -352,7 +393,7 @@
             lblCarrental.AutoSize = true;
             lblCarrental.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             lblCarrental.ForeColor = Color.FromArgb(30, 30, 47);
-            lblCarrental.Location = new Point(511, 0);
+            lblCarrental.Location = new Point(469, 0);
             lblCarrental.Name = "lblCarrental";
             lblCarrental.Size = new Size(414, 35);
             lblCarrental.TabIndex = 0;
@@ -367,7 +408,7 @@
             btnClose.IconChar = FontAwesome.Sharp.IconChar.X;
             btnClose.IconColor = Color.OrangeRed;
             btnClose.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnClose.Location = new Point(1337, 0);
+            btnClose.Location = new Point(1252, 0);
             btnClose.Margin = new Padding(10);
             btnClose.Name = "btnClose";
             btnClose.Padding = new Padding(10);
@@ -390,14 +431,14 @@
             // 
             // panelDesktop
             // 
-            panelDesktop.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelDesktop.BackColor = Color.FromArgb(30, 30, 47);
-            panelDesktop.BackgroundImage = (Image)resources.GetObject("panelDesktop.BackgroundImage");
+            panelDesktop.BackgroundImage = Properties.Resources.dashboard;
             panelDesktop.BackgroundImageLayout = ImageLayout.Zoom;
-            panelDesktop.Location = new Point(310, 125);
+            panelDesktop.Dock = DockStyle.Fill;
+            panelDesktop.Location = new Point(395, 125);
             panelDesktop.Margin = new Padding(4, 2, 4, 2);
             panelDesktop.Name = "panelDesktop";
-            panelDesktop.Size = new Size(1377, 848);
+            panelDesktop.Size = new Size(1292, 848);
             panelDesktop.TabIndex = 2;
             // 
             // fileSystemWatcher1
@@ -423,6 +464,7 @@
             Load += Dashboard_Load;
             panelMenu.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxStaff).EndInit();
             panelTitleBar.ResumeLayout(false);
             panelTitleBar.PerformLayout();
@@ -455,5 +497,7 @@
         private FontAwesome.Sharp.IconButton btnMax;
         private FontAwesome.Sharp.IconButton btnMin;
         private System.Windows.Forms.Timer menuTimer;
+        private FontAwesome.Sharp.IconButton btnUsersMgmt;
+        private Label lblUser;
     }
 }

@@ -28,7 +28,7 @@ namespace Car_Rental_Management_System
         private Color defaultButtonText = Color.White;
         private Color defaultTitleBarColor;
 
-     
+
 
 
         public Dashboard()
@@ -135,7 +135,7 @@ namespace Car_Rental_Management_System
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Restart();
         }
 
         private void panelDesktop_Paint(object sender, PaintEventArgs e)
@@ -178,6 +178,17 @@ namespace Car_Rental_Management_System
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnUsersMgmt_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new UsersForm());
+            ActivateButton(btnUsersMgmt);
+        }
+
+        private void panelMenu_Paint(object sender, PaintEventArgs e)
         {
 
         }

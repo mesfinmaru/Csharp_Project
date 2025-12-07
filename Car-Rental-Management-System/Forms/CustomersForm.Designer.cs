@@ -3,13 +3,8 @@
     partial class CustomersForm : System.Windows.Forms.Form
     {
         private System.ComponentModel.IContainer components = null;
-
-        private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.DataGridView dgvCustomers;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnDelete;
 
         protected override void Dispose(bool disposing)
         {
@@ -20,31 +15,21 @@
 
         private void InitializeComponent()
         {
-            lblHeader = new Label();
             txtSearch = new TextBox();
             dgvCustomers = new DataGridView();
-            btnAdd = new Button();
-            btnEdit = new Button();
-            btnDelete = new Button();
+            btnAdd = new FontAwesome.Sharp.IconButton();
+            btnEdit = new FontAwesome.Sharp.IconButton();
+            btnDelete = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             SuspendLayout();
             // 
-            // lblHeader
-            // 
-            lblHeader.AutoSize = true;
-            lblHeader.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            lblHeader.Location = new Point(20, 18);
-            lblHeader.Name = "lblHeader";
-            lblHeader.Size = new Size(559, 65);
-            lblHeader.TabIndex = 0;
-            lblHeader.Text = "Customer Management";
-            // 
             // txtSearch
             // 
-            txtSearch.Font = new Font("Segoe UI", 10F);
-            txtSearch.Location = new Point(24, 68);
+            txtSearch.Font = new Font("Trebuchet MS", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(33, 46);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(420, 43);
+            txtSearch.PlaceholderText = "Search for customers ...";
+            txtSearch.Size = new Size(572, 39);
             txtSearch.TabIndex = 1;
             // 
             // dgvCustomers
@@ -54,57 +39,82 @@
             dgvCustomers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCustomers.ColumnHeadersHeight = 46;
-            dgvCustomers.Location = new Point(24, 110);
+            dgvCustomers.Location = new Point(33, 126);
             dgvCustomers.Name = "dgvCustomers";
             dgvCustomers.ReadOnly = true;
             dgvCustomers.RowHeadersWidth = 82;
-            dgvCustomers.Size = new Size(820, 420);
+            dgvCustomers.Size = new Size(1358, 651);
             dgvCustomers.TabIndex = 2;
             dgvCustomers.CellContentClick += dgvCustomers_CellContentClick;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(860, 110);
+            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Trebuchet MS", 10.125F);
+            btnAdd.IconChar = FontAwesome.Sharp.IconChar.UserPlus;
+            btnAdd.IconColor = Color.Black;
+            btnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnAdd.Location = new Point(700, 38);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(120, 36);
-            btnAdd.TabIndex = 3;
+            btnAdd.Size = new Size(200, 60);
+            btnAdd.TabIndex = 14;
             btnAdd.Text = "Add";
+            btnAdd.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAdd.UseVisualStyleBackColor = true;
             // 
             // btnEdit
             // 
-            btnEdit.Location = new Point(860, 160);
+            btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.Font = new Font("Trebuchet MS", 10.125F);
+            btnEdit.IconChar = FontAwesome.Sharp.IconChar.UserPen;
+            btnEdit.IconColor = Color.Black;
+            btnEdit.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnEdit.Location = new Point(947, 38);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(120, 36);
-            btnEdit.TabIndex = 4;
+            btnEdit.Size = new Size(200, 60);
+            btnEdit.TabIndex = 15;
             btnEdit.Text = "Edit";
+            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnEdit.UseVisualStyleBackColor = true;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(860, 210);
+            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Trebuchet MS", 10.125F);
+            btnDelete.IconChar = FontAwesome.Sharp.IconChar.UserMinus;
+            btnDelete.IconColor = Color.Black;
+            btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnDelete.Location = new Point(1191, 38);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(120, 36);
-            btnDelete.TabIndex = 5;
+            btnDelete.Size = new Size(200, 60);
+            btnDelete.TabIndex = 16;
             btnDelete.Text = "Delete";
+            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDelete.UseVisualStyleBackColor = true;
             // 
             // CustomersForm
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(13F, 29F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1000, 560);
-            Controls.Add(lblHeader);
+            ClientSize = new Size(1415, 788);
+            Controls.Add(btnDelete);
+            Controls.Add(btnEdit);
+            Controls.Add(btnAdd);
             Controls.Add(txtSearch);
             Controls.Add(dgvCustomers);
-            Controls.Add(btnAdd);
-            Controls.Add(btnEdit);
-            Controls.Add(btnDelete);
+            Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Name = "CustomersForm";
+            Load += CustomersForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
+        private FontAwesome.Sharp.IconButton btnAdd;
+        private FontAwesome.Sharp.IconButton btnEdit;
+        private FontAwesome.Sharp.IconButton btnDelete;
     }
 }

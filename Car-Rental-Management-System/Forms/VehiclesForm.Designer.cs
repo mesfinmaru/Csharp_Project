@@ -2,63 +2,108 @@
 {
     partial class VehiclesForm
     {
-        private Label lblHeader;
-        private DataGridView dgvVehicles;
-        private Button btnAdd;
-        private Button btnEdit;
-        private Button btnDelete;
-        private TextBox txtSearch;
 
         private void InitializeComponent()
         {
-            lblHeader = new Label();
-            dgvVehicles = new DataGridView();
-            btnAdd = new Button();
-            btnEdit = new Button();
-            btnDelete = new Button();
             txtSearch = new TextBox();
-
-            // Header
-            lblHeader.Text = "Vehicle Management";
-            lblHeader.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            lblHeader.Location = new System.Drawing.Point(20, 15);
-            lblHeader.AutoSize = true;
-
-            // Search
-            txtSearch.Location = new System.Drawing.Point(25, 70);
-            txtSearch.Width = 350;
-            txtSearch.Font = new System.Drawing.Font("Segoe UI", 11F);
-            txtSearch.PlaceholderText = "Search vehicle...";
-
-            // DataGridView
-            dgvVehicles.Location = new System.Drawing.Point(25, 110);
-            dgvVehicles.Size = new System.Drawing.Size(800, 400);
+            dgvVehicles = new DataGridView();
+            btnDelete = new FontAwesome.Sharp.IconButton();
+            btnEdit = new FontAwesome.Sharp.IconButton();
+            btnAdd = new FontAwesome.Sharp.IconButton();
+            ((System.ComponentModel.ISupportInitialize)dgvVehicles).BeginInit();
+            SuspendLayout();
+            // 
+            // txtSearch
+            // 
+            txtSearch.Font = new Font("Trebuchet MS", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(29, 42);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search for vehicles...";
+            txtSearch.Size = new Size(572, 39);
+            txtSearch.TabIndex = 6;
+            // 
+            // dgvVehicles
+            // 
+            dgvVehicles.AllowUserToAddRows = false;
+            dgvVehicles.AllowUserToDeleteRows = false;
+            dgvVehicles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvVehicles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            // Buttons
-            btnAdd.Text = "Add";
-            btnAdd.Location = new System.Drawing.Point(850, 110);
-            btnAdd.Size = new System.Drawing.Size(120, 40);
-
-            btnEdit.Text = "Edit";
-            btnEdit.Location = new System.Drawing.Point(850, 160);
-            btnEdit.Size = new System.Drawing.Size(120, 40);
-
+            dgvVehicles.ColumnHeadersHeight = 46;
+            dgvVehicles.Location = new Point(29, 124);
+            dgvVehicles.Name = "dgvVehicles";
+            dgvVehicles.ReadOnly = true;
+            dgvVehicles.RowHeadersWidth = 82;
+            dgvVehicles.Size = new Size(1359, 652);
+            dgvVehicles.TabIndex = 7;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Trebuchet MS", 10.125F);
+            btnDelete.IconChar = FontAwesome.Sharp.IconChar.DeleteLeft;
+            btnDelete.IconColor = Color.Black;
+            btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnDelete.Location = new Point(1176, 33);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(200, 60);
+            btnDelete.TabIndex = 19;
             btnDelete.Text = "Delete";
-            btnDelete.Location = new System.Drawing.Point(850, 210);
-            btnDelete.Size = new System.Drawing.Size(120, 40);
-
+            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnEdit
+            // 
+            btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.Font = new Font("Trebuchet MS", 10.125F);
+            btnEdit.IconChar = FontAwesome.Sharp.IconChar.Edit;
+            btnEdit.IconColor = Color.Black;
+            btnEdit.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnEdit.Location = new Point(932, 33);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(200, 60);
+            btnEdit.TabIndex = 18;
+            btnEdit.Text = "Edit";
+            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnEdit.UseVisualStyleBackColor = true;
+            // 
+            // btnAdd
+            // 
+            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Trebuchet MS", 10.125F);
+            btnAdd.IconChar = FontAwesome.Sharp.IconChar.PlusSquare;
+            btnAdd.IconColor = Color.Black;
+            btnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnAdd.Location = new Point(685, 33);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(200, 60);
+            btnAdd.TabIndex = 17;
+            btnAdd.Text = "Add";
+            btnAdd.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAdd.UseVisualStyleBackColor = true;
+            // 
             // VehiclesForm
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.Size = new System.Drawing.Size(1000, 550);
-
-            this.Controls.Add(lblHeader);
-            this.Controls.Add(txtSearch);
-            this.Controls.Add(dgvVehicles);
-            this.Controls.Add(btnAdd);
-            this.Controls.Add(btnEdit);
-            this.Controls.Add(btnDelete);
+            // 
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(1415, 788);
+            Controls.Add(btnDelete);
+            Controls.Add(btnEdit);
+            Controls.Add(btnAdd);
+            Controls.Add(txtSearch);
+            Controls.Add(dgvVehicles);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "VehiclesForm";
+            Load += VehiclesForm_Load_1;
+            ((System.ComponentModel.ISupportInitialize)dgvVehicles).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
+        private TextBox txtSearch;
+        private DataGridView dgvVehicles;
+        private FontAwesome.Sharp.IconButton btnDelete;
+        private FontAwesome.Sharp.IconButton btnEdit;
+        private FontAwesome.Sharp.IconButton btnAdd;
     }
 }

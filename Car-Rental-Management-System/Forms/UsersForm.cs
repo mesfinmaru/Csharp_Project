@@ -11,14 +11,16 @@ using System.Windows.Forms;
 
 namespace Car_Rental_Management_System.Forms
 {
-    public partial class ReturnsForm : Form
+    public partial class UsersForm : Form
     {
-        public ReturnsForm()
+        public UsersForm()
         {
             InitializeComponent();
             ApplyTheme();
             WireEvents();
         }
+
+
 
         private void ApplyTheme()
         {
@@ -32,28 +34,28 @@ namespace Car_Rental_Management_System.Forms
 
             this.BackColor = bg;
 
-            //// Textbox
-            //txtSearch.BackColor = panelBg;
-            //txtSearch.ForeColor = lightText;
-            //txtSearch.BorderStyle = BorderStyle.FixedSingle;
+            // Textbox
+            txtSearch.BackColor = panelBg;
+            txtSearch.ForeColor = lightText;
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
 
             // Buttons
-            btnComplete.BackColor = primary;
-            btnComplete.ForeColor = Color.White;
+            btnAdd.BackColor = primary;
+            btnAdd.ForeColor = Color.White;
             btnEdit.BackColor = secondary;
             btnEdit.ForeColor = Color.White;
             btnDelete.BackColor = Color.FromArgb(255, 98, 70);
             btnDelete.ForeColor = Color.White;
 
             // DataGridView style
-            dgvReturns.BackgroundColor = Color.FromArgb(30, 30, 44);
-            dgvReturns.DefaultCellStyle.BackColor = Color.FromArgb(30, 30, 44);
-            dgvReturns.DefaultCellStyle.ForeColor = lightText;
-            dgvReturns.ColumnHeadersDefaultCellStyle.BackColor = primary;
-            dgvReturns.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvReturns.EnableHeadersVisualStyles = false;
-            dgvReturns.GridColor = Color.FromArgb(55, 55, 70);
-            dgvReturns.RowTemplate.Height = 36;
+            dgvUsers.BackgroundColor = Color.FromArgb(30, 30, 44);
+            dgvUsers.DefaultCellStyle.BackColor = Color.FromArgb(30, 30, 44);
+            dgvUsers.DefaultCellStyle.ForeColor = lightText;
+            dgvUsers.ColumnHeadersDefaultCellStyle.BackColor = primary;
+            dgvUsers.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvUsers.EnableHeadersVisualStyles = false;
+            dgvUsers.GridColor = Color.FromArgb(55, 55, 70);
+            dgvUsers.RowTemplate.Height = 36;
 
             // Header
 
@@ -62,24 +64,25 @@ namespace Car_Rental_Management_System.Forms
         private void WireEvents()
         {
             // Example event handlers; wire real logic here
-            btnComplete.Click += (s, e) => MessageBox.Show("Add - implement logic");
+            btnAdd.Click += (s, e) => MessageBox.Show("Add - implement logic");
             btnEdit.Click += (s, e) =>
             {
-                if (dgvReturns.SelectedRows.Count == 0) { MessageBox.Show("Select a row first."); return; }
+                if (dgvUsers.SelectedRows.Count == 0) { MessageBox.Show("Select a row first."); return; }
                 MessageBox.Show("Edit - implement logic");
             };
             btnDelete.Click += (s, e) =>
             {
-                if (dgvReturns  .SelectedRows.Count == 0) { MessageBox.Show("Select a row first."); return; }
-                var id = dgvReturns.SelectedRows[0].Cells[0].Value;
+                if (dgvUsers.SelectedRows.Count == 0) { MessageBox.Show("Select a row first."); return; }
+                var id = dgvUsers.SelectedRows[0].Cells[0].Value;
                 if (MessageBox.Show($"Delete ID {id}?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     // remove demo row (replace with DB logic)
-                    dgvReturns.Rows.RemoveAt(dgvReturns.SelectedRows[0].Index);
+                    dgvUsers.Rows.RemoveAt(dgvUsers.SelectedRows[0].Index);
                 }
             };
         }
-        private void ReturnsForm_Load(object sender, EventArgs e)
+
+        private void UsersForm_Load(object sender, EventArgs e)
         {
 
         }

@@ -71,7 +71,7 @@ namespace Car_Rental_Management_System
         }
         private async void btnLogin_Click_1(object sender, EventArgs e)
         {
-            
+
 
             // Use this Handler to bypass SSL certificate errors locally
             var handler = new HttpClientHandler();
@@ -88,7 +88,7 @@ namespace Car_Rental_Management_System
 
                     if (response.IsSuccessStatusCode)
                     {
-                       
+
 
                         // Open Dashboard
                         Dashboard dash = new Dashboard();
@@ -107,8 +107,13 @@ namespace Car_Rental_Management_System
                 }
             }
         }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
-    }
+}
 
 
 
