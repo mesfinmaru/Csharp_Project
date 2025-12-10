@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CRMdataLayer\CRMdataLayer.csproj" />
+    <ProjectReference Include="..\CRM_API\CRM_API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

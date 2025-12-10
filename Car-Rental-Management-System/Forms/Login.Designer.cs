@@ -1,4 +1,7 @@
-﻿namespace Car_Rental_Management_System
+﻿
+using System.Windows.Forms;
+
+namespace Car_Rental_Management_System
 {
     partial class Login
     {
@@ -178,7 +181,7 @@
             btnLogin.TabIndex = 13;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = true;
-            btnLogin.Click += btnLogin_Click_1;
+            btnLogin.Click += btnLogin_Click;
             // 
             // txtbPassword
             // 
@@ -266,6 +269,8 @@
             panel3.PerformLayout();
             ResumeLayout(false);
         }
+
+
 
         #endregion
         private Panel panel2;

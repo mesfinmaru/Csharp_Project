@@ -1,4 +1,5 @@
 using CRMdataLayer; // This is important!
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,12 +9,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// --- THIS IS THE FIX ---
-// Use 'AppDBContext', NOT 'AppContext'
 builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
-    "Server=(localdb)\\MSSQLLocalDB;Database=CarRentalDB;Trusted_Connection=True;TrustServerCertificate=True;"));
-// -----------------------
+   "Server=.;Database=CarRentalDB;user Id= sa; Password=12345678; MultipleActiveResultSets=true;TrustServerCertificate=True;"));
+
+
+builder.Services.AddScoped<IPasswordHasher<Users>, PasswordHasher<Users>>();
 
 var app = builder.Build();
 

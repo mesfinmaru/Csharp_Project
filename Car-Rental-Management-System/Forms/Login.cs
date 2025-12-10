@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Windows.Forms;
 
 namespace Car_Rental_Management_System
 {
@@ -66,54 +67,50 @@ namespace Car_Rental_Management_System
 
         }
 
-        private async void btnLogin_Click(object sender, EventArgs e)
-        {
-        }
-        private async void btnLogin_Click_1(object sender, EventArgs e)
-        {
 
 
-            // Use this Handler to bypass SSL certificate errors locally
-            var handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-
-            using (HttpClient client = new HttpClient(handler))
-            {
-                try
-                {
-                    // Make sure this port matches your Swagger page (7209)
-                    string apiUrl = $"https://localhost:7209/api/Auth/login?username={txtbUsername.Text}&password={txtbPassword.Text}";
-
-                    var response = await client.PostAsync(apiUrl, null);
-
-                    if (response.IsSuccessStatusCode)
-                    {
 
 
-                        // Open Dashboard
-                        Dashboard dash = new Dashboard();
-                        dash.Show();
-                        this.Hide();
-                    }
-                    else
-                    {
-                        // This happens if username/password is wrong (401 error)
-                        MessageBox.Show("Invalid Username or Password.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Connection Failed: " + ex.Message);
-                }
-            }
-        }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
 
         }
+        private readonly ApiClient apiClient = new ApiClient();
+
+        private async void btnLogin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var request = new CRM_API.Models.AuthVMs.LoginRequest
+                {
+                    Username = txtbUsername.Text,
+                    Password = txtbPassword.Text
+                };
+
+                var result = await apiClient.Login(request);
+
+                if (result.Success)
+                {
+                    Dashboard dash = new Dashboard();
+                    dash.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Login failed: " + result.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
     }
 }
+
+
 
 
 
