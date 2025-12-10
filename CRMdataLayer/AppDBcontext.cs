@@ -36,11 +36,21 @@ namespace CRMdataLayer
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Users>()
-            .HasIndex(u => u.Username)
-            .IsUnique();
+            modelBuilder.Entity<Users>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Username).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.PasswordHash).IsRequired();
+                entity.Property(e => e.Role).IsRequired().HasMaxLength(20);
+                entity.Property(e => e.FullName).HasMaxLength(100);
+                entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.Phone).HasMaxLength(20);
 
-        
+                // Add index for username
+                entity.HasIndex(e => e.Username).IsUnique();
+
+
+            }); 
         }
   
     }

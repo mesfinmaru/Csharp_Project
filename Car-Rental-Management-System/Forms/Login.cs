@@ -1,14 +1,19 @@
+using CRM_API.Models;
 using System.Net.Http.Json;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace Car_Rental_Management_System
 {
     public partial class Login : Form
     {
+        private readonly ApiClient _apiClient;
         public Login()
         {
             InitializeComponent();
+            _apiClient = new ApiClient();
         }
+
 
         private void Login_Load(object sender, EventArgs e)
         {
@@ -76,41 +81,78 @@ namespace Car_Rental_Management_System
         {
 
         }
-        private readonly ApiClient apiClient = new ApiClient();
+
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+            string username = txtbUsername.Text.Trim();
+            string password = txtbPassword.Text;
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Please enter username and password", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Disable controls during login
+            btnLogin.Enabled = false;
+            lblStatus.Text = "Logging in...";
+
             try
             {
-                var request = new CRM_API.Models.AuthVMs.LoginRequest
-                {
-                    Username = txtbUsername.Text,
-                    Password = txtbPassword.Text
-                };
+                var result = await _apiClient.Login(username, password);
 
-                var result = await apiClient.Login(request);
-
-                if (result.Success)
+                if (result?.Success == true)
                 {
-                    Dashboard dash = new Dashboard();
-                    dash.Show();
-                    this.Hide();
+                    // Store user info for later use
+                    ConfigurationManager.AppSettings["UserToken"] = result.Token;
+                    ConfigurationManager.AppSettings["UserRole"] = result.User.Role;
+                    ConfigurationManager.AppSettings["UserName"] = result.User.Username;
+                    ConfigurationManager.AppSettings["FullName"] = result.User.FullName;
+
+                    MessageBox.Show($"Welcome {result.User.FullName}!", "Login Successful");
+
+
+                    // Navigate to main dashboard
+                    OpenDashboard();
+
                 }
                 else
                 {
-                    MessageBox.Show("Login failed: " + result.Message);
+                    MessageBox.Show(result?.Message ?? "Login failed", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show($"Login error: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnLogin.Enabled = true;
+                lblStatus.Text = "";
             }
         }
+        private void OpenDashboard()
+        {
+            // Create Dashboard instance and pass the ApiClient and a second argument (use null or appropriate value)
+            var dashboard = new Dashboard(_apiClient, null);
 
+            // Optional: Set dashboard as main form
+            dashboard.FormClosed += (s, args) => this.Close();
+
+            // Show dashboard and hide login form
+            dashboard.Show();
+            this.Hide();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
+
 }
-
-
-
-
 

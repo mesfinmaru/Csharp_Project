@@ -41,7 +41,7 @@
             btnVehicles = new FontAwesome.Sharp.IconButton();
             btnDashboard = new FontAwesome.Sharp.IconButton();
             panel1 = new Panel();
-            lblUser = new Label();
+            lblWelcome = new Label();
             pictureBoxStaff = new PictureBox();
             panelTitleBar = new Panel();
             panel2 = new Panel();
@@ -292,7 +292,7 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(lblUser);
+            panel1.Controls.Add(lblWelcome);
             panel1.Controls.Add(pictureBoxStaff);
             panel1.Dock = DockStyle.Top;
             panel1.Font = new Font("Trebuchet MS", 11F, FontStyle.Bold);
@@ -302,18 +302,19 @@
             panel1.Size = new Size(395, 313);
             panel1.TabIndex = 0;
             // 
-            // lblUser
+            // lblWelcome
             // 
-            lblUser.Anchor = AnchorStyles.None;
-            lblUser.AutoSize = true;
-            lblUser.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
-            lblUser.ForeColor = Color.FromArgb(30, 30, 47);
-            lblUser.Location = new Point(47, 265);
-            lblUser.Name = "lblUser";
-            lblUser.Size = new Size(90, 35);
-            lblUser.TabIndex = 3;
-            lblUser.Text = "Hello!";
-            lblUser.TextAlign = ContentAlignment.MiddleCenter;
+            lblWelcome.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblWelcome.AutoSize = true;
+            lblWelcome.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
+            lblWelcome.ForeColor = Color.FromArgb(30, 30, 47);
+            lblWelcome.Location = new Point(27, 265);
+            lblWelcome.Name = "lblWelcome";
+            lblWelcome.Size = new Size(328, 35);
+            lblWelcome.TabIndex = 3;
+            lblWelcome.Text = "Mr. Mextenserst (Admin)";
+            lblWelcome.TextAlign = ContentAlignment.MiddleCenter;
+            lblWelcome.Click += lblWelcome_Click;
             // 
             // pictureBoxStaff
             // 
@@ -339,6 +340,7 @@
             panelTitleBar.Name = "panelTitleBar";
             panelTitleBar.Size = new Size(1292, 125);
             panelTitleBar.TabIndex = 1;
+            panelTitleBar.Paint += panelTitleBar_Paint;
             // 
             // panel2
             // 
@@ -440,6 +442,7 @@
             panelDesktop.Name = "panelDesktop";
             panelDesktop.Size = new Size(1292, 848);
             panelDesktop.TabIndex = 2;
+            panelDesktop.Paint += panelDesktop_Paint_1;
             // 
             // fileSystemWatcher1
             // 
@@ -498,6 +501,6 @@
         private FontAwesome.Sharp.IconButton btnMin;
         private System.Windows.Forms.Timer menuTimer;
         private FontAwesome.Sharp.IconButton btnUsersMgmt;
-        private Label lblUser;
+        private Label lblWelcome;
     }
 }

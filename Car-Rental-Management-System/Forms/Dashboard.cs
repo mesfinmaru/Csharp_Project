@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Configuration;
 
 
 namespace Car_Rental_Management_System
@@ -17,6 +18,8 @@ namespace Car_Rental_Management_System
 
     public partial class Dashboard : Form
     {
+        private readonly ApiClient _apiClient;
+
         // Active form inside panelDesktop
         private Form? activeForm = null;
 
@@ -30,10 +33,35 @@ namespace Car_Rental_Management_System
 
 
 
-
-        public Dashboard()
+        public Dashboard(ApiClient apiClient, object apiClient1)
         {
             InitializeComponent();
+            _apiClient = apiClient;
+
+            // Set user info
+            lblWelcome.Text = $"{_apiClient.CurrentUser?.FullName ?? "User"}({_apiClient.CurrentUser?.Role})";
+
+            // Show/hide buttons based on role
+            ConfigureRoleBasedUI();
+        }
+
+        private void ConfigureRoleBasedUI()
+        {
+            bool isAdmin = _apiClient.IsAdmin;
+
+            // Show all buttons for Admin
+            btnVehicles.Visible = isAdmin;
+            btnReports.Visible = isAdmin;
+            btnUsersMgmt.Visible = isAdmin;
+
+
+
+            // Always show for both Admin and Staff
+            btnRentals.Visible = true;
+            btnReturns.Visible = true;
+            btnMaintenances.Visible = true;
+
+            
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
@@ -135,7 +163,97 @@ namespace Car_Rental_Management_System
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            Application.Restart();
+
+            // Show confirmation dialog
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to logout?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2); // Default to "No" for safety
+
+            // If user clicks "No", cancel the logout
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+            try
+            {
+                // Logout from API client
+                if (_apiClient != null)
+                {
+                    _apiClient.Logout();
+                }
+
+                // Clear application settings
+                ClearUserSettings();
+
+
+                // Return to login form
+                Application.Restart();
+            }
+            catch (Exception ex)
+            {
+                // Handle any errors during logout
+                MessageBox.Show(
+                    $"Error during logout: {ex.Message}",
+                    "Logout Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+        private void ClearUserSettings()
+        {
+            try
+            {
+                // Clear from ConfigurationManager (App.config)
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                // Clear each setting safely (check if key exists)
+                if (config.AppSettings.Settings["UserToken"] != null)
+                    config.AppSettings.Settings["UserToken"].Value = "";
+
+                if (config.AppSettings.Settings["UserRole"] != null)
+                    config.AppSettings.Settings["UserRole"].Value = "";
+
+                if (config.AppSettings.Settings["UserName"] != null)
+                    config.AppSettings.Settings["UserName"].Value = "";
+
+                if (config.AppSettings.Settings["FullName"] != null)
+                    config.AppSettings.Settings["FullName"].Value = "";
+
+                // Also clear any session-specific settings
+                if (config.AppSettings.Settings["LastLogin"] != null)
+                    config.AppSettings.Settings["LastLogin"].Value = "";
+
+                if (config.AppSettings.Settings["RememberMe"] != null)
+                    config.AppSettings.Settings["RememberMe"].Value = "false";
+
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+
+
+
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                // Handle configuration errors specifically
+                MessageBox.Show(
+                    $"Configuration error: {ex.Message}\nSettings may not have been cleared completely.",
+                    "Configuration Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                // Handle any other errors
+                MessageBox.Show(
+                    $"Error clearing settings: {ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         private void panelDesktop_Paint(object sender, PaintEventArgs e)
@@ -189,6 +307,21 @@ namespace Car_Rental_Management_System
         }
 
         private void panelMenu_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelTitleBar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelDesktop_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblWelcome_Click(object sender, EventArgs e)
         {
 
         }

@@ -37,6 +37,7 @@ namespace Car_Rental_Management_System
             btnMax = new FontAwesome.Sharp.IconButton();
             btnClose = new FontAwesome.Sharp.IconButton();
             panel1 = new Panel();
+            lblStatus = new Label();
             pictureBox1 = new PictureBox();
             lblPassword = new Label();
             lblUsername = new Label();
@@ -117,6 +118,7 @@ namespace Car_Rental_Management_System
             // 
             // panel1
             // 
+            panel1.Controls.Add(lblStatus);
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(lblPassword);
             panel1.Controls.Add(lblUsername);
@@ -130,6 +132,17 @@ namespace Car_Rental_Management_System
             panel1.Size = new Size(1701, 952);
             panel1.TabIndex = 9;
             panel1.Paint += panel1_Paint;
+            // 
+            // lblStatus
+            // 
+            lblStatus.Anchor = AnchorStyles.None;
+            lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
+            lblStatus.ForeColor = Color.IndianRed;
+            lblStatus.Location = new Point(759, 229);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(0, 35);
+            lblStatus.TabIndex = 18;
             // 
             // pictureBox1
             // 
@@ -219,8 +232,9 @@ namespace Car_Rental_Management_System
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(201, 50);
             btnCancel.TabIndex = 10;
-            btnCancel.Text = "Cancel";
+            btnCancel.Text = "Close";
             btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // panel3
             // 
@@ -287,5 +301,6 @@ namespace Car_Rental_Management_System
         private PictureBox pictureBox1;
         private Panel panel3;
         private Label label1;
+        private Label lblStatus;
     }
 }
