@@ -8,6 +8,10 @@ namespace Car_Rental_Management_System
         [STAThread]
         static void Main()
         {
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

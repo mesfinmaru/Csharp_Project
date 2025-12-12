@@ -7,8 +7,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-	<EnableWindowsFormsHighDpiAutoResizing>false</EnableWindowsFormsHighDpiAutoResizing>
-	<HighDpiMode>SystemAware</HighDpiMode>
+	<EnableWindowsFormsHighDpiAutoResizing>true</EnableWindowsFormsHighDpiAutoResizing>
+	<HighDpiMode>PerMonitorV2</HighDpiMode>
 
   </PropertyGroup>
 

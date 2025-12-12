@@ -51,6 +51,7 @@
             btnDelete.Text = "Delete";
             btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnEdit
             // 
@@ -67,6 +68,7 @@
             btnEdit.Text = "Edit";
             btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
             // btnAdd
             // 
@@ -83,6 +85,7 @@
             btnAdd.Text = "Add";
             btnAdd.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // txtSearch
             // 
@@ -92,6 +95,7 @@
             txtSearch.PlaceholderText = "Search for users ...";
             txtSearch.Size = new Size(572, 39);
             txtSearch.TabIndex = 17;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // dgvUsers
             // 
@@ -106,6 +110,7 @@
             dgvUsers.RowHeadersWidth = 82;
             dgvUsers.Size = new Size(1384, 679);
             dgvUsers.TabIndex = 18;
+            dgvUsers.CellContentClick += dgvUsers_CellContentClick;
             // 
             // UsersForm
             // 

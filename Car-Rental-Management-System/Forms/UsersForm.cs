@@ -86,5 +86,30 @@ namespace Car_Rental_Management_System.Forms
         {
 
         }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
