@@ -1,4 +1,4 @@
-﻿using CRMdataLayer;
+﻿using CRMdataLayer.Entities;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 
