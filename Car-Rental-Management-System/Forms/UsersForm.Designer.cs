@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             btnDelete = new FontAwesome.Sharp.IconButton();
             btnEdit = new FontAwesome.Sharp.IconButton();
             btnAdd = new FontAwesome.Sharp.IconButton();
             txtSearch = new TextBox();
             dgvUsers = new DataGridView();
+            lblStatus = new Label();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
             SuspendLayout();
             // 
@@ -51,7 +54,7 @@
             btnDelete.Text = "Delete";
             btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += btnDelete_Click;
+            btnDelete.Click += btnDelete_Click_1;
             // 
             // btnEdit
             // 
@@ -68,7 +71,7 @@
             btnEdit.Text = "Edit";
             btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnEdit.UseVisualStyleBackColor = true;
-            btnEdit.Click += btnEdit_Click;
+            btnEdit.Click += btnEdit_Click_1;
             // 
             // btnAdd
             // 
@@ -85,7 +88,7 @@
             btnAdd.Text = "Add";
             btnAdd.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAdd.UseVisualStyleBackColor = true;
-            btnAdd.Click += btnAdd_Click;
+            btnAdd.Click += btnAdd_Click_1;
             // 
             // txtSearch
             // 
@@ -95,7 +98,7 @@
             txtSearch.PlaceholderText = "Search for users ...";
             txtSearch.Size = new Size(572, 39);
             txtSearch.TabIndex = 17;
-            txtSearch.TextChanged += txtSearch_TextChanged;
+            txtSearch.TextChanged += txtSearch_TextChanged_1;
             // 
             // dgvUsers
             // 
@@ -104,19 +107,29 @@
             dgvUsers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUsers.ColumnHeadersHeight = 46;
-            dgvUsers.Location = new Point(15, 97);
+            dgvUsers.Location = new Point(15, 98);
             dgvUsers.Name = "dgvUsers";
             dgvUsers.ReadOnly = true;
             dgvUsers.RowHeadersWidth = 82;
-            dgvUsers.Size = new Size(1384, 679);
+            dgvUsers.Size = new Size(1384, 678);
             dgvUsers.TabIndex = 18;
-            dgvUsers.CellContentClick += dgvUsers_CellContentClick;
+            // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.ForeColor = Color.IndianRed;
+            lblStatus.Location = new Point(594, 36);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(104, 32);
+            lblStatus.TabIndex = 22;
+            lblStatus.Text = "lblStatus";
             // 
             // UsersForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1415, 788);
+            Controls.Add(lblStatus);
             Controls.Add(btnDelete);
             Controls.Add(btnEdit);
             Controls.Add(btnAdd);
@@ -125,7 +138,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "UsersForm";
             Text = "UsersForm";
-            Load += UsersForm_Load;
+            Load += UsersForm_Load_1;
             ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -138,5 +151,7 @@
         private FontAwesome.Sharp.IconButton btnAdd;
         private TextBox txtSearch;
         private DataGridView dgvUsers;
+        private Label lblStatus;
+        private ToolTip toolTip1;
     }
 }

@@ -61,7 +61,7 @@ namespace Car_Rental_Management_System
             btnReturns.Visible = true;
             btnMaintenances.Visible = true;
 
-            
+
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
@@ -300,10 +300,9 @@ namespace Car_Rental_Management_System
 
         }
 
-        private void btnUsersMgmt_Click(object sender, EventArgs e)
+        private void BtnUsersMgmt_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new UsersForm());
-            ActivateButton(btnUsersMgmt);
+           
         }
 
         private void panelMenu_Paint(object sender, PaintEventArgs e)
@@ -324,6 +323,12 @@ namespace Car_Rental_Management_System
         private void lblWelcome_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnUsersMgmt_Click_1(object sender, EventArgs e)
+        {
+            OpenChildForm(new UsersForm());
+            ActivateButton(btnUsersMgmt);
         }
     }
 }

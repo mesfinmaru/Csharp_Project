@@ -103,7 +103,7 @@
             btnUsersMgmt.TextAlign = ContentAlignment.MiddleRight;
             btnUsersMgmt.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnUsersMgmt.UseVisualStyleBackColor = true;
-            btnUsersMgmt.Click += btnUsersMgmt_Click;
+            btnUsersMgmt.Click += btnUsersMgmt_Click_1;
             // 
             // btnLogout
             // 

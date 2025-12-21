@@ -139,7 +139,7 @@ namespace Car_Rental_Management_System
             lblStatus.AutoSize = true;
             lblStatus.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
             lblStatus.ForeColor = Color.IndianRed;
-            lblStatus.Location = new Point(759, 229);
+            lblStatus.Location = new Point(757, 299);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(0, 35);
             lblStatus.TabIndex = 18;
@@ -150,7 +150,7 @@ namespace Car_Rental_Management_System
             pictureBox1.Image = Properties.Resources.Untitled__1_1;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1701, 203);
+            pictureBox1.Size = new Size(1701, 296);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 17;
             pictureBox1.TabStop = false;
@@ -203,7 +203,7 @@ namespace Car_Rental_Management_System
             txtbPassword.ForeColor = SystemColors.ButtonHighlight;
             txtbPassword.Location = new Point(640, 529);
             txtbPassword.Name = "txtbPassword";
-            txtbPassword.PlaceholderText = "Enter Password";
+            txtbPassword.PlaceholderText = "Enter your password";
             txtbPassword.Size = new Size(489, 39);
             txtbPassword.TabIndex = 2;
             txtbPassword.UseSystemPasswordChar = true;
@@ -215,7 +215,7 @@ namespace Car_Rental_Management_System
             txtbUsername.ForeColor = SystemColors.ButtonHighlight;
             txtbUsername.Location = new Point(640, 447);
             txtbUsername.Name = "txtbUsername";
-            txtbUsername.PlaceholderText = "Enter Username";
+            txtbUsername.PlaceholderText = "Enter your username";
             txtbUsername.Size = new Size(489, 39);
             txtbUsername.TabIndex = 1;
             // 
@@ -241,9 +241,9 @@ namespace Car_Rental_Management_System
             panel3.BackColor = Color.FromArgb(30, 30, 40);
             panel3.Controls.Add(label1);
             panel3.Dock = DockStyle.Bottom;
-            panel3.Location = new Point(0, 920);
+            panel3.Location = new Point(0, 898);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1701, 80);
+            panel3.Size = new Size(1701, 102);
             panel3.TabIndex = 18;
             panel3.Paint += panel3_Paint;
             // 
@@ -253,7 +253,7 @@ namespace Car_Rental_Management_System
             label1.AutoSize = true;
             label1.Font = new Font("Trebuchet MS", 8F, FontStyle.Bold);
             label1.ForeColor = SystemColors.ControlDarkDark;
-            label1.Location = new Point(544, 30);
+            label1.Location = new Point(564, 40);
             label1.Name = "label1";
             label1.Size = new Size(638, 27);
             label1.TabIndex = 19;

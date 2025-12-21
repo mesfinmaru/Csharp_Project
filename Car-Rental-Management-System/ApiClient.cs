@@ -4,12 +4,13 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static CRM_API.Models.UpdateUserRequest;
 
 namespace Car_Rental_Management_System
 {
     public class ApiClient
     {
-        private readonly HttpClient _http;
+        public readonly HttpClient _http;
         private string _token;
         private UserVM _currentUser;
 

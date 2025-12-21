@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CRM_API.Models;
 using CRMdataLayer;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using CRM_API.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using static CRM_API.Models.UpdateUserRequest;
 
 namespace CRM_API.Controllers
 {
@@ -26,13 +28,22 @@ namespace CRM_API.Controllers
             _passwordHasher = passwordHasher;
             _configuration = configuration;
         }
+        private static string HashPassword(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+                return string.Empty;
+
+            using var sha256 = SHA256.Create();
+            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(bytes);
+        }
 
         // POST: api/auth/login
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponseVM>> Login(LoginRequest request)
         {
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Username == request.Username && u.IsActive);
+                .FirstOrDefaultAsync(u => u.Username == request.Username);
 
             if (user == null)
             {
@@ -74,33 +85,64 @@ namespace CRM_API.Controllers
             });
         }
 
-        // POST: api/auth/register-admin (First time setup - creates first admin)
+       
         [HttpPost("register-admin")]
-        public async Task<ActionResult<AuthResponseVM>> RegisterAdmin(RegisterVM request)
+        public async Task<IActionResult> Register(RegisterVM model)
         {
-            // Check if any admin already exists
-            var adminExists = await _context.Users.AnyAsync(u => u.Role == "Admin");
-
-            if (adminExists)
+            // Check if username exists (with hard delete, deleted users are gone)
+            if (await _context.Users.AnyAsync(u => u.Username == model.Username))
             {
-                return BadRequest(new AuthResponseVM
-                {
-                    Success = false,
-                    Message = "Admin already exists. Only one admin can be created."
-                });
+                return Conflict(new { message = "Username already exists" });
             }
 
-            // Validate role
-            if (request.Role != "Admin")
+            // Check if email exists
+            if (await _context.Users.AnyAsync(u => u.Email == model.Email))
             {
-                return BadRequest(new AuthResponseVM
-                {
-                    Success = false,
-                    Message = "This endpoint is only for creating Admin."
-                });
+                return Conflict(new { message = "Email already exists" });
             }
 
-            return await RegisterUser(request);
+            // Check admin restriction
+            if (model.Role == "Admin")
+            {
+                var adminExists = await _context.Users.AnyAsync(u => u.Role == "Admin");
+                if (adminExists)
+                {
+                    return Conflict(new
+                    {
+                        message = "Only one admin is allowed in the system. Admin already exists."
+                    });
+                }
+            }
+
+            var user = new Users
+            {
+                FullName = model.FullName,
+                Username = model.Username,
+                Email = model.Email,
+                Phone = model.Phone,
+                Role = model.Role,
+                PasswordHash = HashPassword(model.Password),
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(new AuthResponseVM
+            {
+                Success = true,
+                Message = "User registered successfully",
+                User = new UserVM
+                {
+                    Id = user.Id,
+                    FullName = user.FullName,
+                    Username = user.Username,
+                    Email = user.Email,
+                    Phone = user.Phone,
+                    Role = user.Role,
+                    CreatedAt = user.CreatedAt
+                }
+            });
         }
 
         // POST: api/auth/register-staff (Only Admin can access - will add authorization later)
@@ -125,7 +167,7 @@ namespace CRM_API.Controllers
         public async Task<ActionResult<AuthResponseVM>> ChangePassword(ChangePasswordVM request)
         {
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Username == request.Username && u.IsActive);
+                .FirstOrDefaultAsync(u => u.Username == request.Username);
 
             if (user == null)
             {
@@ -208,6 +250,7 @@ namespace CRM_API.Controllers
                     FullName = user.FullName,
                     Username = user.Username,
                     Email = user.Email,
+                    Phone = user.Phone,
                     Role = user.Role
                 }
             });

@@ -1,6 +1,6 @@
 ﻿namespace Car_Rental_Management_System.Forms
 {
-    partial class AddUser
+    partial class EditUser
     {
         /// <summary>
         /// Required designer variable.
@@ -29,18 +29,19 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            mainPanel = new Panel();
-            lblAdminMessage = new Label();
-            btnClose = new FontAwesome.Sharp.IconButton();
-            formPanel = new Panel();
+            lblHeader = new Label();
             ButtonsPanel = new Panel();
-            btnAdd = new Button();
+            btnSave = new Button();
             btnCancel = new Button();
             txtPassword = new TextBox();
             lblPasswd = new Label();
             txtConfirmPassword = new TextBox();
             label3 = new Label();
             lblRole = new Label();
+            mainPanel = new Panel();
+            lblAdminNote = new Label();
+            btnClose = new FontAwesome.Sharp.IconButton();
+            formPanel = new Panel();
             cmbRole = new ComboBox();
             txtUsername = new TextBox();
             lblUsername = new Label();
@@ -50,79 +51,28 @@
             lblPhone = new Label();
             txtFullName = new TextBox();
             lblFullname = new Label();
-            lblHeader = new Label();
             toolTip1 = new ToolTip(components);
+            ButtonsPanel.SuspendLayout();
             mainPanel.SuspendLayout();
             formPanel.SuspendLayout();
-            ButtonsPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // mainPanel
+            // lblHeader
             // 
-            mainPanel.Controls.Add(lblAdminMessage);
-            mainPanel.Controls.Add(btnClose);
-            mainPanel.Controls.Add(formPanel);
-            mainPanel.Controls.Add(lblHeader);
-            mainPanel.Dock = DockStyle.Fill;
-            mainPanel.Location = new Point(0, 0);
-            mainPanel.Name = "mainPanel";
-            mainPanel.Padding = new Padding(20);
-            mainPanel.Size = new Size(724, 729);
-            mainPanel.TabIndex = 0;
-            // 
-            // lblAdminMessage
-            // 
-            lblAdminMessage.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblAdminMessage.AutoSize = true;
-            lblAdminMessage.ForeColor = Color.IndianRed;
-            lblAdminMessage.Location = new Point(310, 18);
-            lblAdminMessage.Name = "lblAdminMessage";
-            lblAdminMessage.Size = new Size(0, 32);
-            lblAdminMessage.TabIndex = 23;
-            // 
-            // btnClose
-            // 
-            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.IconChar = FontAwesome.Sharp.IconChar.X;
-            btnClose.IconColor = Color.IndianRed;
-            btnClose.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnClose.Location = new Point(665, 12);
-            btnClose.Margin = new Padding(10);
-            btnClose.Name = "btnClose";
-            btnClose.Padding = new Padding(10);
-            btnClose.Size = new Size(40, 45);
-            btnClose.TabIndex = 2;
-            btnClose.UseVisualStyleBackColor = true;
-            // 
-            // formPanel
-            // 
-            formPanel.AutoScroll = true;
-            formPanel.Controls.Add(ButtonsPanel);
-            formPanel.Controls.Add(txtPassword);
-            formPanel.Controls.Add(lblPasswd);
-            formPanel.Controls.Add(txtConfirmPassword);
-            formPanel.Controls.Add(label3);
-            formPanel.Controls.Add(lblRole);
-            formPanel.Controls.Add(cmbRole);
-            formPanel.Controls.Add(txtUsername);
-            formPanel.Controls.Add(lblUsername);
-            formPanel.Controls.Add(txtEmail);
-            formPanel.Controls.Add(label2);
-            formPanel.Controls.Add(txtPhone);
-            formPanel.Controls.Add(lblPhone);
-            formPanel.Controls.Add(txtFullName);
-            formPanel.Controls.Add(lblFullname);
-            formPanel.Dock = DockStyle.Fill;
-            formPanel.Location = new Point(20, 57);
-            formPanel.Name = "formPanel";
-            formPanel.Size = new Size(684, 652);
-            formPanel.TabIndex = 1;
+            lblHeader.AutoSize = true;
+            lblHeader.Dock = DockStyle.Top;
+            lblHeader.FlatStyle = FlatStyle.Flat;
+            lblHeader.Font = new Font("Trebuchet MS", 10.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblHeader.Location = new Point(20, 20);
+            lblHeader.Name = "lblHeader";
+            lblHeader.Size = new Size(142, 37);
+            lblHeader.TabIndex = 0;
+            lblHeader.Text = "Edit User";
+            lblHeader.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ButtonsPanel
             // 
-            ButtonsPanel.Controls.Add(btnAdd);
+            ButtonsPanel.Controls.Add(btnSave);
             ButtonsPanel.Controls.Add(btnCancel);
             ButtonsPanel.Dock = DockStyle.Bottom;
             ButtonsPanel.Location = new Point(0, 539);
@@ -130,16 +80,15 @@
             ButtonsPanel.Size = new Size(684, 113);
             ButtonsPanel.TabIndex = 14;
             // 
-            // btnAdd
+            // btnSave
             // 
-            btnAdd.DialogResult = DialogResult.OK;
-            btnAdd.Location = new Point(378, 29);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(180, 60);
-            btnAdd.TabIndex = 1;
-            btnAdd.Text = "Save";
-            btnAdd.UseVisualStyleBackColor = true;
-            btnAdd.Click += btnAdd_Click_1;
+            btnSave.DialogResult = DialogResult.OK;
+            btnSave.Location = new Point(378, 29);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(180, 60);
+            btnSave.TabIndex = 1;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = true;
             // 
             // btnCancel
             // 
@@ -150,7 +99,6 @@
             btnCancel.TabIndex = 0;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
-            btnCancel.Click += btnCancel_Click_1;
             // 
             // txtPassword
             // 
@@ -199,6 +147,70 @@
             lblRole.Size = new Size(67, 35);
             lblRole.TabIndex = 9;
             lblRole.Text = "Role";
+            // 
+            // mainPanel
+            // 
+            mainPanel.Controls.Add(lblAdminNote);
+            mainPanel.Controls.Add(btnClose);
+            mainPanel.Controls.Add(formPanel);
+            mainPanel.Controls.Add(lblHeader);
+            mainPanel.Dock = DockStyle.Fill;
+            mainPanel.Location = new Point(0, 0);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Padding = new Padding(20);
+            mainPanel.Size = new Size(724, 729);
+            mainPanel.TabIndex = 1;
+            mainPanel.Paint += mainPanel_Paint;
+            // 
+            // lblAdminNote
+            // 
+            lblAdminNote.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblAdminNote.AutoSize = true;
+            lblAdminNote.ForeColor = Color.IndianRed;
+            lblAdminNote.Location = new Point(180, 18);
+            lblAdminNote.Name = "lblAdminNote";
+            lblAdminNote.Size = new Size(0, 32);
+            lblAdminNote.TabIndex = 24;
+            // 
+            // btnClose
+            // 
+            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnClose.IconColor = Color.IndianRed;
+            btnClose.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnClose.Location = new Point(665, 12);
+            btnClose.Margin = new Padding(10);
+            btnClose.Name = "btnClose";
+            btnClose.Padding = new Padding(10);
+            btnClose.Size = new Size(40, 45);
+            btnClose.TabIndex = 2;
+            btnClose.UseVisualStyleBackColor = true;
+            // 
+            // formPanel
+            // 
+            formPanel.AutoScroll = true;
+            formPanel.Controls.Add(ButtonsPanel);
+            formPanel.Controls.Add(txtPassword);
+            formPanel.Controls.Add(lblPasswd);
+            formPanel.Controls.Add(txtConfirmPassword);
+            formPanel.Controls.Add(label3);
+            formPanel.Controls.Add(lblRole);
+            formPanel.Controls.Add(cmbRole);
+            formPanel.Controls.Add(txtUsername);
+            formPanel.Controls.Add(lblUsername);
+            formPanel.Controls.Add(txtEmail);
+            formPanel.Controls.Add(label2);
+            formPanel.Controls.Add(txtPhone);
+            formPanel.Controls.Add(lblPhone);
+            formPanel.Controls.Add(txtFullName);
+            formPanel.Controls.Add(lblFullname);
+            formPanel.Dock = DockStyle.Fill;
+            formPanel.Location = new Point(20, 57);
+            formPanel.Name = "formPanel";
+            formPanel.Size = new Size(684, 652);
+            formPanel.TabIndex = 1;
             // 
             // cmbRole
             // 
@@ -267,13 +279,11 @@
             // 
             // txtFullName
             // 
-            txtFullName.BackColor = Color.White;
             txtFullName.Font = new Font("Trebuchet MS", 10.125F);
             txtFullName.Location = new Point(249, 30);
             txtFullName.Name = "txtFullName";
             txtFullName.Size = new Size(380, 39);
             txtFullName.TabIndex = 1;
-            txtFullName.TextChanged += txtFullName_TextChanged_1;
             // 
             // lblFullname
             // 
@@ -285,62 +295,49 @@
             lblFullname.TabIndex = 0;
             lblFullname.Text = "FullName";
             // 
-            // lblHeader
-            // 
-            lblHeader.AutoSize = true;
-            lblHeader.Dock = DockStyle.Top;
-            lblHeader.FlatStyle = FlatStyle.Flat;
-            lblHeader.Font = new Font("Trebuchet MS", 10.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblHeader.Location = new Point(20, 20);
-            lblHeader.Name = "lblHeader";
-            lblHeader.Size = new Size(207, 37);
-            lblHeader.TabIndex = 0;
-            lblHeader.Text = "Add New User";
-            lblHeader.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // AddUser
+            // EditUser
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(724, 729);
             Controls.Add(mainPanel);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "AddUser";
+            Name = "EditUser";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Add New User";
-            Load += AddUser_Load;
+            Text = "EditUser";
+            Load += EditUser_Load;
+            ButtonsPanel.ResumeLayout(false);
             mainPanel.ResumeLayout(false);
             mainPanel.PerformLayout();
             formPanel.ResumeLayout(false);
             formPanel.PerformLayout();
-            ButtonsPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
+        private Label lblHeader;
+        private Panel ButtonsPanel;
+        private Button btnSave;
+        private Button btnCancel;
+        private TextBox txtPassword;
+        private Label lblPasswd;
+        private TextBox txtConfirmPassword;
+        private Label label3;
+        private Label lblRole;
         private Panel mainPanel;
         private Panel formPanel;
-        private Label lblHeader;
-        private TextBox txtFullName;
-        private Label lblFullname;
+        private ComboBox cmbRole;
         private TextBox txtUsername;
         private Label lblUsername;
         private TextBox txtEmail;
         private Label label2;
         private TextBox txtPhone;
         private Label lblPhone;
-        private Label lblRole;
-        private ComboBox cmbRole;
-        private TextBox txtPassword;
-        private Label lblPasswd;
-        private TextBox txtConfirmPassword;
-        private Label label3;
-        private Panel ButtonsPanel;
-        private Button btnAdd;
-        private Button btnCancel;
+        private TextBox txtFullName;
+        private Label lblFullname;
         private ToolTip toolTip1;
         private FontAwesome.Sharp.IconButton btnClose;
-        private Label lblAdminMessage;
+        private Label lblAdminNote;
     }
 }

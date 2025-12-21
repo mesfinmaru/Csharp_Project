@@ -2,29 +2,39 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static CRM_API.Models.UpdateUserRequest;
 
 namespace Car_Rental_Management_System.Forms
 {
-    public partial class AddUser : Form
+    public partial class EditUser : Form
     {
+        private readonly UserVM? _userToEdit;
+        private readonly bool _adminExists;
         private bool _isFormLoaded = false;
         private bool _validationInProgress = false;
-        private bool _adminExists = false;
 
-
-     
-        public AddUser(bool adminExists = false)
+       
+        public EditUser(UserVM? userToEdit, bool adminExists = false)
         {
             try
             {
                 InitializeComponent();
+
+                this.btnSave.Click += BtnSave_Click;
+
+                if (userToEdit == null)
+                {
+                    ShowSimpleError("No user data provided");
+                    this.DialogResult = DialogResult.Cancel;
+                    this.Close();
+                    return;
+                }
+
+                _userToEdit = userToEdit;
                 _adminExists = adminExists;
+                LoadUserData();
                 ApplyTheme();
-                SetupForm();
                 _isFormLoaded = true;
             }
             catch
@@ -34,63 +44,80 @@ namespace Car_Rental_Management_System.Forms
                 this.Close();
             }
         }
+        private void LoadUserData()
+        {
+            try
+            {
+                if (_userToEdit == null) return;
+
+                txtFullName.Text = _userToEdit.FullName ?? "";
+                txtUsername.Text = _userToEdit.Username ?? "";
+                txtEmail.Text = _userToEdit.Email ?? "";
+                txtPhone.Text = _userToEdit.Phone ?? "";
+
+                cmbRole.Items.Clear();
+                cmbRole.Items.Add("Staff");
+
+                // CRITICAL FIX: Only show Admin option if:
+                // 1. User is already Admin (for display), OR
+                // 2. No Admin exists in the system AND user is not currently Admin
+                bool isCurrentUserAdmin = _userToEdit.Role?.Equals("Admin", StringComparison.OrdinalIgnoreCase) == true;
+
+                if (isCurrentUserAdmin || (!_adminExists && !isCurrentUserAdmin))
+                {
+                    cmbRole.Items.Add("Admin");
+                }
+
+                cmbRole.SelectedItem = _userToEdit.Role ?? "Staff";
+
+                txtPassword.UseSystemPasswordChar = true;
+                txtConfirmPassword.UseSystemPasswordChar = true;
+                txtPassword.Text = "";
+                txtConfirmPassword.Text = "";
+
+                txtUsername.Enabled = false;
+
+                // If user is Admin, disable role change
+                if (isCurrentUserAdmin)
+                {
+                    cmbRole.Enabled = false;
+                    lblAdminNote.Text = "Admin role cannot be changed";
+                    lblAdminNote.Visible = true;
+                    lblAdminNote.ForeColor = Color.Orange;
+                }
+                
+            }
+            catch
+            {
+                ShowSimpleError("Failed to load user data");
+            }
+        }
 
         private void ApplyTheme()
         {
-
             var bg = Color.FromArgb(0, 90, 158);
             var primary = Color.FromArgb(124, 77, 255);
 
             this.BackColor = bg;
-            btnAdd.BackColor = primary;
-            btnAdd.ForeColor = Color.White;
+            btnSave.BackColor = primary;
+            btnSave.ForeColor = Color.White;
             btnCancel.BackColor = Color.FromArgb(255, 98, 70);
             btnCancel.ForeColor = Color.White;
-
         }
 
-        private void SetupForm()
-        {
-            try
-            {
-                cmbRole.Items.Clear();
-
-                // If Admin already exists, only show Staff option
-                if (_adminExists)
-                {
-                    cmbRole.Items.Add("Staff");
-                   
-                }
-                else
-                {
-                    cmbRole.Items.AddRange(new object[] { "Staff", "Admin" });
-                  
-                }
-
-                cmbRole.SelectedIndex = 0;
-
-                this.DialogResult = DialogResult.None;
-            }
-            catch
-            {
-                ShowSimpleError("Failed to set up form");
-            }
-        }
-
-        public RegisterVM GetUserData()
+        public UpdateUserRequest GetUpdatedUserData()
         {
             if (!_isFormLoaded)
                 throw new InvalidOperationException("Form not ready");
 
-            return new RegisterVM
+            return new UpdateUserRequest
             {
                 FullName = txtFullName.Text.Trim(),
                 Username = txtUsername.Text.Trim(),
                 Email = txtEmail.Text.Trim(),
                 Phone = txtPhone.Text.Trim(),
-                Password = txtPassword.Text,
-                ConfirmPassword = txtConfirmPassword.Text,
-                Role = cmbRole.SelectedItem?.ToString() ?? "Staff"
+                Role = cmbRole.SelectedItem?.ToString() ?? "Staff",
+                Password = string.IsNullOrEmpty(txtPassword.Text) ? "" : txtPassword.Text
             };
         }
 
@@ -125,26 +152,6 @@ namespace Car_Rental_Management_System.Forms
                     isValid = false;
                 }
 
-                // Validate Username
-                if (string.IsNullOrWhiteSpace(txtUsername.Text))
-                {
-                    errorMessages.Add("Username is required");
-                    HighlightError(txtUsername);
-                    isValid = false;
-                }
-                else if (txtUsername.Text.Trim().Length < 3)
-                {
-                    errorMessages.Add("Username must be at least 3 characters");
-                    HighlightError(txtUsername);
-                    isValid = false;
-                }
-                else if (txtUsername.Text.Contains(" "))
-                {
-                    errorMessages.Add("Username cannot contain spaces");
-                    HighlightError(txtUsername);
-                    isValid = false;
-                }
-
                 // Validate Email
                 if (string.IsNullOrWhiteSpace(txtEmail.Text))
                 {
@@ -159,40 +166,41 @@ namespace Car_Rental_Management_System.Forms
                     isValid = false;
                 }
 
-                // Validate Password
-                if (string.IsNullOrWhiteSpace(txtPassword.Text))
-                {
-                    errorMessages.Add("Password is required");
-                    HighlightError(txtPassword);
-                    isValid = false;
-                }
-                else if (txtPassword.Text.Length < 6)
-                {
-                    errorMessages.Add("Password must be at least 6 characters");
-                    HighlightError(txtPassword);
-                    isValid = false;
-                }
+                // Validate password if provided
+                bool passwordProvided = !string.IsNullOrEmpty(txtPassword.Text);
+                bool confirmPasswordProvided = !string.IsNullOrEmpty(txtConfirmPassword.Text);
 
-                // Validate Confirm Password
-                if (string.IsNullOrWhiteSpace(txtConfirmPassword.Text))
+                if (passwordProvided || confirmPasswordProvided)
                 {
-                    errorMessages.Add("Please confirm your password");
-                    HighlightError(txtConfirmPassword);
-                    isValid = false;
-                }
-                else if (txtPassword.Text != txtConfirmPassword.Text)
-                {
-                    errorMessages.Add("Passwords do not match");
-                    HighlightError(txtConfirmPassword);
-                    isValid = false;
-                }
+                    if (passwordProvided && !confirmPasswordProvided)
+                    {
+                        errorMessages.Add("Please confirm your password");
+                        HighlightError(txtConfirmPassword);
+                        isValid = false;
+                    }
+                    else if (!passwordProvided && confirmPasswordProvided)
+                    {
+                        errorMessages.Add("Please enter a new password");
+                        HighlightError(txtPassword);
+                        isValid = false;
+                    }
+                    else if (passwordProvided && confirmPasswordProvided)
+                    {
+                        if (txtPassword.Text.Length < 6)
+                        {
+                            errorMessages.Add("Password must be at least 6 characters");
+                            HighlightError(txtPassword);
+                            isValid = false;
+                        }
 
-                // Validate Role
-                if (cmbRole.SelectedItem == null)
-                {
-                    errorMessages.Add("Please select a role");
-                    HighlightError(cmbRole);
-                    isValid = false;
+                        if (txtPassword.Text != txtConfirmPassword.Text)
+                        {
+                            errorMessages.Add("Passwords do not match");
+                            HighlightError(txtPassword);
+                            HighlightError(txtConfirmPassword);
+                            isValid = false;
+                        }
+                    }
                 }
 
                 if (!isValid)
@@ -217,7 +225,6 @@ namespace Car_Rental_Management_System.Forms
             ClearErrorHighlight(txtPhone);
             ClearErrorHighlight(txtPassword);
             ClearErrorHighlight(txtConfirmPassword);
-            ClearErrorHighlight(cmbRole);
         }
 
         private static bool IsValidEmail(string email)
@@ -237,7 +244,7 @@ namespace Car_Rental_Management_System.Forms
         {
             try
             {
-                control.BackColor = Color.FromArgb(192,0,0);
+                control.BackColor = Color.FromArgb(192, 0, 0);
                 control.Focus();
             }
             catch { }
@@ -256,7 +263,7 @@ namespace Car_Rental_Management_System.Forms
         {
             if (errors.Count == 0) return;
 
-            var errorText = new StringBuilder("Please fix the following errors:\n\n");
+            var errorText = new System.Text.StringBuilder("Please fix the following errors:\n\n");
             foreach (var error in errors)
             {
                 errorText.AppendLine($"• {error}");
@@ -271,14 +278,16 @@ namespace Car_Rental_Management_System.Forms
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private static void ShowInfo(string message)
+        private void EditUser_Load(object sender, EventArgs e)
         {
-            MessageBox.Show(message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (_isFormLoaded)
+            {
+                txtFullName.Focus();
+            }
         }
 
-        private void btnAdd_Click_1(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
-            // CRITICAL: Set DialogResult to None first
             this.DialogResult = DialogResult.None;
 
             try
@@ -291,87 +300,43 @@ namespace Car_Rental_Management_System.Forms
 
                 if (ValidateForm())
                 {
-                    // Only set DialogResult.OK if validation passed
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
-                // If validation failed, DialogResult remains None and form stays open
             }
             catch
             {
-                ShowSimpleError("Failed to save user");
-                // Don't close on error
+                ShowSimpleError("Failed to save changes");
             }
         }
 
-        private void btnCancel_Click_1(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
+            var result = MessageBox.Show(
+                "Cancel without saving changes?",
+                "Confirm Cancel",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
 
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-
-        }
-
-        private void AddUser_Load(object sender, EventArgs e)
-        {
-            if (_isFormLoaded)
+            if (result == DialogResult.Yes)
             {
-                txtFullName.Focus();
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
             }
         }
 
-        private void TxtPhone_TextChanged(object sender, EventArgs e)
+        private void BtnClose_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(txtPhone.Text)) return;
-
-                if (Regex.IsMatch(txtPhone.Text, "[^0-9+\\s-]"))
-                {
-                    txtPhone.Text = Regex.Replace(txtPhone.Text, "[^0-9+\\s-]", "");
-                    txtPhone.SelectionStart = txtPhone.Text.Length;
-                }
-
-                FormatPhoneNumber();
-            }
-            catch { }
-        }
-
-        private void FormatPhoneNumber()
-        {
-            try
-            {
-                string digitsOnly = new string(txtPhone.Text.Where(char.IsDigit).ToArray());
-
-                if (digitsOnly.Length <= 3)
-                {
-                    txtPhone.Text = digitsOnly;
-                }
-                else if (digitsOnly.Length <= 6)
-                {
-                    txtPhone.Text = $"{digitsOnly[..3]}-{digitsOnly[3..]}";
-                }
-                else if (digitsOnly.Length <= 10)
-                {
-                    txtPhone.Text = $"{digitsOnly[..3]}-{digitsOnly[3..6]}-{digitsOnly[6..]}";
-                }
-                else
-                {
-                    txtPhone.Text = $"{digitsOnly[..3]}-{digitsOnly[3..6]}-{digitsOnly[6..10]}";
-                }
-
-                txtPhone.SelectionStart = txtPhone.Text.Length;
-            }
-            catch { }
+            BtnCancel_Click(sender, e);
         }
 
         // Text change handlers
         private void TxtFullName_TextChanged(object sender, EventArgs e) => ClearErrorHighlight(txtFullName);
-        private void TxtUsername_TextChanged(object sender, EventArgs e) => ClearErrorHighlight(txtUsername);
         private void TxtEmail_TextChanged(object sender, EventArgs e) => ClearErrorHighlight(txtEmail);
+        private void TxtPhone_TextChanged(object sender, EventArgs e) => ClearErrorHighlight(txtPhone);
         private void TxtPassword_TextChanged(object sender, EventArgs e) => ClearErrorHighlight(txtPassword);
         private void TxtConfirmPassword_TextChanged(object sender, EventArgs e) => ClearErrorHighlight(txtConfirmPassword);
-        private void CmbRole_SelectedIndexChanged(object sender, EventArgs e) => ClearErrorHighlight(cmbRole);
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -384,7 +349,7 @@ namespace Car_Rental_Management_System.Forms
             if (e.CloseReason == CloseReason.UserClosing && this.DialogResult == DialogResult.None)
             {
                 var result = MessageBox.Show(
-                    "Close without saving?",
+                    "Close without saving changes?",
                     "Confirm Close",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question,
@@ -404,7 +369,7 @@ namespace Car_Rental_Management_System.Forms
             base.OnFormClosing(e);
         }
 
-        private void txtFullName_TextChanged_1(object sender, EventArgs e)
+        private void mainPanel_Paint(object sender, PaintEventArgs e)
         {
 
         }
