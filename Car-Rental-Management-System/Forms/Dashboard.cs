@@ -160,7 +160,7 @@ namespace Car_Rental_Management_System
 
         private void btnVehicles_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new VehiclesForm());
+            OpenChildForm(new VehiclesForm(_apiClient));
             ActivateButton(btnVehicles);
         }
 

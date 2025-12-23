@@ -10,17 +10,19 @@
             btnDelete = new FontAwesome.Sharp.IconButton();
             btnEdit = new FontAwesome.Sharp.IconButton();
             btnAdd = new FontAwesome.Sharp.IconButton();
+            lblStatus = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvVehicles).BeginInit();
             SuspendLayout();
             // 
             // txtSearch
             // 
             txtSearch.Font = new Font("Trebuchet MS", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearch.Location = new Point(29, 42);
+            txtSearch.Location = new Point(29, 22);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Search for vehicles...";
             txtSearch.Size = new Size(572, 39);
             txtSearch.TabIndex = 6;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // dgvVehicles
             // 
@@ -29,12 +31,13 @@
             dgvVehicles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvVehicles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvVehicles.ColumnHeadersHeight = 46;
-            dgvVehicles.Location = new Point(29, 124);
+            dgvVehicles.Location = new Point(29, 87);
             dgvVehicles.Name = "dgvVehicles";
             dgvVehicles.ReadOnly = true;
             dgvVehicles.RowHeadersWidth = 82;
-            dgvVehicles.Size = new Size(1359, 652);
+            dgvVehicles.Size = new Size(1369, 689);
             dgvVehicles.TabIndex = 7;
+            dgvVehicles.CellContentClick += dgvVehicles_CellContentClick;
             // 
             // btnDelete
             // 
@@ -44,13 +47,14 @@
             btnDelete.IconChar = FontAwesome.Sharp.IconChar.DeleteLeft;
             btnDelete.IconColor = Color.Black;
             btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnDelete.Location = new Point(1176, 33);
+            btnDelete.Location = new Point(1198, 12);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(200, 60);
             btnDelete.TabIndex = 19;
             btnDelete.Text = "Delete";
             btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnEdit
             // 
@@ -60,13 +64,14 @@
             btnEdit.IconChar = FontAwesome.Sharp.IconChar.Edit;
             btnEdit.IconColor = Color.Black;
             btnEdit.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnEdit.Location = new Point(932, 33);
+            btnEdit.Location = new Point(978, 12);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(200, 60);
             btnEdit.TabIndex = 18;
             btnEdit.Text = "Edit";
             btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
             // btnAdd
             // 
@@ -76,18 +81,29 @@
             btnAdd.IconChar = FontAwesome.Sharp.IconChar.PlusSquare;
             btnAdd.IconColor = Color.Black;
             btnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnAdd.Location = new Point(685, 33);
+            btnAdd.Location = new Point(756, 12);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(200, 60);
             btnAdd.TabIndex = 17;
             btnAdd.Text = "Add";
             btnAdd.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click_1;
+            // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.ForeColor = Color.IndianRed;
+            lblStatus.Location = new Point(627, 29);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(0, 32);
+            lblStatus.TabIndex = 24;
             // 
             // VehiclesForm
             // 
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1415, 788);
+            Controls.Add(lblStatus);
             Controls.Add(btnDelete);
             Controls.Add(btnEdit);
             Controls.Add(btnAdd);
@@ -95,7 +111,6 @@
             Controls.Add(dgvVehicles);
             FormBorderStyle = FormBorderStyle.None;
             Name = "VehiclesForm";
-            Load += VehiclesForm_Load_1;
             ((System.ComponentModel.ISupportInitialize)dgvVehicles).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -105,5 +120,6 @@
         private FontAwesome.Sharp.IconButton btnDelete;
         private FontAwesome.Sharp.IconButton btnEdit;
         private FontAwesome.Sharp.IconButton btnAdd;
+        private Label lblStatus;
     }
 }

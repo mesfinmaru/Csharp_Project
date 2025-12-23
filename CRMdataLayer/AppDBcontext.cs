@@ -30,7 +30,7 @@ namespace CRMdataLayer
         // DbSet properties
         public DbSet<Users> Users { get; set; }
         public DbSet<Customers> Customers { get; set; }
-        public DbSet<Vehicles> Vehicles { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Rentals> Rentals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -71,6 +71,70 @@ namespace CRMdataLayer
                 entity.HasIndex(e => e.Email);
                 entity.HasIndex(e => e.IsActive);
             });
+
+            modelBuilder.Entity<Vehicle>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.PlateNumber)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Make)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Model)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Year)
+                    .IsRequired();
+
+                entity.Property(e => e.Color)
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.VehicleType)
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Transmission)
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.FuelType)
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.VIN)
+                    .HasMaxLength(17);
+
+                entity.Property(e => e.EngineNumber)
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(20)
+                    .HasDefaultValue("Available");
+
+                entity.Property(e => e.DailyRate)
+                    .HasPrecision(18, 2);
+
+                entity.Property(e => e.WeeklyRate)
+                    .HasPrecision(18, 2);
+
+                entity.Property(e => e.MonthlyRate)
+                    .HasPrecision(18, 2);
+
+                // Add indexes
+                entity.HasIndex(e => e.PlateNumber)
+                    .IsUnique();
+
+                entity.HasIndex(e => e.VIN)
+                    .IsUnique()
+                    .HasFilter("[VIN] IS NOT NULL");
+
+                entity.HasIndex(e => e.IsActive);
+                entity.HasIndex(e => e.IsAvailable);
+                entity.HasIndex(e => e.Status);
+            });
+
         }
   
     }

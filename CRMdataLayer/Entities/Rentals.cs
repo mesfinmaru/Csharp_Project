@@ -14,7 +14,7 @@ namespace CRMdataLayer.Entities
             public required Customers Customer { get; set; }
 
             public int Id { get; set; }
-            public required Vehicles Vehicle { get; set; }
+            public required Vehicle Vehicle { get; set; }
 
             public DateTime RentDate { get; set; }
             public DateTime ReturnDate { get; set; }
