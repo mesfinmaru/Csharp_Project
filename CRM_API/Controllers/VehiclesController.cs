@@ -27,7 +27,6 @@ namespace CRM_API.Controllers
             {
                 var query = _context.Vehicles.AsQueryable();
 
-                // Apply search filter if provided
                 if (!string.IsNullOrWhiteSpace(search))
                 {
                     query = query.Where(v =>
@@ -40,7 +39,6 @@ namespace CRM_API.Controllers
 
                 var vehicles = await query.ToListAsync();
 
-                // Map to VehicleVM
                 var vehicleVMs = vehicles.Select(v => new VehicleVM
                 {
                     Id = v.Id,
@@ -60,14 +58,15 @@ namespace CRM_API.Controllers
                     DailyRate = v.DailyRate,
                     WeeklyRate = v.WeeklyRate,
                     MonthlyRate = v.MonthlyRate,
-                    Status = "Available", // You need to add Status property to Vehicle entity
                     IsActive = v.IsActive,
                     IsAvailable = v.IsAvailable,
                     CreatedAt = v.CreatedAt,
                     UpdatedAt = v.UpdatedAt,
                     LastServiceDate = v.LastServiceDate,
                     NextServiceDate = v.NextServiceDate,
-                    Notes = v.Notes
+                    Notes = v.Notes,
+                    // Calculate Status based on IsActive and IsAvailable
+                    Status = CalculateStatus(v.IsActive, v.IsAvailable)
                 }).ToList();
 
                 return Ok(vehicleVMs);
@@ -78,6 +77,13 @@ namespace CRM_API.Controllers
             }
         }
 
+        // Helper method to calculate status
+        private string CalculateStatus(bool isActive, bool isAvailable)
+        {
+            if (!isActive) return "Inactive";
+            if (!isAvailable) return "Rented";
+            return "Available";
+        }
         // GET: api/vehicles/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<VehicleVM>> Get(int id)
@@ -90,7 +96,6 @@ namespace CRM_API.Controllers
                     return NotFound(new { message = $"Vehicle with ID {id} not found" });
                 }
 
-                // Map to VehicleVM
                 var vehicleVM = new VehicleVM
                 {
                     Id = vehicle.Id,
@@ -110,14 +115,15 @@ namespace CRM_API.Controllers
                     DailyRate = vehicle.DailyRate,
                     WeeklyRate = vehicle.WeeklyRate,
                     MonthlyRate = vehicle.MonthlyRate,
-                    Status = "Available", // You need to add Status property to Vehicle entity
                     IsActive = vehicle.IsActive,
                     IsAvailable = vehicle.IsAvailable,
                     CreatedAt = vehicle.CreatedAt,
                     UpdatedAt = vehicle.UpdatedAt,
                     LastServiceDate = vehicle.LastServiceDate,
                     NextServiceDate = vehicle.NextServiceDate,
-                    Notes = vehicle.Notes
+                    Notes = vehicle.Notes,
+                    // Calculate Status
+                    Status = CalculateStatus(vehicle.IsActive, vehicle.IsAvailable)
                 };
 
                 return Ok(vehicleVM);

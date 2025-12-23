@@ -198,11 +198,14 @@ namespace Car_Rental_Management_System.Forms
             else
                 cmbFuelType.SelectedIndex = 0;
 
-            // Status
-            if (!string.IsNullOrEmpty(_vehicleToEdit.Status))
-                cmbStatus.SelectedItem = _vehicleToEdit.Status;
-            else
-                cmbStatus.SelectedItem = _vehicleToEdit.IsActive ? "Available" : "Inactive";
+            // Determine Status based on IsActive and IsAvailable
+            string status = "Available";
+            if (!_vehicleToEdit.IsActive)
+                status = "Inactive";
+            else if (!_vehicleToEdit.IsAvailable)
+                status = "Rented";
+
+            cmbStatus.SelectedItem = status;
 
             // Additional Details
             nurSeats.Value = Math.Max(nurSeats.Minimum, Math.Min(nurSeats.Maximum, _vehicleToEdit.Seats));
@@ -228,9 +231,37 @@ namespace Car_Rental_Management_System.Forms
 
             string selectedStatus = cmbStatus.SelectedItem?.ToString() ?? "Available";
 
-            // Determine IsActive based on status
-            bool isActive = !(selectedStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase) ||
-                             selectedStatus.Equals("Maintenance", StringComparison.OrdinalIgnoreCase));
+            // Determine IsActive and IsAvailable based on status
+            bool isActive = true;
+            bool isAvailable = true;
+
+            switch (selectedStatus.ToLower())
+            {
+                case "available":
+                    isActive = true;
+                    isAvailable = true;
+                    break;
+                case "rented":
+                    isActive = true;
+                    isAvailable = false;
+                    break;
+                case "maintenance":
+                    isActive = false;
+                    isAvailable = false;
+                    break;
+                case "inactive":
+                    isActive = false;
+                    isAvailable = false;
+                    break;
+                case "reserved":
+                    isActive = true;
+                    isAvailable = false;
+                    break;
+                default:
+                    isActive = true;
+                    isAvailable = true;
+                    break;
+            }
 
             return new VehicleVM
             {
@@ -251,13 +282,12 @@ namespace Car_Rental_Management_System.Forms
                 DailyRate = nurDailyRate.Value,
                 WeeklyRate = nurWeeklyRate.Value,
                 MonthlyRate = nurMonthlyRate.Value,
-                Status = selectedStatus,
                 IsActive = isActive,
-                IsAvailable = selectedStatus.Equals("Available", StringComparison.OrdinalIgnoreCase),
-                CreatedAt = _vehicleToEdit.CreatedAt
+                IsAvailable = isAvailable,
+                CreatedAt = _vehicleToEdit.CreatedAt,
+                Status = selectedStatus
             };
         }
-
         private bool ValidateForm()
         {
             _validationInProgress = true;

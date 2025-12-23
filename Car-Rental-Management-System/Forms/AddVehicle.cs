@@ -167,11 +167,38 @@ namespace Car_Rental_Management_System.Forms
 
             string selectedStatus = cmbStatus.SelectedItem?.ToString() ?? "Available";
 
-            // Determine IsActive based on status
-            bool isActive = !(selectedStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase) ||
-                             selectedStatus.Equals("Maintenance", StringComparison.OrdinalIgnoreCase));
+            // Determine IsActive and IsAvailable based on status
+            bool isActive = true;
+            bool isAvailable = true;
 
-            // Create vehicle with ALL fields initialized
+            switch (selectedStatus.ToLower())
+            {
+                case "available":
+                    isActive = true;
+                    isAvailable = true;
+                    break;
+                case "rented":
+                    isActive = true;
+                    isAvailable = false;
+                    break;
+                case "maintenance":
+                    isActive = false;
+                    isAvailable = false;
+                    break;
+                case "inactive":
+                    isActive = false;
+                    isAvailable = false;
+                    break;
+                case "reserved":
+                    isActive = true;
+                    isAvailable = false;
+                    break;
+                default:
+                    isActive = true;
+                    isAvailable = true;
+                    break;
+            }
+
             var vehicle = new VehicleVM
             {
                 // Basic Information
@@ -193,25 +220,21 @@ namespace Car_Rental_Management_System.Forms
                 DailyRate = nurDailyRate.Value,
                 WeeklyRate = nurWeeklyRate.Value,
                 MonthlyRate = nurMonthlyRate.Value,
-                IsAvailable = selectedStatus.Equals("Available", StringComparison.OrdinalIgnoreCase),
+                IsAvailable = isAvailable,
                 IsActive = isActive,
 
                 // Additional Info
                 VIN = string.IsNullOrWhiteSpace(txtVIN.Text) ? null : txtVIN.Text.Trim(),
                 EngineNumber = string.IsNullOrWhiteSpace(txtEngineNumber.Text) ? null : txtEngineNumber.Text.Trim(),
-                LastServiceDate = DateTime.Now, // Set to current date
-                NextServiceDate = DateTime.Now.AddMonths(6), // Set 6 months from now
+                LastServiceDate = DateTime.Now,
+                NextServiceDate = DateTime.Now.AddMonths(6),
                 Notes = "New vehicle added via system",
 
                 // System
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                Status = selectedStatus
+                Status = selectedStatus // This is calculated property, but we send it for consistency
             };
-
-            // DEBUG: Show what we're sending
-            Console.WriteLine("=== Vehicle Data Being Sent ===");
-            Console.WriteLine(JsonConvert.SerializeObject(vehicle, Formatting.Indented));
 
             return vehicle;
         }

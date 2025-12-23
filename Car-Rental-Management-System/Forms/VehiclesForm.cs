@@ -92,6 +92,7 @@ namespace Car_Rental_Management_System.Forms
 
         private void SetupDataGridView()
         {
+
             dgvVehicles.AutoGenerateColumns = false;
             dgvVehicles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvVehicles.MultiSelect = false;
@@ -101,7 +102,6 @@ namespace Car_Rental_Management_System.Forms
 
             dgvVehicles.Columns.Clear();
 
-            // Add columns
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 Name = "colId",
@@ -114,9 +114,9 @@ namespace Car_Rental_Management_System.Forms
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 Name = "colPlateNumber",
-                HeaderText = "Plate No",
+                HeaderText = "Plate Number",
                 DataPropertyName = "PlateNumber",
-                Width = 100
+                Width = 120
             });
 
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
@@ -140,15 +140,27 @@ namespace Car_Rental_Management_System.Forms
                 Name = "colYear",
                 HeaderText = "Year",
                 DataPropertyName = "Year",
-                Width = 70
+                Width = 70,
+                DefaultCellStyle = new DataGridViewCellStyle()
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleCenter
+                }
             });
 
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 Name = "colType",
-                HeaderText = "Type",
+                HeaderText = "Vehicle Type",
                 DataPropertyName = "VehicleType",
-                Width = 80
+                Width = 100
+            });
+
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "colFuelType",
+                HeaderText = "Fuel Type",
+                DataPropertyName = "FuelType",
+                Width = 100
             });
 
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
@@ -161,21 +173,44 @@ namespace Car_Rental_Management_System.Forms
 
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
             {
+                Name = "colTransmission",
+                HeaderText = "Transmission",
+                DataPropertyName = "Transmission",
+                Width = 100
+            });
+
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
+            {
                 Name = "colDailyRate",
                 HeaderText = "Daily Rate",
                 DataPropertyName = "DailyRate",
-                Width = 90,
+                Width = 100,
                 DefaultCellStyle = new DataGridViewCellStyle()
                 {
-                    Format = "C2"
+                    Format = "ETB #,##0.00",
+                    Alignment = DataGridViewContentAlignment.MiddleRight
                 }
             });
 
-            // Status column
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "colCreatedAt",
+                HeaderText = "Created Date",
+                DataPropertyName = "CreatedAt",
+                Width = 120,
+                DefaultCellStyle = new DataGridViewCellStyle()
+                {
+                    Format = "yyyy-MM-dd",
+                    Alignment = DataGridViewContentAlignment.MiddleCenter
+                }
+            });
+
+            // FIX: Added DataPropertyName = "Status" to bind to the Status property
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
             {
                 Name = "colStatus",
                 HeaderText = "Status",
+                DataPropertyName = "Status", // This is the fix - binds to Status property
                 Width = 100,
                 DefaultCellStyle = new DataGridViewCellStyle()
                 {
@@ -184,19 +219,6 @@ namespace Car_Rental_Management_System.Forms
                 }
             });
 
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn()
-            {
-                Name = "colCreatedAt",
-                HeaderText = "Created",
-                DataPropertyName = "CreatedAt",
-                Width = 120,
-                DefaultCellStyle = new DataGridViewCellStyle()
-                {
-                    Format = "yyyy-MM-dd"
-                }
-            });
-
-            // Add DataError handler
             dgvVehicles.DataError += (sender, e) =>
             {
                 if (e.Exception is FormatException)
@@ -205,7 +227,6 @@ namespace Car_Rental_Management_System.Forms
                 }
             };
         }
-
         private async Task LoadVehiclesAsync()
         {
             try
@@ -247,6 +268,10 @@ namespace Car_Rental_Management_System.Forms
                     {
                         dgvVehicles.Columns["IsAvailable"].Visible = false;
                     }
+                    if (dgvVehicles.Columns.Contains("Status"))
+                    {
+                        dgvVehicles.Columns["Status"].Visible = false; // Hide auto-generated Status column
+                    }
 
                     // Format status columns
                     FormatStatusColumns();
@@ -273,7 +298,6 @@ namespace Car_Rental_Management_System.Forms
                 Cursor = Cursors.Default;
             }
         }
-
         private void FormatStatusColumns()
         {
             if (dgvVehicles.Columns["colStatus"] != null && dgvVehicles.Rows.Count > 0)
@@ -282,8 +306,8 @@ namespace Car_Rental_Management_System.Forms
                 {
                     if (row.DataBoundItem is VehicleVM vehicle)
                     {
+                        // Get the actual status from the bound item
                         string status = vehicle.Status ?? (vehicle.IsActive ? "Active" : "Inactive");
-                        row.Cells["colStatus"].Value = status;
 
                         // Apply color coding
                         switch (status.ToLower())
@@ -519,6 +543,7 @@ namespace Car_Rental_Management_System.Forms
 
         private void dgvVehicles_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+       
             // Format the status column
             if (dgvVehicles.Columns[e.ColumnIndex].Name == "colStatus" &&
                 e.RowIndex >= 0 &&
@@ -556,7 +581,6 @@ namespace Car_Rental_Management_System.Forms
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
         }
-
         private async void btnEdit_Click(object sender, EventArgs e)
         {
             if (dgvVehicles.SelectedRows.Count == 0)
