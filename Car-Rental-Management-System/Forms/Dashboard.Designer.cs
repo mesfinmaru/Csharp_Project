@@ -80,7 +80,6 @@
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(395, 973);
             panelMenu.TabIndex = 0;
-            panelMenu.Paint += panelMenu_Paint;
             // 
             // btnUsersMgmt
             // 
@@ -314,7 +313,6 @@
             lblWelcome.TabIndex = 3;
             lblWelcome.Text = "Mr. Mextenserst (Admin)";
             lblWelcome.TextAlign = ContentAlignment.MiddleCenter;
-            lblWelcome.Click += lblWelcome_Click;
             // 
             // pictureBoxStaff
             // 
@@ -340,7 +338,6 @@
             panelTitleBar.Name = "panelTitleBar";
             panelTitleBar.Size = new Size(1292, 125);
             panelTitleBar.TabIndex = 1;
-            panelTitleBar.Paint += panelTitleBar_Paint;
             // 
             // panel2
             // 
@@ -442,7 +439,6 @@
             panelDesktop.Name = "panelDesktop";
             panelDesktop.Size = new Size(1292, 848);
             panelDesktop.TabIndex = 2;
-            panelDesktop.Paint += panelDesktop_Paint_1;
             // 
             // fileSystemWatcher1
             // 
@@ -461,7 +457,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 2, 4, 2);
             Name = "Dashboard";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.WindowsDefaultBounds;
             Text = "Dashboard";
             WindowState = FormWindowState.Maximized;
             Load += Dashboard_Load;

@@ -97,7 +97,8 @@ namespace Car_Rental_Management_System
 
             // Disable controls during login
             btnLogin.Enabled = false;
-            lblStatus.Text = "Logging in...";
+            btnLogin.Text = "Login";
+            lblStatus.Text = "Please wait...";
 
             try
             {

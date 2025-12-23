@@ -119,6 +119,7 @@
             formPanel.Name = "formPanel";
             formPanel.Size = new Size(684, 652);
             formPanel.TabIndex = 1;
+            formPanel.Paint += formPanel_Paint;
             // 
             // ButtonsPanel
             // 

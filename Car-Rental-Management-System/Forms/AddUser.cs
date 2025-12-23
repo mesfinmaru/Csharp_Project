@@ -16,7 +16,7 @@ namespace Car_Rental_Management_System.Forms
         private bool _adminExists = false;
 
 
-     
+
         public AddUser(bool adminExists = false)
         {
             try
@@ -59,12 +59,12 @@ namespace Car_Rental_Management_System.Forms
                 if (_adminExists)
                 {
                     cmbRole.Items.Add("Staff");
-                   
+
                 }
                 else
                 {
                     cmbRole.Items.AddRange(new object[] { "Staff", "Admin" });
-                  
+
                 }
 
                 cmbRole.SelectedIndex = 0;
@@ -237,7 +237,7 @@ namespace Car_Rental_Management_System.Forms
         {
             try
             {
-                control.BackColor = Color.FromArgb(192,0,0);
+                control.BackColor = Color.FromArgb(192, 0, 0);
                 control.Focus();
             }
             catch { }
@@ -405,6 +405,11 @@ namespace Car_Rental_Management_System.Forms
         }
 
         private void txtFullName_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void formPanel_Paint(object sender, PaintEventArgs e)
         {
 
         }

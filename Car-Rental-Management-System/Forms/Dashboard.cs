@@ -31,6 +31,10 @@ namespace Car_Rental_Management_System
         private Color defaultButtonText = Color.White;
         private Color defaultTitleBarColor;
 
+        // For draggable form
+        private bool dragging = false;
+        private Point dragStartPoint;
+
 
 
         public Dashboard(ApiClient apiClient, object apiClient1)
@@ -68,9 +72,38 @@ namespace Car_Rental_Management_System
         {
             defaultTitleBarColor = panelTitleBar.BackColor;
 
+            // Set up draggable functionality for panel2
+            panel2.MouseDown += Panel2_MouseDown;
+            panel2.MouseMove += Panel2_MouseMove;
+            panel2.MouseUp += Panel2_MouseUp;
+
             // Open home by default
             OpenChildForm(new Home());
             ActivateButton(btnDashboard);
+        }
+
+        // Draggable functionality for panel2
+        private void Panel2_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                dragging = true;
+                dragStartPoint = e.Location;
+            }
+        }
+
+        private void Panel2_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point screenPoint = PointToScreen(e.Location);
+                Location = new Point(screenPoint.X - dragStartPoint.X, screenPoint.Y - dragStartPoint.Y);
+            }
+        }
+
+        private void Panel2_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
         }
 
 
@@ -133,7 +166,7 @@ namespace Car_Rental_Management_System
 
         private void btnCustomers_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CustomersForm());
+            OpenChildForm(new CustomersForm(_apiClient));
             ActivateButton(btnCustomers);
         }
 
@@ -302,7 +335,7 @@ namespace Car_Rental_Management_System
 
         private void BtnUsersMgmt_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void panelMenu_Paint(object sender, PaintEventArgs e)
@@ -330,6 +363,10 @@ namespace Car_Rental_Management_System
             OpenChildForm(new UsersForm());
             ActivateButton(btnUsersMgmt);
         }
+
+        private void panel2_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
-

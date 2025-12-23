@@ -1,4 +1,5 @@
-﻿using CRMdataLayer.Entities;
+﻿using CRMdataLayer;
+using CRMdataLayer.Entities;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 
@@ -50,7 +51,26 @@ namespace CRMdataLayer
                 entity.HasIndex(e => e.Username).IsUnique();
 
 
-            }); 
+            });
+
+            // Customer configuration
+            modelBuilder.Entity<Customers>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.FullName).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.Phone).IsRequired().HasMaxLength(20);
+                entity.Property(e => e.Address).HasMaxLength(200);
+                entity.Property(e => e.City).HasMaxLength(100);
+                entity.Property(e => e.Country).HasMaxLength(50);
+                entity.Property(e => e.LicenseNumber).HasMaxLength(20);
+                entity.Property(e => e.LicenseType).HasMaxLength(50);
+
+                // Add indexes
+                entity.HasIndex(e => e.Phone).IsUnique();
+                entity.HasIndex(e => e.Email);
+                entity.HasIndex(e => e.IsActive);
+            });
         }
   
     }
