@@ -1149,5 +1149,146 @@ namespace Car_Rental_Management_System
                 throw new HttpRequestException($"Failed to load vehicle maintenance history: {ex.Message}");
             }
         }
+            // ==============================================
+            // REPORT METHODS
+            // ==============================================
+public async Task<RentalReportVM> GetRentalReportAsync(DateTime? startDate = null, DateTime? endDate = null, string? status = null)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var url = $"api/reports/rentals";
+                var queryParams = new List<string>();
+
+                if (startDate.HasValue)
+                    queryParams.Add($"startDate={startDate.Value:yyyy-MM-dd}");
+
+                if (endDate.HasValue)
+                    queryParams.Add($"endDate={endDate.Value:yyyy-MM-dd}");
+
+                if (!string.IsNullOrWhiteSpace(status))
+                    queryParams.Add($"status={Uri.EscapeDataString(status)}");
+
+                if (queryParams.Count > 0)
+                    url += "?" + string.Join("&", queryParams);
+
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<RentalReportVM>(content);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to generate rental report: {ex.Message}");
+            }
+        }
+
+        public async Task<MaintenanceReportVM> GetMaintenanceReportAsync(DateTime? startDate = null, DateTime? endDate = null, string? status = null)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var url = $"api/reports/maintenance";
+                var queryParams = new List<string>();
+
+                if (startDate.HasValue)
+                    queryParams.Add($"startDate={startDate.Value:yyyy-MM-dd}");
+
+                if (endDate.HasValue)
+                    queryParams.Add($"endDate={endDate.Value:yyyy-MM-dd}");
+
+                if (!string.IsNullOrWhiteSpace(status))
+                    queryParams.Add($"status={Uri.EscapeDataString(status)}");
+
+                if (queryParams.Count > 0)
+                    url += "?" + string.Join("&", queryParams);
+
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<MaintenanceReportVM>(content);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to generate maintenance report: {ex.Message}");
+            }
+        }
+
+        public async Task<VehicleReportVM> GetVehicleReportAsync()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var response = await _httpClient.GetAsync("api/reports/vehicles");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<VehicleReportVM>(content);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to generate vehicle report: {ex.Message}");
+            }
+        }
+
+        public async Task<FinancialReportVM> GetFinancialReportAsync(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var url = $"api/reports/financial?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}";
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<FinancialReportVM>(content);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to generate financial report: {ex.Message}");
+            }
+        }
     }
-}
+    }

@@ -27,7 +27,7 @@ namespace Car_Rental_Management_System.Forms
             ApplyTheme();
             SetupDataGridView();
             InitializeDropdowns();
-            SetupUIButtons();
+            
             SetFormState(false);
         }
 
@@ -38,40 +38,8 @@ namespace Car_Rental_Management_System.Forms
             _ = LoadVehiclesAsync();
         }
 
-        private void SetupUIButtons()
-        {
-            // Add New Button
-            btnNew = new Button
-            {
-                Text = "New Maintenance",
-                BackColor = Color.FromArgb(124, 77, 255),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = { BorderSize = 0 },
-                Size = new Size(180, 45),
-                Location = new Point(20, 25),
-                Cursor = Cursors.Hand,
-                Font = new Font("Trebuchet MS", 9F)
-            };
-            btnNew.Click += btnNew_Click;
-            panelHeader.Controls.Add(btnNew);
-
-            // Cancel Button
-            btnCancel = new Button
-            {
-                Text = "Cancel",
-                BackColor = Color.FromArgb(108, 117, 125),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                FlatAppearance = { BorderSize = 0 },
-                Size = new Size(120, 45),
-                Location = new Point(210, 25),
-                Visible = false,
-                Font = new Font("Trebuchet MS", 9F)
-            };
-            btnCancel.Click += btnCancel_Click;
-            panelHeader.Controls.Add(btnCancel);
-        }
+      
+        
 
         private void ApplyTheme()
         {
@@ -93,10 +61,6 @@ namespace Car_Rental_Management_System.Forms
             txtSearch.ForeColor = lightText;
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
 
-            // Status Filter
-            cmbStatusFilter.BackColor = Color.FromArgb(45, 45, 60);
-            cmbStatusFilter.ForeColor = lightText;
-            cmbStatusFilter.FlatStyle = FlatStyle.Flat;
 
             // Buttons
             btnEdit.BackColor = secondary;
@@ -309,15 +273,7 @@ namespace Car_Rental_Management_System.Forms
         private void InitializeDropdowns()
         {
             // Status Filter
-            cmbStatusFilter.Items.Clear();
-            cmbStatusFilter.Items.AddRange(new string[] {
-                "All Status",
-                "Scheduled",
-                "In Progress",
-                "Completed",
-                "Cancelled"
-            });
-            cmbStatusFilter.SelectedIndex = 0;
+
 
             // Maintenance Type
             cmbMaintenanceType.Items.Clear();
@@ -399,13 +355,6 @@ namespace Car_Rental_Management_System.Forms
 
                 _maintenancesList = await _apiClient.GetMaintenancesAsync(txtSearch.Text.Trim());
                 _filteredList = new List<MaintenanceVM>(_maintenancesList);
-
-                // Apply status filter
-                if (cmbStatusFilter.SelectedIndex > 0)
-                {
-                    string selectedStatus = cmbStatusFilter.Text;
-                    _filteredList = _filteredList.Where(m => m.Status == selectedStatus).ToList();
-                }
 
                 // Set the data source
                 dgvMaintenance.DataSource = null;
@@ -492,7 +441,7 @@ namespace Car_Rental_Management_System.Forms
             int overdueCount = _maintenancesList.Count(m => m.IsOverdue);
             int cancelledCount = _maintenancesList.Count(m => m.Status == "Cancelled");
 
-            if (string.IsNullOrEmpty(txtSearch.Text.Trim()) && cmbStatusFilter.SelectedIndex == 0)
+            if (string.IsNullOrEmpty(txtSearch.Text.Trim()))
             {
                 lblStatus.Text = $"{totalCount} maintenance(s) - {scheduledCount} scheduled, {inProgressCount} in progress, {completedCount} completed, {cancelledCount} cancelled, {overdueCount} overdue";
             }
@@ -504,10 +453,7 @@ namespace Car_Rental_Management_System.Forms
 
         private void SetFormState(bool enable)
         {
-            // Show/hide form controls based on mode
-            panelInput.Visible = enable;
-            btnNew.Visible = !enable;
-            btnCancel.Visible = enable;
+           
 
             // Enable/disable form controls
             cmbVehicle.Enabled = enable;
@@ -529,7 +475,7 @@ namespace Car_Rental_Management_System.Forms
             btnDelete.Enabled = !enable && dgvMaintenance.SelectedRows.Count > 0;
             btnComplete.Enabled = !enable && dgvMaintenance.SelectedRows.Count > 0;
             txtSearch.Enabled = !enable;
-            cmbStatusFilter.Enabled = !enable;
+
 
             // Update form title
             if (enable)
@@ -557,7 +503,7 @@ namespace Car_Rental_Management_System.Forms
         private void ClearForm()
         {
             cmbVehicle.SelectedIndex = 0;
-            txtCurrentMilage.Text = "";
+            txtCurrentMilage.Text = "0";
             cmbMaintenanceType.SelectedIndex = -1;
             cmbStatus.SelectedIndex = 0; // Default to "Scheduled"
             dtpDate.Value = DateTime.Today;
@@ -602,7 +548,7 @@ namespace Car_Rental_Management_System.Forms
             txtProvider.Text = maintenance.ServiceProvider;
             txtContact.Text = maintenance.ServiceContact;
             rtbDescription.Text = maintenance.Description;
-           
+
 
             _currentMaintenanceId = maintenance.Id;
             _isEditMode = true;
@@ -622,7 +568,7 @@ namespace Car_Rental_Management_System.Forms
                 Cost = decimal.TryParse(txtCost.Text, out decimal cost) ? cost : 0,
                 ServiceProvider = txtProvider.Text,
                 ServiceContact = txtContact.Text,
-               
+
                 IsActive = true,
                 CreatedAt = DateTime.Now,
                 NextMaintenanceDate = dtpDate.Value.AddMonths(6),
@@ -642,7 +588,7 @@ namespace Car_Rental_Management_System.Forms
                     maintenance.VehiclePlateNumber = vehicle.PlateNumber;
                     maintenance.VehicleMake = vehicle.Make;
                     maintenance.VehicleModel = vehicle.Model;
-                
+
                 }
             }
 
@@ -716,203 +662,23 @@ namespace Car_Rental_Management_System.Forms
             ClearForm();
         }
 
-        private async void btnSave_Click(object sender, EventArgs e)
-        {
-            if (!ValidateForm() || _apiClient == null) return;
-
-            try
-            {
-                Cursor = Cursors.WaitCursor;
-                var maintenance = GetMaintenanceFromForm();
-
-                if (_isEditMode)
-                {
-                    await _apiClient.UpdateMaintenanceAsync(maintenance);
-                    ShowSuccess("Maintenance updated successfully!");
-                }
-                else
-                {
-                    await _apiClient.CreateMaintenanceAsync(maintenance);
-                    ShowSuccess("Maintenance created successfully!");
-                }
-
-                SetFormState(false);
-                ClearForm();
-                await LoadMaintenancesAsync();
-            }
-            catch (HttpRequestException ex)
-            {
-                ShowError($"Cannot connect to server: {CleanErrorMessage(ex.Message)}");
-            }
-            catch (Exception ex)
-            {
-                ShowError($"Failed to save maintenance: {CleanErrorMessage(ex.Message)}");
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-            }
-        }
+       
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (dgvMaintenance.SelectedRows.Count == 0) return;
-
-            var selectedRow = dgvMaintenance.SelectedRows[0];
-            var maintenance = selectedRow.DataBoundItem as MaintenanceVM;
-
-            if (maintenance != null)
-            {
-                LoadMaintenanceToForm(maintenance);
-                SetFormState(true);
-            }
+            
         }
 
-        private async void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (dgvMaintenance.SelectedRows.Count == 0) return;
-
-            var selectedRow = dgvMaintenance.SelectedRows[0];
-            var id = selectedRow.Cells["colId"].Value;
-            var vehicle = selectedRow.Cells["colVehicle"].Value?.ToString() ?? "Unknown";
-            var status = selectedRow.Cells["colStatus"].Value?.ToString() ?? "Unknown";
-
-            if (id == null || _apiClient == null) return;
-
-            if (status == "Completed")
-            {
-                ShowError("Cannot delete completed maintenances. They are kept for records.");
-                return;
-            }
-
-            var result = MessageBox.Show(
-                $"Are you sure you want to delete maintenance for '{vehicle}'?\n\n" +
-                $"Status: {status}\n" +
-                $"This action cannot be undone!",
-                "Confirm Delete",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning,
-                MessageBoxDefaultButton.Button2);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    lblStatus.Text = "Deleting...";
-                    await _apiClient.DeleteMaintenanceAsync(Convert.ToInt32(id));
-
-                    lblStatus.Text = "Maintenance deleted!";
-                    ShowSuccess($"Maintenance has been deleted.");
-
-                    await LoadMaintenancesAsync();
-                }
-                catch (Exception ex)
-                {
-                    lblStatus.Text = "Delete failed";
-                    ShowError($"Failed to delete maintenance: {CleanErrorMessage(ex.Message)}");
-                    await LoadMaintenancesAsync();
-                }
-            }
-        }
-
-        private async void btnComplete_Click(object sender, EventArgs e)
-        {
-            if (dgvMaintenance.SelectedRows.Count == 0 || _apiClient == null) return;
-
-            var selectedRow = dgvMaintenance.SelectedRows[0];
-            var id = selectedRow.Cells["colId"].Value;
-            var maintenance = selectedRow.DataBoundItem as MaintenanceVM;
-
-            if (id == null || maintenance == null) return;
-
-            if (maintenance.Status == "Completed")
-            {
-                ShowInfo("Maintenance is already completed.");
-                return;
-            }
-
-            var result = MessageBox.Show(
-                $"Mark maintenance for '{maintenance.VehicleInfo}' as completed?\n\n" +
-                $"This will update the vehicle status to 'Available' if it was 'In Maintenance'.",
-                "Complete Maintenance",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    lblStatus.Text = "Completing maintenance...";
-                    maintenance.Status = "Completed";
-                    maintenance.CompletionDate = DateTime.Today;
-                    await _apiClient.UpdateMaintenanceAsync(maintenance);
-
-                    ShowSuccess("Maintenance marked as completed!");
-                    await LoadMaintenancesAsync();
-                }
-                catch (Exception ex)
-                {
-                    ShowError($"Failed to complete maintenance: {CleanErrorMessage(ex.Message)}");
-                }
-            }
-        }
-
-        private async void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            // Add delay to prevent too many API calls
-            await Task.Delay(500);
-            await LoadMaintenancesAsync();
-        }
-
-        private async void cmbStatusFilter_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            await LoadMaintenancesAsync();
-        }
+      
 
         private void cmbVehicle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbVehicle.SelectedIndex > 0 && _vehiclesList != null && _maintenancesList != null)
-            {
-                string selectedText = cmbVehicle.Text;
-                var plateNumber = selectedText.Split('-')[0].Trim();
-
-                var vehicle = _vehiclesList.FirstOrDefault(v => v.PlateNumber == plateNumber);
-                if (vehicle != null)
-                {
-                    // Set current mileage from vehicle
-                   
-
-                    // Find last maintenance for this vehicle
-                    var lastMaintenance = _maintenancesList
-                        .Where(m => m.VehiclePlateNumber == plateNumber && m.Status == "Completed")
-                        .OrderByDescending(m => m.CompletionDate)
-                        .FirstOrDefault();
-
-                    if (lastMaintenance != null)
-                    {
-                        lblLastService.Text = $"{lastMaintenance.CompletionDate:dd/MM/yyyy}";
-                        lblLastService.ForeColor = Color.FromArgb(46, 204, 113);
-                    }
-                    else
-                    {
-                        lblLastService.Text = "Never";
-                        lblLastService.ForeColor = Color.FromArgb(255, 98, 70);
-                    }
-                }
-            }
-            else
-            {
-                lblLastService.Text = "N/A";
-                lblLastService.ForeColor = Color.FromArgb(230, 230, 235);
-            }
+           
         }
 
         private void dtpDate_ValueChanged(object sender, EventArgs e)
         {
-            if (dtpExpectedComplete.Value < dtpDate.Value)
-            {
-                dtpExpectedComplete.Value = dtpDate.Value.AddDays(1);
-            }
+            
         }
 
         private void dgvMaintenance_SelectionChanged(object sender, EventArgs e)
@@ -1046,5 +812,265 @@ namespace Car_Rental_Management_System.Forms
         private void dgvMaintenance_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
 
         #endregion
+
+        private void lblFormTitle_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnSave_Click_1(object sender, EventArgs e)
+        {
+            if (!ValidateForm() || _apiClient == null) return;
+
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                var maintenance = GetMaintenanceFromForm();
+
+                if (_isEditMode)
+                {
+                    await _apiClient.UpdateMaintenanceAsync(maintenance);
+                    ShowSuccess("Maintenance updated successfully!");
+                }
+                else
+                {
+                    await _apiClient.CreateMaintenanceAsync(maintenance);
+                    ShowSuccess("Maintenance created successfully!");
+                }
+
+                SetFormState(false);
+                ClearForm();
+                await LoadMaintenancesAsync();
+            }
+            catch (HttpRequestException ex)
+            {
+                ShowError($"Cannot connect to server: {CleanErrorMessage(ex.Message)}");
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Failed to save maintenance: {CleanErrorMessage(ex.Message)}");
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+
+        private void btnEdit_Click_1(object sender, EventArgs e)
+        {
+            if (dgvMaintenance.SelectedRows.Count == 0) return;
+
+            var selectedRow = dgvMaintenance.SelectedRows[0];
+            var maintenance = selectedRow.DataBoundItem as MaintenanceVM;
+
+            if (maintenance != null)
+            {
+                LoadMaintenanceToForm(maintenance);
+                SetFormState(true);
+            }
+        }
+
+        private async void btnDelete_Click_1(object sender, EventArgs e)
+        {
+            if (dgvMaintenance.SelectedRows.Count == 0) return;
+
+            var selectedRow = dgvMaintenance.SelectedRows[0];
+            var id = selectedRow.Cells["colId"].Value;
+            var vehicle = selectedRow.Cells["colVehicle"].Value?.ToString() ?? "Unknown";
+            var status = selectedRow.Cells["colStatus"].Value?.ToString() ?? "Unknown";
+
+            if (id == null || _apiClient == null) return;
+
+            if (status == "Completed")
+            {
+                ShowError("Cannot delete completed maintenances. They are kept for records.");
+                return;
+            }
+
+            var result = MessageBox.Show(
+                $"Are you sure you want to delete maintenance for '{vehicle}'?\n\n" +
+                $"Status: {status}\n" +
+                $"This action cannot be undone!",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    lblStatus.Text = "Deleting...";
+                    await _apiClient.DeleteMaintenanceAsync(Convert.ToInt32(id));
+
+                    lblStatus.Text = "Maintenance deleted!";
+                    ShowSuccess($"Maintenance has been deleted.");
+
+                    await LoadMaintenancesAsync();
+                }
+                catch (Exception ex)
+                {
+                    lblStatus.Text = "Delete failed";
+                    ShowError($"Failed to delete maintenance: {CleanErrorMessage(ex.Message)}");
+                    await LoadMaintenancesAsync();
+                }
+            }
+        }
+
+        private async void btnComplete_Click_1(object sender, EventArgs e)
+        {
+            if (dgvMaintenance.SelectedRows.Count == 0 || _apiClient == null) return;
+
+            var selectedRow = dgvMaintenance.SelectedRows[0];
+            var id = selectedRow.Cells["colId"].Value;
+            var maintenance = selectedRow.DataBoundItem as MaintenanceVM;
+
+            if (id == null || maintenance == null) return;
+
+            if (maintenance.Status == "Completed")
+            {
+                ShowInfo("Maintenance is already completed.");
+                return;
+            }
+
+            var result = MessageBox.Show(
+                $"Mark maintenance for '{maintenance.VehicleInfo}' as completed?\n\n" +
+                $"This will update the vehicle status to 'Available' if it was 'In Maintenance'.",
+                "Complete Maintenance",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    lblStatus.Text = "Completing maintenance...";
+                    maintenance.Status = "Completed";
+                    maintenance.CompletionDate = DateTime.Today;
+                    await _apiClient.UpdateMaintenanceAsync(maintenance);
+
+                    ShowSuccess("Maintenance marked as completed!");
+                    await LoadMaintenancesAsync();
+                }
+                catch (Exception ex)
+                {
+                    ShowError($"Failed to complete maintenance: {CleanErrorMessage(ex.Message)}");
+                }
+            }
+        }
+
+        private void dgvMaintenance_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private async void txtSearch_TextChanged_1(object sender, EventArgs e)
+        {
+
+            // Add delay to prevent too many API calls
+            await Task.Delay(500);
+            await LoadMaintenancesAsync();
+        }
+
+        private void cmbVehicle_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtCurrentMilage_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblLastService_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbMaintenanceType_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (cmbVehicle.SelectedIndex > 0 && _vehiclesList != null && _maintenancesList != null)
+            {
+                string selectedText = cmbVehicle.Text;
+                var plateNumber = selectedText.Split('-')[0].Trim();
+
+                var vehicle = _vehiclesList.FirstOrDefault(v => v.PlateNumber == plateNumber);
+                if (vehicle != null)
+                {
+                    // Set current mileage from vehicle
+
+
+                    // Find last maintenance for this vehicle
+                    var lastMaintenance = _maintenancesList
+                        .Where(m => m.VehiclePlateNumber == plateNumber && m.Status == "Completed")
+                        .OrderByDescending(m => m.CompletionDate)
+                        .FirstOrDefault();
+
+                    if (lastMaintenance != null)
+                    {
+                        lblLastService.Text = $"{lastMaintenance.CompletionDate:dd/MM/yyyy}";
+                        lblLastService.ForeColor = Color.FromArgb(46, 204, 113);
+                    }
+                    else
+                    {
+                        lblLastService.Text = "Never";
+                        lblLastService.ForeColor = Color.FromArgb(255, 98, 70);
+                    }
+                }
+            }
+            else
+            {
+                lblLastService.Text = "N/A";
+                lblLastService.ForeColor = Color.FromArgb(230, 230, 235);
+            }
+        }
+
+        private void dtpExpectedComplete_ValueChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpDate_ValueChanged_1(object sender, EventArgs e)
+        {
+            if (dtpExpectedComplete.Value < dtpDate.Value)
+            {
+                dtpExpectedComplete.Value = dtpDate.Value.AddDays(1);
+            }
+        }
+
+        private void txtCost_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtProvider_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtContact_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtLocation_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rtbDescription_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblStatus_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

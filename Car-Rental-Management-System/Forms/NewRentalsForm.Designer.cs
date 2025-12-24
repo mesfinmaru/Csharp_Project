@@ -46,9 +46,9 @@
             label1 = new Label();
             label4 = new Label();
             groupBox4 = new GroupBox();
+            txtDiscount = new TextBox();
             lblTotalAmount = new Label();
             label14 = new Label();
-            lblDiscount = new Label();
             label12 = new Label();
             lblSubtotal = new Label();
             label10 = new Label();
@@ -57,8 +57,9 @@
             lblDailyRate = new Label();
             label6 = new Label();
             groupBox5 = new GroupBox();
+            txtAmountPaid = new TextBox();
             textBox2 = new TextBox();
-            cmbTransmission = new ComboBox();
+            cmbPaymentMethod = new ComboBox();
             label11 = new Label();
             label15 = new Label();
             lblBalanceDue = new Label();
@@ -68,7 +69,6 @@
             btnCalculate = new Button();
             btnCancel = new Button();
             btnSaveRental = new Button();
-            lblAmountPaid = new TextBox();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -258,9 +258,9 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(txtDiscount);
             groupBox4.Controls.Add(lblTotalAmount);
             groupBox4.Controls.Add(label14);
-            groupBox4.Controls.Add(lblDiscount);
             groupBox4.Controls.Add(label12);
             groupBox4.Controls.Add(lblSubtotal);
             groupBox4.Controls.Add(label10);
@@ -274,6 +274,14 @@
             groupBox4.TabIndex = 19;
             groupBox4.TabStop = false;
             groupBox4.Text = "Pricing Details";
+            // 
+            // txtDiscount
+            // 
+            txtDiscount.Font = new Font("Trebuchet MS", 10.125F);
+            txtDiscount.Location = new Point(292, 219);
+            txtDiscount.Name = "txtDiscount";
+            txtDiscount.Size = new Size(423, 39);
+            txtDiscount.TabIndex = 41;
             // 
             // lblTotalAmount
             // 
@@ -295,17 +303,6 @@
             label14.Size = new Size(193, 35);
             label14.TabIndex = 23;
             label14.Text = "Total Amount :";
-            // 
-            // lblDiscount
-            // 
-            lblDiscount.AutoSize = true;
-            lblDiscount.Font = new Font("Trebuchet MS", 10.125F);
-            lblDiscount.Location = new Point(327, 219);
-            lblDiscount.Name = "lblDiscount";
-            lblDiscount.Size = new Size(62, 35);
-            lblDiscount.TabIndex = 22;
-            lblDiscount.Text = "N/A";
-            lblDiscount.Click += lblDiscount_Click;
             // 
             // label12
             // 
@@ -382,9 +379,9 @@
             // 
             // groupBox5
             // 
-            groupBox5.Controls.Add(lblAmountPaid);
+            groupBox5.Controls.Add(txtAmountPaid);
             groupBox5.Controls.Add(textBox2);
-            groupBox5.Controls.Add(cmbTransmission);
+            groupBox5.Controls.Add(cmbPaymentMethod);
             groupBox5.Controls.Add(label11);
             groupBox5.Controls.Add(label15);
             groupBox5.Controls.Add(lblBalanceDue);
@@ -397,6 +394,14 @@
             groupBox5.TabStop = false;
             groupBox5.Text = "Payment Information";
             // 
+            // txtAmountPaid
+            // 
+            txtAmountPaid.Font = new Font("Trebuchet MS", 10.125F);
+            txtAmountPaid.Location = new Point(292, 49);
+            txtAmountPaid.Name = "txtAmountPaid";
+            txtAmountPaid.Size = new Size(423, 39);
+            txtAmountPaid.TabIndex = 18;
+            // 
             // textBox2
             // 
             textBox2.Font = new Font("Trebuchet MS", 10.125F);
@@ -407,16 +412,16 @@
             textBox2.TabIndex = 40;
             textBox2.TextChanged += textBox2_TextChanged;
             // 
-            // cmbTransmission
+            // cmbPaymentMethod
             // 
-            cmbTransmission.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbTransmission.Font = new Font("Trebuchet MS", 10.125F);
-            cmbTransmission.FormattingEnabled = true;
-            cmbTransmission.Location = new Point(292, 158);
-            cmbTransmission.Name = "cmbTransmission";
-            cmbTransmission.Size = new Size(423, 43);
-            cmbTransmission.TabIndex = 39;
-            cmbTransmission.SelectedIndexChanged += cmbTransmission_SelectedIndexChanged;
+            cmbPaymentMethod.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbPaymentMethod.Font = new Font("Trebuchet MS", 10.125F);
+            cmbPaymentMethod.FormattingEnabled = true;
+            cmbPaymentMethod.Location = new Point(292, 158);
+            cmbPaymentMethod.Name = "cmbPaymentMethod";
+            cmbPaymentMethod.Size = new Size(423, 43);
+            cmbPaymentMethod.TabIndex = 39;
+            cmbPaymentMethod.SelectedIndexChanged += cmbTransmission_SelectedIndexChanged;
             // 
             // label11
             // 
@@ -510,14 +515,6 @@
             btnSaveRental.UseVisualStyleBackColor = true;
             btnSaveRental.Click += btnSaveRental_Click;
             // 
-            // lblAmountPaid
-            // 
-            lblAmountPaid.Font = new Font("Trebuchet MS", 10.125F);
-            lblAmountPaid.Location = new Point(292, 49);
-            lblAmountPaid.Name = "lblAmountPaid";
-            lblAmountPaid.Size = new Size(423, 39);
-            lblAmountPaid.TabIndex = 18;
-            // 
             // NewRentalsForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -573,7 +570,6 @@
         private GroupBox groupBox4;
         private Label lblTotalAmount;
         private Label label14;
-        private Label lblDiscount;
         private Label label12;
         private Label lblSubtotal;
         private Label label10;
@@ -588,11 +584,12 @@
         private Label label17;
         private Label label19;
         private TextBox textBox2;
-        private ComboBox cmbTransmission;
+        private ComboBox cmbPaymentMethod;
         private Panel panel2;
         private Button btnCalculate;
         private Button btnCancel;
         private Button btnSaveRental;
-        private TextBox lblAmountPaid;
+        private TextBox txtAmountPaid;
+        private TextBox txtDiscount;
     }
 }

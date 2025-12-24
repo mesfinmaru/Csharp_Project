@@ -97,8 +97,8 @@ namespace Car_Rental_Management_System.Forms
             dtpTo.ForeColor = Color.Black;
 
             // Style ComboBox
-            cmbTransmission.BackColor = Color.White;
-            cmbTransmission.ForeColor = Color.Black;
+            cmbPaymentMethod.BackColor = Color.White;
+            cmbPaymentMethod.ForeColor = Color.Black;
 
             // Style selection labels
             lblSelectedCustomer.ForeColor = Color.FromArgb(124, 77, 255);
@@ -119,9 +119,9 @@ namespace Car_Rental_Management_System.Forms
             dtpTo.Value = DateTime.Today.AddDays(1);
 
             // Initialize ComboBox
-            cmbTransmission.Items.Clear();
-            cmbTransmission.Items.AddRange(new string[] { "Automatic", "Manual", "Semi-Automatic" });
-            cmbTransmission.SelectedIndex = 0;
+            cmbPaymentMethod.Items.Clear();
+            cmbPaymentMethod.Items.AddRange(new string[] { "Cash", "Mobile", "Bank" });
+            cmbPaymentMethod.SelectedIndex = 0;
 
             // Initialize labels
             lblSelectedCustomer.Text = "Not selected";
@@ -129,14 +129,12 @@ namespace Car_Rental_Management_System.Forms
             lblDailyRate.Text = "ETB 0.00";
             lblRentalDays.Text = "1";
             lblSubtotal.Text = "ETB 0.00";
-            lblDiscount.Text = "ETB 0.00";
+            txtDiscount.Text = "ETB 0.00";
             lblTotalAmount.Text = "ETB 0.00";
-            lblAmountPaid.Text = "ETB 0.00";
+            txtAmountPaid.Text = "ETB 0.00";
             lblBalanceDue.Text = "ETB 0.00";
 
-            // Initialize textboxes
-            textBox1.Text = "0.00"; // Discount
-            textBox2.Text = "0.00"; // Amount paid
+          
 
             this.DialogResult = DialogResult.None;
         }
@@ -163,10 +161,10 @@ namespace Car_Rental_Management_System.Forms
 
                 // Calculate discount
                 decimal discount = 0;
-                if (decimal.TryParse(textBox1.Text, out decimal discountValue))
+                if (decimal.TryParse(txtDiscount.Text, out decimal discountValue))
                 {
                     discount = discountValue;
-                    lblDiscount.Text = $"ETB {discount:N2}";
+                    txtDiscount.Text = $"ETB {discount:N2}";
                 }
 
                 // Calculate total
@@ -176,10 +174,10 @@ namespace Car_Rental_Management_System.Forms
 
                 // Calculate amount paid and balance
                 decimal amountPaid = 0;
-                if (decimal.TryParse(textBox2.Text, out decimal paidValue))
+                if (decimal.TryParse(txtAmountPaid.Text, out decimal paidValue))
                 {
                     amountPaid = paidValue;
-                    lblAmountPaid.Text = $"ETB {amountPaid:N2}";
+                    txtAmountPaid.Text = $"ETB {amountPaid:N2}";
                 }
 
                 decimal balanceDue = totalAmount - amountPaid;
@@ -343,7 +341,7 @@ namespace Car_Rental_Management_System.Forms
             }
 
             // Validate discount
-            if (decimal.TryParse(textBox1.Text, out decimal discount))
+            if (decimal.TryParse(txtDiscount.Text, out decimal discount))
             {
                 if (discount < 0)
                 {
@@ -358,7 +356,7 @@ namespace Car_Rental_Management_System.Forms
             }
 
             // Validate amount paid
-            if (decimal.TryParse(textBox2.Text, out decimal amountPaid))
+            if (decimal.TryParse(txtDiscount.Text, out decimal amountPaid))
             {
                 if (amountPaid < 0)
                 {
@@ -396,8 +394,8 @@ namespace Car_Rental_Management_System.Forms
         private RentalVM GetRentalData()
         {
             // Parse values
-            decimal discount = decimal.TryParse(textBox1.Text, out decimal d) ? d : 0;
-            decimal amountPaid = decimal.TryParse(textBox2.Text, out decimal a) ? a : 0;
+            decimal discount = decimal.TryParse(txtDiscount.Text, out decimal d) ? d : 0;
+            decimal amountPaid = decimal.TryParse(txtAmountPaid.Text, out decimal a) ? a : 0;
 
             // Calculate values
             int rentalDays = (dtpTo.Value - dtpFrom.Value).Days;
@@ -419,7 +417,7 @@ namespace Car_Rental_Management_System.Forms
                 VehicleMake = _selectedVehicle.Make,
                 VehicleModel = _selectedVehicle.Model,
                 VehicleColor = _selectedVehicle.Color,
-                VehicleType = cmbTransmission.SelectedItem?.ToString() ?? _selectedVehicle.VehicleType,
+                VehicleType = cmbPaymentMethod.SelectedItem?.ToString() ?? _selectedVehicle.VehicleType,
                 StartDate = dtpFrom.Value,
                 EndDate = dtpTo.Value,
                 DailyRate = dailyRate,
@@ -517,9 +515,9 @@ namespace Car_Rental_Management_System.Forms
         private void lblDailyRate_Click(object sender, EventArgs e) { }
         private void lblRentalDays_Click(object sender, EventArgs e) { }
         private void lblSubtotal_Click(object sender, EventArgs e) { }
-        private void lblDiscount_Click(object sender, EventArgs e) { }
+        private void txtDiscount_Click(object sender, EventArgs e) { }
         private void lblTotalAmount_Click(object sender, EventArgs e) { }
-        private void lblAmountPaid_Click(object sender, EventArgs e) { }
+        private void txtAmountPaid_Click(object sender, EventArgs e) { }
         private void lblBalanceDue_Click(object sender, EventArgs e) { }
     }
 }

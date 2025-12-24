@@ -110,7 +110,7 @@ namespace Car_Rental_Management_System.Forms
 
             // Initialize ComboBox
             cmbTransmission.Items.Clear();
-            cmbTransmission.Items.AddRange(new string[] { "Automatic", "Manual", "Semi-Automatic" });
+            cmbTransmission.Items.AddRange(new string[] { "Cash", "Mobile", "Bank" });
 
             // Initialize labels
             lblRentalDays.Text = "1";

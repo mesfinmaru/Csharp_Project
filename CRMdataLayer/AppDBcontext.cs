@@ -24,7 +24,7 @@ namespace CRMdataLayer
             if (!optionsBuilder.IsConfigured)
             {
                 // This is for migrations only
-                optionsBuilder.UseSqlServer("Server =.; Database = CarRentalDB; user Id = sa; Password = 12345678; MultipleActiveResultSets = true; TrustServerCertificate = True; ");
+                optionsBuilder.UseSqlServer("Server =.; Database = CarRentalDB1; user Id = sa; Password = 12345678; MultipleActiveResultSets = true; TrustServerCertificate = True; ");
             }
         }
         // DbSet properties
@@ -134,8 +134,41 @@ namespace CRMdataLayer
                 entity.HasIndex(e => e.IsAvailable);
                 entity.HasIndex(e => e.Status);
             });
+            // In AppDBContext.cs
 
+
+            // Configure Maintenance entity
+            modelBuilder.Entity<Maintenance>(entity =>
+            {
+                entity.ToTable("Maintenances");
+
+                entity.HasKey(e => e.Id)
+                      .HasName("PK_Maintenances");
+
+                entity.Property(e => e.Id)
+                      .HasColumnName("id");  // Map to lowercase 'id'
+
+                entity.Property(e => e.CurrentMileage)
+                      .HasColumnName("CurrentWileage");  // Map to column with typo
+
+                entity.Property(e => e.CompletionDate)
+                      .HasColumnName("CompletionDate");
+
+                entity.Property(e => e.CreatedAt)
+                      .HasColumnName("CreatedAt");
+
+                entity.Property(e => e.UpdatedAt)
+                      .HasColumnName("UpdatedAt");
+
+                // Relationship
+                entity.HasOne(m => m.Vehicle)
+                      .WithMany()
+                      .HasForeignKey(m => m.VehicleId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
         }
+
+    }
   
     }
-}
+

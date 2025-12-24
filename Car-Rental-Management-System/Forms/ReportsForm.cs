@@ -21,5 +21,20 @@ namespace Car_Rental_Management_System.Forms
         {
 
         }
+
+        private void btnGenerateReport_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rtbReport_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
