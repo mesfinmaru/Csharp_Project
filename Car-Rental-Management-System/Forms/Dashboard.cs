@@ -185,7 +185,7 @@ namespace Car_Rental_Management_System
 
         private void btnMaintenances_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new MaintenanceForm());
+            OpenChildForm(new MaintenanceForm(_apiClient));
             ActivateButton(btnMaintenances);
         }
 

@@ -492,48 +492,48 @@ namespace Car_Rental_Management_System.Forms
             }
         }
 
-        private async void btnReturnVehicle_Click(object sender, EventArgs e)
+      private async void btnReturnVehicle_Click(object sender, EventArgs e)
+{
+    if (dgvRentals.SelectedRows.Count == 0)
+    {
+        ShowInfo("Please select a rental to return vehicle.");
+        return;
+    }
+
+    var selectedRow = dgvRentals.SelectedRows[0];
+    var idValue = selectedRow.Cells["colId"].Value;
+
+    if (idValue == null)
+    {
+        ShowError("Invalid selection");
+        return;
+    }
+
+    if (_apiClient == null || !_apiClient.IsAuthenticated)
+    {
+        ShowError("Please login first");
+        return;
+    }
+
+    int rentalId = Convert.ToInt32(idValue);
+
+    try
+    {
+        using (var returnForm = new ReturnVehicle(_apiClient, rentalId))
         {
-            if (dgvRentals.SelectedRows.Count == 0)
+            if (returnForm.ShowDialog() == DialogResult.OK)
             {
-                ShowInfo("Please select a rental to return vehicle.");
-                return;
-            }
-
-            var selectedRow = dgvRentals.SelectedRows[0];
-            var idValue = selectedRow.Cells["colId"].Value;
-
-            if (idValue == null)
-            {
-                ShowError("Invalid selection");
-                return;
-            }
-
-            if (_apiClient == null || !_apiClient.IsAuthenticated)
-            {
-                ShowError("Please login first");
-                return;
-            }
-
-            int rentalId = Convert.ToInt32(idValue);
-
-            try
-            {
-                using (var returnForm = new ReturnVehicle(_apiClient, rentalId))
-                {
-                    if (returnForm.ShowDialog() == DialogResult.OK)
-                    {
-                        var vehiclePlate = selectedRow.Cells["colVehicle"].Value?.ToString() ?? "Unknown";
-                        ShowSuccess($"Vehicle {vehiclePlate} returned successfully!");
-                        await LoadRentalsAsync();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError($"Cannot return vehicle: {ex.Message}");
+                var vehiclePlate = selectedRow.Cells["colVehicle"].Value?.ToString() ?? "Unknown";
+                ShowSuccess($"Vehicle {vehiclePlate} returned successfully!");
+                await LoadRentalsAsync();
             }
         }
+    }
+    catch (Exception ex)
+    {
+        ShowError($"Cannot return vehicle: {ex.Message}");
+    }
+}
         private async void btnEdit_Click(object sender, EventArgs e)
         {
             if (dgvRentals.SelectedRows.Count == 0)

@@ -32,7 +32,7 @@ namespace CRMdataLayer
         public DbSet<Customers> Customers { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Rentals> Rentals { get; set; }
-
+        public DbSet<Maintenance> Maintenances { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

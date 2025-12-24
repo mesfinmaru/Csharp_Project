@@ -976,5 +976,178 @@ namespace Car_Rental_Management_System
         {
             throw new NotImplementedException();
         }
+        // ==============================================
+        // MAINTENANCE METHODS
+        // ==============================================
+        public async Task<List<MaintenanceVM>> GetMaintenancesAsync(string search = "")
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var url = $"api/maintenances";
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    url += $"?search={Uri.EscapeDataString(search)}";
+                }
+
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new List<MaintenanceVM>();
+                }
+
+                var maintenances = JsonConvert.DeserializeObject<List<MaintenanceVM>>(content);
+                return maintenances ?? new List<MaintenanceVM>();
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to load maintenances: {ex.Message}");
+            }
+        }
+
+        public async Task<MaintenanceVM> GetMaintenanceAsync(int id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/maintenances/{id}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    throw new HttpRequestException($"Maintenance with ID {id} not found");
+                }
+
+                var maintenance = JsonConvert.DeserializeObject<MaintenanceVM>(content);
+                return maintenance ?? throw new HttpRequestException($"Maintenance with ID {id} not found");
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to load maintenance: {ex.Message}");
+            }
+        }
+
+        public async Task<MaintenanceVM> CreateMaintenanceAsync(MaintenanceVM maintenance)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(maintenance);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/maintenances", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(responseContent))
+                {
+                    throw new HttpRequestException("Empty response from server");
+                }
+
+                return JsonConvert.DeserializeObject<MaintenanceVM>(responseContent);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to create maintenance: {ex.Message}");
+            }
+        }
+
+        public async Task UpdateMaintenanceAsync(MaintenanceVM maintenance)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(maintenance);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/maintenances/{maintenance.Id}", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to update maintenance: {ex.Message}");
+            }
+        }
+
+        public async Task DeleteMaintenanceAsync(int id)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/maintenances/{id}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to delete maintenance: {ex.Message}");
+            }
+        }
+
+        public async Task<List<MaintenanceVM>> GetVehicleMaintenanceHistoryAsync(int vehicleId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var response = await _httpClient.GetAsync($"api/maintenances/vehicle/{vehicleId}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new List<MaintenanceVM>();
+                }
+
+                var maintenances = JsonConvert.DeserializeObject<List<MaintenanceVM>>(content);
+                return maintenances ?? new List<MaintenanceVM>();
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to load vehicle maintenance history: {ex.Message}");
+            }
+        }
     }
 }

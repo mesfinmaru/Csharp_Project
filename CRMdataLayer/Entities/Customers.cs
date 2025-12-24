@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -47,5 +48,7 @@ namespace CRMdataLayer.Entities
 
 
         public bool IsActive { get; set; } = true;
+
+     
     }
 }

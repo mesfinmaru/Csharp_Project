@@ -114,7 +114,7 @@
             lblStatus.Size = new Size(104, 32);
             lblStatus.TabIndex = 28;
             lblStatus.Text = "lblStatus";
-         
+            lblStatus.Click += lblStatus_Click;
             // 
             // txtSearch
             // 
