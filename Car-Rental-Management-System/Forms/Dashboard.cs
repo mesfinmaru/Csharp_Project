@@ -61,8 +61,7 @@ namespace Car_Rental_Management_System
 
 
             // Always show for both Admin and Staff
-            btnRentals.Visible = true;
-            btnReturns.Visible = true;
+           
             btnMaintenances.Visible = true;
 
 
@@ -172,15 +171,11 @@ namespace Car_Rental_Management_System
 
         private void btnRentals_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new RentalsForm());
+            OpenChildForm(new RentalsForm(_apiClient));
             ActivateButton(btnRentals);
         }
 
-        private void btnReturns_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new ReturnsForm());
-            ActivateButton(btnReturns);
-        }
+     
 
         private void btnReports_Click(object sender, EventArgs e)
         {

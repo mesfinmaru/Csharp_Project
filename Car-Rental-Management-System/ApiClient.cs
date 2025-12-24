@@ -1,4 +1,5 @@
-﻿using CRM_API.Models;
+﻿using CRM_API.Controllers;
+using CRM_API.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,203 @@ namespace Car_Rental_Management_System
             _httpClient.Timeout = TimeSpan.FromSeconds(30);
         }
 
+        // ==============================================
+        // RENTAL METHODS
+        // ==============================================
+        public async Task<List<RentalVM>> GetRentalsAsync(string search = "")
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var url = $"api/rentals";
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    url += $"?search={Uri.EscapeDataString(search)}";
+                }
+
+                Console.WriteLine($"Calling API: {_httpClient.BaseAddress}{url}");
+
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"API Error ({response.StatusCode}): {errorContent}");
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        throw new HttpRequestException("Authentication required. Please login again.");
+                    }
+
+                    string errorMessage = ExtractErrorMessage(errorContent);
+                    throw new HttpRequestException($"API Error ({response.StatusCode}): {errorMessage}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"API Response received: {content.Length} characters");
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new List<RentalVM>();
+                }
+
+                var rentals = JsonConvert.DeserializeObject<List<RentalVM>>(content);
+                return rentals ?? new List<RentalVM>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in GetRentalsAsync: {ex}");
+                throw new HttpRequestException($"Failed to load rentals: {ex.Message}");
+            }
+        }
+
+        public async Task<RentalVM> GetRentalAsync(int id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/rentals/{id}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    throw new HttpRequestException($"Rental with ID {id} not found");
+                }
+
+                return JsonConvert.DeserializeObject<RentalVM>(content) ?? throw new HttpRequestException($"Rental with ID {id} not found");
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to load rental: {ex.Message}");
+            }
+        }
+
+        public async Task<RentalVM> CreateRentalAsync(RentalVM rental)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(rental);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/rentals", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(responseContent))
+                {
+                    throw new HttpRequestException("Empty response from server");
+                }
+
+                return JsonConvert.DeserializeObject<RentalVM>(responseContent);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to create rental: {ex.Message}");
+            }
+        }
+
+        public async Task UpdateRentalAsync(RentalVM rental)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(rental);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/rentals/{rental.Id}", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to update rental: {ex.Message}");
+            }
+        }
+
+        // SINGLE ReturnVehicleAsync method - NO DUPLICATES
+        public async Task<object> ReturnVehicleAsync(int rentalId, DateTime returnDate, decimal? lateFee = null, decimal? damageFee = null)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var request = new
+                {
+                    ActualReturnDate = returnDate,
+                    LateFee = lateFee,
+                    DamageFee = damageFee,
+                    Notes = ""
+                };
+
+                Console.WriteLine($"Returning vehicle - Rental ID: {rentalId}, Date: {returnDate}");
+
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/rentals/{rentalId}/return", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Return Vehicle Error ({response.StatusCode}): {errorContent}");
+
+                    string errorMessage = ExtractErrorMessage(errorContent);
+                    throw new HttpRequestException($"Failed to return vehicle: {errorMessage}");
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Return Vehicle Response: {responseContent}");
+
+                return JsonConvert.DeserializeObject<object>(responseContent) ?? new { message = "Vehicle returned successfully" };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in ReturnVehicleAsync: {ex}");
+                throw new HttpRequestException($"Failed to return vehicle: {ex.Message}");
+            }
+        }
+
+        public async Task DeleteRentalAsync(int id)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/rentals/{id}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to delete rental: {ex.Message}");
+            }
+        }
         // ==============================================
         // VEHICLE METHODS
         // ==============================================
@@ -770,6 +968,13 @@ namespace Car_Rental_Management_System
         public void Dispose()
         {
             _httpClient?.Dispose();
+        }
+
+       
+
+        internal async Task<object> ReturnVehicleAsync(int rentalId, CRM_API.Controllers.ReturnRequest returnRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }

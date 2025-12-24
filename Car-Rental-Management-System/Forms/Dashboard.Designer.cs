@@ -35,7 +35,6 @@
             btnLogout = new FontAwesome.Sharp.IconButton();
             btnReports = new FontAwesome.Sharp.IconButton();
             btnMaintenances = new FontAwesome.Sharp.IconButton();
-            btnReturns = new FontAwesome.Sharp.IconButton();
             btnRentals = new FontAwesome.Sharp.IconButton();
             btnCustomers = new FontAwesome.Sharp.IconButton();
             btnVehicles = new FontAwesome.Sharp.IconButton();
@@ -68,7 +67,6 @@
             panelMenu.Controls.Add(btnLogout);
             panelMenu.Controls.Add(btnReports);
             panelMenu.Controls.Add(btnMaintenances);
-            panelMenu.Controls.Add(btnReturns);
             panelMenu.Controls.Add(btnRentals);
             panelMenu.Controls.Add(btnCustomers);
             panelMenu.Controls.Add(btnVehicles);
@@ -93,7 +91,7 @@
             btnUsersMgmt.IconColor = SystemColors.Highlight;
             btnUsersMgmt.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnUsersMgmt.ImageAlign = ContentAlignment.MiddleLeft;
-            btnUsersMgmt.Location = new Point(0, 803);
+            btnUsersMgmt.Location = new Point(0, 733);
             btnUsersMgmt.Name = "btnUsersMgmt";
             btnUsersMgmt.Padding = new Padding(30, 0, 0, 0);
             btnUsersMgmt.Size = new Size(395, 70);
@@ -139,7 +137,7 @@
             btnReports.IconColor = SystemColors.Highlight;
             btnReports.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnReports.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReports.Location = new Point(0, 733);
+            btnReports.Location = new Point(0, 663);
             btnReports.Name = "btnReports";
             btnReports.Padding = new Padding(30, 0, 0, 0);
             btnReports.Size = new Size(395, 70);
@@ -162,7 +160,7 @@
             btnMaintenances.IconColor = SystemColors.Highlight;
             btnMaintenances.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaintenances.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMaintenances.Location = new Point(0, 663);
+            btnMaintenances.Location = new Point(0, 593);
             btnMaintenances.Name = "btnMaintenances";
             btnMaintenances.Padding = new Padding(30, 0, 0, 0);
             btnMaintenances.Size = new Size(395, 70);
@@ -172,29 +170,6 @@
             btnMaintenances.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnMaintenances.UseVisualStyleBackColor = true;
             btnMaintenances.Click += btnMaintenances_Click;
-            // 
-            // btnReturns
-            // 
-            btnReturns.Dock = DockStyle.Top;
-            btnReturns.FlatAppearance.BorderSize = 0;
-            btnReturns.FlatStyle = FlatStyle.Flat;
-            btnReturns.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-            btnReturns.Font = new Font("Trebuchet MS", 10F, FontStyle.Bold);
-            btnReturns.ForeColor = Color.FromArgb(15, 255, 255, 255);
-            btnReturns.IconChar = FontAwesome.Sharp.IconChar.ArrowCircleDown;
-            btnReturns.IconColor = SystemColors.Highlight;
-            btnReturns.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnReturns.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReturns.Location = new Point(0, 593);
-            btnReturns.Name = "btnReturns";
-            btnReturns.Padding = new Padding(30, 0, 0, 0);
-            btnReturns.Size = new Size(395, 70);
-            btnReturns.TabIndex = 5;
-            btnReturns.Text = "Returns";
-            btnReturns.TextAlign = ContentAlignment.MiddleRight;
-            btnReturns.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnReturns.UseVisualStyleBackColor = true;
-            btnReturns.Click += btnReturns_Click;
             // 
             // btnRentals
             // 
@@ -481,7 +456,6 @@
         private Panel panelDesktop;
         private PictureBox pictureBoxStaff;
         private FontAwesome.Sharp.IconButton btnDashboard;
-        private FontAwesome.Sharp.IconButton btnReturns;
         private FontAwesome.Sharp.IconButton btnRentals;
         private FontAwesome.Sharp.IconButton btnCustomers;
         private FontAwesome.Sharp.IconButton btnVehicles;

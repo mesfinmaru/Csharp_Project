@@ -30,8 +30,11 @@
         {
             btnDelete = new FontAwesome.Sharp.IconButton();
             btnEdit = new FontAwesome.Sharp.IconButton();
-            btnCreateRental = new FontAwesome.Sharp.IconButton();
+            btnNewRental = new FontAwesome.Sharp.IconButton();
             dgvRentals = new DataGridView();
+            lblStatus = new Label();
+            txtSearch = new TextBox();
+            btnReturnVehicle = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)dgvRentals).BeginInit();
             SuspendLayout();
             // 
@@ -44,45 +47,48 @@
             btnDelete.IconColor = Color.Black;
             btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnDelete.IconSize = 45;
-            btnDelete.Location = new Point(1165, 30);
+            btnDelete.Location = new Point(1196, 12);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(200, 60);
+            btnDelete.Size = new Size(169, 60);
             btnDelete.TabIndex = 26;
             btnDelete.Text = "Delete";
             btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnEdit
             // 
             btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnEdit.FlatStyle = FlatStyle.Flat;
             btnEdit.Font = new Font("Trebuchet MS", 10.125F);
-            btnEdit.IconChar = FontAwesome.Sharp.IconChar.UserPen;
+            btnEdit.IconChar = FontAwesome.Sharp.IconChar.Edit;
             btnEdit.IconColor = Color.Black;
             btnEdit.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnEdit.Location = new Point(930, 30);
+            btnEdit.Location = new Point(1029, 12);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(200, 60);
+            btnEdit.Size = new Size(152, 60);
             btnEdit.TabIndex = 25;
             btnEdit.Text = "Edit";
             btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
-            // btnCreateRental
+            // btnNewRental
             // 
-            btnCreateRental.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCreateRental.FlatStyle = FlatStyle.Flat;
-            btnCreateRental.Font = new Font("Trebuchet MS", 10.125F);
-            btnCreateRental.IconChar = FontAwesome.Sharp.IconChar.Add;
-            btnCreateRental.IconColor = Color.Black;
-            btnCreateRental.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnCreateRental.Location = new Point(689, 30);
-            btnCreateRental.Name = "btnCreateRental";
-            btnCreateRental.Size = new Size(200, 60);
-            btnCreateRental.TabIndex = 24;
-            btnCreateRental.Text = "Create";
-            btnCreateRental.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCreateRental.UseVisualStyleBackColor = true;
+            btnNewRental.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnNewRental.FlatStyle = FlatStyle.Flat;
+            btnNewRental.Font = new Font("Trebuchet MS", 10.125F);
+            btnNewRental.IconChar = FontAwesome.Sharp.IconChar.CirclePlus;
+            btnNewRental.IconColor = Color.Black;
+            btnNewRental.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnNewRental.Location = new Point(606, 12);
+            btnNewRental.Name = "btnNewRental";
+            btnNewRental.Size = new Size(225, 60);
+            btnNewRental.TabIndex = 24;
+            btnNewRental.Text = "New Rental";
+            btnNewRental.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnNewRental.UseVisualStyleBackColor = true;
+            btnNewRental.Click += btnNewRental_Click;
             // 
             // dgvRentals
             // 
@@ -91,13 +97,51 @@
             dgvRentals.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvRentals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvRentals.ColumnHeadersHeight = 46;
-            dgvRentals.Location = new Point(29, 110);
+            dgvRentals.Location = new Point(12, 86);
             dgvRentals.Name = "dgvRentals";
             dgvRentals.ReadOnly = true;
             dgvRentals.RowHeadersWidth = 82;
-            dgvRentals.Size = new Size(1336, 594);
+            dgvRentals.Size = new Size(1353, 618);
             dgvRentals.TabIndex = 23;
             dgvRentals.CellContentClick += dgvRentals_CellContentClick;
+            // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.ForeColor = Color.IndianRed;
+            lblStatus.Location = new Point(500, 20);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(104, 32);
+            lblStatus.TabIndex = 28;
+            lblStatus.Text = "lblStatus";
+         
+            // 
+            // txtSearch
+            // 
+            txtSearch.Font = new Font("Trebuchet MS", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(12, 15);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search for rentals...";
+            txtSearch.Size = new Size(481, 39);
+            txtSearch.TabIndex = 27;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // btnReturnVehicle
+            // 
+            btnReturnVehicle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnReturnVehicle.FlatStyle = FlatStyle.Flat;
+            btnReturnVehicle.Font = new Font("Trebuchet MS", 10.125F);
+            btnReturnVehicle.IconChar = FontAwesome.Sharp.IconChar.CircleDown;
+            btnReturnVehicle.IconColor = Color.Black;
+            btnReturnVehicle.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnReturnVehicle.Location = new Point(847, 12);
+            btnReturnVehicle.Name = "btnReturnVehicle";
+            btnReturnVehicle.Size = new Size(171, 60);
+            btnReturnVehicle.TabIndex = 29;
+            btnReturnVehicle.Text = "Return";
+            btnReturnVehicle.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnReturnVehicle.UseVisualStyleBackColor = true;
+            btnReturnVehicle.Click += btnReturnVehicle_Click;
             // 
             // RentalsForm
             // 
@@ -105,9 +149,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1389, 717);
+            Controls.Add(btnReturnVehicle);
+            Controls.Add(lblStatus);
+            Controls.Add(txtSearch);
             Controls.Add(btnDelete);
             Controls.Add(btnEdit);
-            Controls.Add(btnCreateRental);
+            Controls.Add(btnNewRental);
             Controls.Add(dgvRentals);
             FormBorderStyle = FormBorderStyle.None;
             Name = "RentalsForm";
@@ -115,13 +162,17 @@
             Load += RentalsForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvRentals).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private FontAwesome.Sharp.IconButton btnDelete;
         private FontAwesome.Sharp.IconButton btnEdit;
-        private FontAwesome.Sharp.IconButton btnCreateRental;
+        private FontAwesome.Sharp.IconButton btnNewRental;
         private DataGridView dgvRentals;
+        private Label lblStatus;
+        private TextBox txtSearch;
+        private FontAwesome.Sharp.IconButton btnReturnVehicle;
     }
 }
