@@ -13,7 +13,7 @@ A desktop application built using C# Windows Forms for managing car rental opera
 - IDE: Visual Studio 2022
 
 # How to Run
-- clone repository and open the solution from Car-rental-Management-System's folder
+- Clone repository and open the solution from Car-rental-Management-System's folder
 - Run both projects at once (Select Car-rental-Management-System and CRM_API in configuring startup projects tab)
 - Or manually debug Car-rental-Management-System as Start New Instance after opening minimize it and again do same for CRM_API
 - So when running both go back to Car-rental-Management-System(WinForm) and Enter this default credentials
