@@ -17,10 +17,10 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'   # or 7.0.x depending on your project
+        dotnet-version: '8.0.x'   # change if your project uses 7.x
 
     - name: Restore dependencies
-      run: dotnet restore Car-Rental-Management-System.sln
+      run: dotnet restore Car-Rental-Management-System/Car-Rental-Management-System.sln
 
-    - name: Build
-      run: dotnet build Car-Rental-Management-System.sln --configuration Release --no-restore
+    - name: Build solution
+      run: dotnet build Car-Rental-Management-System/Car-Rental-Management-System.sln --configuration Release --no-restore
