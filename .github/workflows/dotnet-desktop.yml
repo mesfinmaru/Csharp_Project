@@ -19,13 +19,13 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Show directory structure (debug)
-      run: tree /f
+    - name: Find solution file
+      run: |
+        echo "Searching for .sln file..."
+        dir /s *.sln
 
-    - name: Restore dependencies
-      working-directory: Car-Rental-Management-System/Car-Rental-Management-System
-      run: dotnet restore
+    - name: Restore
+      run: dotnet restore **/*.sln
 
-    - name: Build solution
-      working-directory: Car-Rental-Management-System/Car-Rental-Management-System
-      run: dotnet build --configuration Release --no-restore
+    - name: Build
+      run: dotnet build **/*.sln --configuration Release --no-restore
