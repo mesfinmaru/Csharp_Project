@@ -179,7 +179,7 @@ namespace Car_Rental_Management_System
 
         private void btnReports_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new ReportsForm());
+            OpenChildForm(new ReportsForm(_apiClient));
             ActivateButton(btnReports);
         }
 

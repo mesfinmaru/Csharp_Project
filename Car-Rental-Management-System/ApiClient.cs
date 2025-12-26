@@ -970,7 +970,7 @@ namespace Car_Rental_Management_System
             _httpClient?.Dispose();
         }
 
-       
+
 
         internal async Task<object> ReturnVehicleAsync(int rentalId, CRM_API.Controllers.ReturnRequest returnRequest)
         {
@@ -1149,10 +1149,12 @@ namespace Car_Rental_Management_System
                 throw new HttpRequestException($"Failed to load vehicle maintenance history: {ex.Message}");
             }
         }
-            // ==============================================
-            // REPORT METHODS
-            // ==============================================
-public async Task<RentalReportVM> GetRentalReportAsync(DateTime? startDate = null, DateTime? endDate = null, string? status = null)
+
+        // ==============================================
+        // REPORT METHODS
+        // ==============================================
+
+        public async Task<List<CustomerReportVM>> GetCustomerReportAsync(DateTime fromDate, DateTime toDate, string status = "All")
         {
             try
             {
@@ -1162,20 +1164,11 @@ public async Task<RentalReportVM> GetRentalReportAsync(DateTime? startDate = nul
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
                 }
 
-                var url = $"api/reports/rentals";
-                var queryParams = new List<string>();
-
-                if (startDate.HasValue)
-                    queryParams.Add($"startDate={startDate.Value:yyyy-MM-dd}");
-
-                if (endDate.HasValue)
-                    queryParams.Add($"endDate={endDate.Value:yyyy-MM-dd}");
-
-                if (!string.IsNullOrWhiteSpace(status))
-                    queryParams.Add($"status={Uri.EscapeDataString(status)}");
-
-                if (queryParams.Count > 0)
-                    url += "?" + string.Join("&", queryParams);
+                var url = $"api/reports/customers?fromDate={fromDate:yyyy-MM-dd}&toDate={toDate:yyyy-MM-dd}";
+                if (status != "All")
+                {
+                    url += $"&status={Uri.EscapeDataString(status)}";
+                }
 
                 var response = await _httpClient.GetAsync(url);
 
@@ -1186,15 +1179,21 @@ public async Task<RentalReportVM> GetRentalReportAsync(DateTime? startDate = nul
                 }
 
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<RentalReportVM>(content);
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new List<CustomerReportVM>();
+                }
+
+                return JsonConvert.DeserializeObject<List<CustomerReportVM>>(content) ?? new List<CustomerReportVM>();
             }
             catch (Exception ex)
             {
-                throw new HttpRequestException($"Failed to generate rental report: {ex.Message}");
+                throw new HttpRequestException($"Failed to load customer report: {ex.Message}");
             }
         }
 
-        public async Task<MaintenanceReportVM> GetMaintenanceReportAsync(DateTime? startDate = null, DateTime? endDate = null, string? status = null)
+        public async Task<List<RentalReportVM>> GetRentalReportAsync(DateTime fromDate, DateTime toDate, string status = "All", string vehicleType = "All")
         {
             try
             {
@@ -1204,20 +1203,9 @@ public async Task<RentalReportVM> GetRentalReportAsync(DateTime? startDate = nul
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
                 }
 
-                var url = $"api/reports/maintenance";
-                var queryParams = new List<string>();
-
-                if (startDate.HasValue)
-                    queryParams.Add($"startDate={startDate.Value:yyyy-MM-dd}");
-
-                if (endDate.HasValue)
-                    queryParams.Add($"endDate={endDate.Value:yyyy-MM-dd}");
-
-                if (!string.IsNullOrWhiteSpace(status))
-                    queryParams.Add($"status={Uri.EscapeDataString(status)}");
-
-                if (queryParams.Count > 0)
-                    url += "?" + string.Join("&", queryParams);
+                var url = $"api/reports/rentals?fromDate={fromDate:yyyy-MM-dd}&toDate={toDate:yyyy-MM-dd}";
+                if (status != "All") url += $"&status={Uri.EscapeDataString(status)}";
+                if (vehicleType != "All") url += $"&vehicleType={Uri.EscapeDataString(vehicleType)}";
 
                 var response = await _httpClient.GetAsync(url);
 
@@ -1228,15 +1216,21 @@ public async Task<RentalReportVM> GetRentalReportAsync(DateTime? startDate = nul
                 }
 
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<MaintenanceReportVM>(content);
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new List<RentalReportVM>();
+                }
+
+                return JsonConvert.DeserializeObject<List<RentalReportVM>>(content) ?? new List<RentalReportVM>();
             }
             catch (Exception ex)
             {
-                throw new HttpRequestException($"Failed to generate maintenance report: {ex.Message}");
+                throw new HttpRequestException($"Failed to load rental report: {ex.Message}");
             }
         }
 
-        public async Task<VehicleReportVM> GetVehicleReportAsync()
+        public async Task<List<VehicleReportVM>> GetVehicleReportAsync(string vehicleType = "All", string status = "All")
         {
             try
             {
@@ -1246,34 +1240,16 @@ public async Task<RentalReportVM> GetRentalReportAsync(DateTime? startDate = nul
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
                 }
 
-                var response = await _httpClient.GetAsync("api/reports/vehicles");
+                var url = "api/reports/vehicles";
+                var parameters = new List<string>();
+                if (vehicleType != "All") parameters.Add($"vehicleType={Uri.EscapeDataString(vehicleType)}");
+                if (status != "All") parameters.Add($"status={Uri.EscapeDataString(status)}");
 
-                if (!response.IsSuccessStatusCode)
+                if (parameters.Count > 0)
                 {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                    url += "?" + string.Join("&", parameters);
                 }
 
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<VehicleReportVM>(content);
-            }
-            catch (Exception ex)
-            {
-                throw new HttpRequestException($"Failed to generate vehicle report: {ex.Message}");
-            }
-        }
-
-        public async Task<FinancialReportVM> GetFinancialReportAsync(DateTime startDate, DateTime endDate)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(_token))
-                {
-                    _httpClient.DefaultRequestHeaders.Authorization =
-                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-                }
-
-                var url = $"api/reports/financial?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}";
                 var response = await _httpClient.GetAsync(url);
 
                 if (!response.IsSuccessStatusCode)
@@ -1283,12 +1259,121 @@ public async Task<RentalReportVM> GetRentalReportAsync(DateTime? startDate = nul
                 }
 
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<FinancialReportVM>(content);
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new List<VehicleReportVM>();
+                }
+
+                return JsonConvert.DeserializeObject<List<VehicleReportVM>>(content) ?? new List<VehicleReportVM>();
             }
             catch (Exception ex)
             {
-                throw new HttpRequestException($"Failed to generate financial report: {ex.Message}");
+                throw new HttpRequestException($"Failed to load vehicle report: {ex.Message}");
+            }
+        }
+
+        public async Task<List<FinancialReportVM>> GetFinancialReportAsync(DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var url = $"api/reports/financial?fromDate={fromDate:yyyy-MM-dd}&toDate={toDate:yyyy-MM-dd}";
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new List<FinancialReportVM>();
+                }
+
+                return JsonConvert.DeserializeObject<List<FinancialReportVM>>(content) ?? new List<FinancialReportVM>();
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to load financial report: {ex.Message}");
+            }
+        }
+
+        public async Task<List<OverdueReportVM>> GetOverdueReportAsync()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var response = await _httpClient.GetAsync("api/reports/overdue");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new List<OverdueReportVM>();
+                }
+
+                return JsonConvert.DeserializeObject<List<OverdueReportVM>>(content) ?? new List<OverdueReportVM>();
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to load overdue report: {ex.Message}");
+            }
+        }
+
+        public async Task<ReportSummaryVM> GetReportSummaryAsync(string reportType, DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                }
+
+                var url = $"api/reports/summary?reportType={Uri.EscapeDataString(reportType)}" +
+                         $"&fromDate={fromDate:yyyy-MM-dd}&toDate={toDate:yyyy-MM-dd}";
+
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return new ReportSummaryVM();
+                }
+
+                return JsonConvert.DeserializeObject<ReportSummaryVM>(content) ?? new ReportSummaryVM();
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to load report summary: {ex.Message}");
             }
         }
     }
-    }
+}
