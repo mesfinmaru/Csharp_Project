@@ -19,6 +19,9 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    - name: Show directory structure (debug)
+      run: tree /f
+
     - name: Restore dependencies
       working-directory: Car-Rental-Management-System/Car-Rental-Management-System
       run: dotnet restore
