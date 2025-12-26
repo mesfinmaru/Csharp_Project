@@ -59,17 +59,36 @@ namespace Car_Rental_Management_System.Forms
 
         private void btnManageVehicles_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void ManageRentals_Click(object sender, EventArgs e)
         {
-
+           
         }
 
         private void btnManageMaintenance_Click(object sender, EventArgs e)
         {
+            
+        }
 
+        private void btnManageCustomer_Click_1(object sender, EventArgs e)
+        {
+         
+        }
+
+        private void btnManageVehicles_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ManageRentals_Click_1(object sender, EventArgs e)
+        {
+           }
+
+        private void btnManageMaintenance_Click_1(object sender, EventArgs e)
+        {
+           
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Car_Rental_Management_System
 
 
             // Always show for both Admin and Staff
-           
+
             btnMaintenances.Visible = true;
 
 
@@ -175,7 +175,7 @@ namespace Car_Rental_Management_System
             ActivateButton(btnRentals);
         }
 
-     
+
 
         private void btnReports_Click(object sender, EventArgs e)
         {
@@ -355,13 +355,18 @@ namespace Car_Rental_Management_System
 
         private void btnUsersMgmt_Click_1(object sender, EventArgs e)
         {
-            OpenChildForm(new UsersForm());
-            ActivateButton(btnUsersMgmt);
+           
         }
 
         private void panel2_Paint_1(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnUsersMgmt_Click_2(object sender, EventArgs e)
+        {
+            OpenChildForm(new UsersForm());
+            ActivateButton(btnUsersMgmt);
         }
     }
 }

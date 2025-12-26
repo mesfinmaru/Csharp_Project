@@ -510,7 +510,7 @@ namespace Car_Rental_Management_System
         }
 
         // ==============================================
-        // EXISTING CUSTOMER METHODS
+        //  CUSTOMER METHODS
         // ==============================================
 
         public async Task<List<CustomerVM>> GetCustomersAsync(string? search = null)
@@ -976,10 +976,10 @@ namespace Car_Rental_Management_System
         {
             throw new NotImplementedException();
         }
-        // ==============================================
-        // MAINTENANCE METHODS
-        // ==============================================
-        public async Task<List<MaintenanceVM>> GetMaintenancesAsync(string search = "")
+        // Add these methods to your existing ApiClient class:
+
+        // Maintenance Methods (if missing any)
+        public async Task<List<MaintenanceVM>> GetMaintenancesAsync(string? search = null, string? status = null)
         {
             try
             {
@@ -989,10 +989,16 @@ namespace Car_Rental_Management_System
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
                 }
 
-                var url = $"api/maintenances";
+                var url = "api/maintenances";
+                var parameters = new List<string>();
                 if (!string.IsNullOrWhiteSpace(search))
+                    parameters.Add($"search={Uri.EscapeDataString(search)}");
+                if (!string.IsNullOrWhiteSpace(status) && status != "All")
+                    parameters.Add($"status={Uri.EscapeDataString(status)}");
+
+                if (parameters.Count > 0)
                 {
-                    url += $"?search={Uri.EscapeDataString(search)}";
+                    url += "?" + string.Join("&", parameters);
                 }
 
                 var response = await _httpClient.GetAsync(url);
@@ -1010,8 +1016,7 @@ namespace Car_Rental_Management_System
                     return new List<MaintenanceVM>();
                 }
 
-                var maintenances = JsonConvert.DeserializeObject<List<MaintenanceVM>>(content);
-                return maintenances ?? new List<MaintenanceVM>();
+                return JsonConvert.DeserializeObject<List<MaintenanceVM>>(content) ?? new List<MaintenanceVM>();
             }
             catch (Exception ex)
             {
@@ -1019,39 +1024,11 @@ namespace Car_Rental_Management_System
             }
         }
 
-        public async Task<MaintenanceVM> GetMaintenanceAsync(int id)
+        public async Task<MaintenanceVM> CreateMaintenanceAsync(MaintenanceRequest request)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/maintenances/{id}");
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
-                }
-
-                var content = await response.Content.ReadAsStringAsync();
-
-                if (string.IsNullOrWhiteSpace(content))
-                {
-                    throw new HttpRequestException($"Maintenance with ID {id} not found");
-                }
-
-                var maintenance = JsonConvert.DeserializeObject<MaintenanceVM>(content);
-                return maintenance ?? throw new HttpRequestException($"Maintenance with ID {id} not found");
-            }
-            catch (Exception ex)
-            {
-                throw new HttpRequestException($"Failed to load maintenance: {ex.Message}");
-            }
-        }
-
-        public async Task<MaintenanceVM> CreateMaintenanceAsync(MaintenanceVM maintenance)
-        {
-            try
-            {
-                var json = JsonConvert.SerializeObject(maintenance);
+                var json = JsonConvert.SerializeObject(request);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync("api/maintenances", content);
@@ -1098,6 +1075,76 @@ namespace Car_Rental_Management_System
             }
         }
 
+        public async Task CompleteMaintenanceAsync(int id, DateTime completionDate, decimal? actualCost = null, string? notes = null)
+        {
+            try
+            {
+                var request = new
+                {
+                    CompletionDate = completionDate,
+                    ActualCost = actualCost,
+                    Notes = notes
+                };
+
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/maintenances/{id}/complete", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to complete maintenance: {ex.Message}");
+            }
+        }
+
+        public async Task StartMaintenanceAsync(int id)
+        {
+            try
+            {
+                var response = await _httpClient.PutAsync($"api/maintenances/{id}/start", null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to start maintenance: {ex.Message}");
+            }
+        }
+
+        public async Task CancelMaintenanceAsync(int id, string? reason = null)
+        {
+            try
+            {
+                var url = $"api/maintenances/{id}/cancel";
+                if (!string.IsNullOrEmpty(reason))
+                {
+                    url += $"?reason={Uri.EscapeDataString(reason)}";
+                }
+
+                var response = await _httpClient.PutAsync(url, null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Failed to cancel maintenance: {ex.Message}");
+            }
+        }
+
         public async Task DeleteMaintenanceAsync(int id)
         {
             try
@@ -1113,40 +1160,6 @@ namespace Car_Rental_Management_System
             catch (Exception ex)
             {
                 throw new HttpRequestException($"Failed to delete maintenance: {ex.Message}");
-            }
-        }
-
-        public async Task<List<MaintenanceVM>> GetVehicleMaintenanceHistoryAsync(int vehicleId)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(_token))
-                {
-                    _httpClient.DefaultRequestHeaders.Authorization =
-                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-                }
-
-                var response = await _httpClient.GetAsync($"api/maintenances/vehicle/{vehicleId}");
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    throw new HttpRequestException($"API Error: {response.StatusCode} - {errorContent}");
-                }
-
-                var content = await response.Content.ReadAsStringAsync();
-
-                if (string.IsNullOrWhiteSpace(content))
-                {
-                    return new List<MaintenanceVM>();
-                }
-
-                var maintenances = JsonConvert.DeserializeObject<List<MaintenanceVM>>(content);
-                return maintenances ?? new List<MaintenanceVM>();
-            }
-            catch (Exception ex)
-            {
-                throw new HttpRequestException($"Failed to load vehicle maintenance history: {ex.Message}");
             }
         }
 

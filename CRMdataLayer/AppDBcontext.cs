@@ -136,39 +136,34 @@ namespace CRMdataLayer
             });
             // In AppDBContext.cs
 
+        
 
-            // Configure Maintenance entity
+            // SIMPLE Maintenance configuration - match EXACT database schema
             modelBuilder.Entity<Maintenance>(entity =>
             {
                 entity.ToTable("Maintenances");
+                entity.HasKey(e => e.id);
 
-                entity.HasKey(e => e.Id)
-                      .HasName("PK_Maintenances");
+                // Map the typo in database column name
+                entity.Property(e => e.VehicleId)
+                      .HasColumnName("Vehicleld"); // lowercase L
 
-                entity.Property(e => e.Id)
-                      .HasColumnName("id");  // Map to lowercase 'id'
+                // Map the typo in mileage column
+                entity.Property(e => e.CurrentWileage)
+                      .HasColumnName("CurrentWileage");
 
-                entity.Property(e => e.CurrentMileage)
-                      .HasColumnName("CurrentWileage");  // Map to column with typo
-
-                entity.Property(e => e.CompletionDate)
-                      .HasColumnName("CompletionDate");
-
-                entity.Property(e => e.CreatedAt)
-                      .HasColumnName("CreatedAt");
-
-                entity.Property(e => e.UpdatedAt)
-                      .HasColumnName("UpdatedAt");
-
-                // Relationship
+                // Simple relationship
                 entity.HasOne(m => m.Vehicle)
                       .WithMany()
                       .HasForeignKey(m => m.VehicleId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+
+          
         }
+    }
 
     }
   
-    }
+    
 

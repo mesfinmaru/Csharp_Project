@@ -49,9 +49,9 @@
             lblCarrental = new Label();
             btnClose = new FontAwesome.Sharp.IconButton();
             lblTitle = new Label();
-            panelDesktop = new Panel();
             fileSystemWatcher1 = new FileSystemWatcher();
             menuTimer = new System.Windows.Forms.Timer(components);
+            panelDesktop = new Panel();
             panelMenu.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxStaff).BeginInit();
@@ -100,7 +100,7 @@
             btnUsersMgmt.TextAlign = ContentAlignment.MiddleRight;
             btnUsersMgmt.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnUsersMgmt.UseVisualStyleBackColor = true;
-            btnUsersMgmt.Click += btnUsersMgmt_Click_1;
+            btnUsersMgmt.Click += btnUsersMgmt_Click_2;
             // 
             // btnLogout
             // 
@@ -403,6 +403,11 @@
             lblTitle.Text = "Car Rental Management System";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // fileSystemWatcher1
+            // 
+            fileSystemWatcher1.EnableRaisingEvents = true;
+            fileSystemWatcher1.SynchronizingObject = this;
+            // 
             // panelDesktop
             // 
             panelDesktop.BackColor = Color.FromArgb(30, 30, 47);
@@ -414,11 +419,6 @@
             panelDesktop.Name = "panelDesktop";
             panelDesktop.Size = new Size(1292, 848);
             panelDesktop.TabIndex = 2;
-            // 
-            // fileSystemWatcher1
-            // 
-            fileSystemWatcher1.EnableRaisingEvents = true;
-            fileSystemWatcher1.SynchronizingObject = this;
             // 
             // Dashboard
             // 
@@ -453,7 +453,6 @@
         private Panel panelMenu;
         private Panel panel1;
         private Panel panelTitleBar;
-        private Panel panelDesktop;
         private PictureBox pictureBoxStaff;
         private FontAwesome.Sharp.IconButton btnDashboard;
         private FontAwesome.Sharp.IconButton btnRentals;
@@ -472,5 +471,6 @@
         private System.Windows.Forms.Timer menuTimer;
         private FontAwesome.Sharp.IconButton btnUsersMgmt;
         private Label lblWelcome;
+        private Panel panelDesktop;
     }
 }

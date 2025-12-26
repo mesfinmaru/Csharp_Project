@@ -8,35 +8,61 @@ namespace CRM_API.Models
 
         // Vehicle Information
         public int VehicleId { get; set; }
-        public string VehiclePlateNumber { get; set; } = "";
-        public string VehicleMake { get; set; } = "";
-        public string VehicleModel { get; set; } = "";
-        public int CurrentMileage { get; set; }
+        public string? VehiclePlateNumber { get; set; }
+        public string? VehicleMake { get; set; }
+        public string? VehicleModel { get; set; }
+        public string? VehicleType { get; set; }
 
         // Maintenance Details
-        public DateTime MaintenanceDate { get; set; }
+        public string MaintenanceType { get; set; } = string.Empty; // Regular Service, Repair, Accident Repair, etc.
+        public string Description { get; set; } = string.Empty;
+        public DateTime ScheduledDate { get; set; }
         public DateTime? CompletionDate { get; set; }
-        public string MaintenanceType { get; set; } = ""; // Regular, Repair, Emergency
-        public string Description { get; set; } = "";
-        public decimal Cost { get; set; }
-        public string ServiceProvider { get; set; } = "";
-        public string ServiceContact { get; set; } = "";
+        public int CurrentMileage { get; set; }
 
         // Status
         public string Status { get; set; } = "Scheduled"; // Scheduled, In Progress, Completed, Cancelled
-        public bool IsActive { get; set; } = true;
+
+        // Cost
+        public decimal Cost { get; set; }
+
+        // Mechanic Information
+        public string MechanicName { get; set; } = string.Empty;
+        public string? MechanicPhone { get; set; }
+
+        // Notes
+        public string? Notes { get; set; }
 
         // System
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-
-        // Next Service
-        public DateTime? NextMaintenanceDate { get; set; }
-        public int? NextServiceKm { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
 
         // Calculated Properties
-        public bool IsOverdue => Status == "Scheduled" && MaintenanceDate < DateTime.Today;
-        public int DaysOverdue => IsOverdue ? (DateTime.Today - MaintenanceDate).Days : 0;
-        public string VehicleInfo => $"{VehiclePlateNumber} - {VehicleMake} {VehicleModel}";
+        public bool IsOverdue => Status == "Scheduled" && ScheduledDate < DateTime.Today;
+        public bool IsInProgress => Status == "In Progress";
+        public bool IsCompleted => Status == "Completed";
+        public int? DaysUntilDue => Status == "Scheduled" ?
+            (ScheduledDate - DateTime.Today).Days : null;
+    }
+
+    public class MaintenanceRequest
+    {
+        public int VehicleId { get; set; }
+        public string MaintenanceType { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public DateTime ScheduledDate { get; set; }
+        public int CurrentMileage { get; set; }
+        public decimal Cost { get; set; }
+        public string MechanicName { get; set; } = string.Empty;
+        public string? MechanicPhone { get; set; }
+        public string? Notes { get; set; }
+    }
+
+    public class CompleteMaintenanceRequest
+    {
+        public DateTime CompletionDate { get; set; }
+        public decimal? ActualCost { get; set; }
+        public string? Notes { get; set; }
     }
 }

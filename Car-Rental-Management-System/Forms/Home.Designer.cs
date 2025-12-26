@@ -82,6 +82,7 @@
             btnManageMaintenance.TabIndex = 15;
             btnManageMaintenance.Text = "Manage Maintenance";
             btnManageMaintenance.UseVisualStyleBackColor = false;
+   
             // 
             // ManageRentals
             // 
@@ -97,6 +98,7 @@
             ManageRentals.TabIndex = 14;
             ManageRentals.Text = "Manage Rentals";
             ManageRentals.UseVisualStyleBackColor = false;
+      
             // 
             // btnManageVehicles
             // 
@@ -112,6 +114,7 @@
             btnManageVehicles.TabIndex = 13;
             btnManageVehicles.Text = "Manage Vehicles";
             btnManageVehicles.UseVisualStyleBackColor = false;
+
             // 
             // btnManageCustomer
             // 
@@ -127,6 +130,7 @@
             btnManageCustomer.TabIndex = 12;
             btnManageCustomer.Text = "Manage Customers";
             btnManageCustomer.UseVisualStyleBackColor = false;
+   
             // 
             // panel4
             // 
@@ -274,7 +278,7 @@
             ForeColor = Color.FromArgb(30, 30, 47);
             Name = "Home";
             Text = "Home";
-            Load += Home_Load;
+           
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();

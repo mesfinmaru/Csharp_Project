@@ -84,7 +84,7 @@ using (var scope = app.Services.CreateScope())
                 Role = "Admin"
             };
 
-            admin.PasswordHash = passwordHasher.HashPassword(admin, "Admin@123");
+            admin.PasswordHash = passwordHasher.HashPassword(admin, "admin");
             context.Users.Add(admin);
             context.SaveChanges();
 

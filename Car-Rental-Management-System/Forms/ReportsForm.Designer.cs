@@ -56,6 +56,7 @@
             // 
             // btnExport
             // 
+            btnExport.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnExport.BackColor = Color.DarkGray;
             btnExport.FlatStyle = FlatStyle.Flat;
             btnExport.Font = new Font("Segoe UI", 10F);
@@ -75,6 +76,7 @@
             // 
             // btnGenerateReport
             // 
+            btnGenerateReport.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnGenerateReport.BackColor = Color.RoyalBlue;
             btnGenerateReport.FlatStyle = FlatStyle.Flat;
             btnGenerateReport.Font = new Font("Segoe UI", 10F);
@@ -94,6 +96,7 @@
             // 
             // rtbReport
             // 
+            rtbReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             rtbReport.BackColor = Color.FromArgb(45, 45, 65);
             rtbReport.Font = new Font("Consolas", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             rtbReport.ForeColor = Color.White;
@@ -239,6 +242,7 @@
             // 
             // btnPrint
             // 
+            btnPrint.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnPrint.BackColor = Color.MediumSeaGreen;
             btnPrint.FlatStyle = FlatStyle.Flat;
             btnPrint.Font = new Font("Segoe UI", 10F);
@@ -258,6 +262,7 @@
             // 
             // btnClear
             // 
+            btnClear.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnClear.BackColor = Color.IndianRed;
             btnClear.FlatStyle = FlatStyle.Flat;
             btnClear.Font = new Font("Segoe UI", 10F);

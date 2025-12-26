@@ -28,603 +28,592 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            lblStatus = new Label();
+            dgvMaintenances = new DataGridView();
+            btnAddMaintenance = new FontAwesome.Sharp.IconButton();
+            btnEditMaintenance = new FontAwesome.Sharp.IconButton();
+            btnDeleteMaintenance = new FontAwesome.Sharp.IconButton();
+            btnViewHistory = new FontAwesome.Sharp.IconButton();
+            btnCompleteMaintenance = new FontAwesome.Sharp.IconButton();
+            btnStartMaintenance = new FontAwesome.Sharp.IconButton();
+            btnCancelMaintenance = new FontAwesome.Sharp.IconButton();
             txtSearch = new TextBox();
-            dgvMaintenance = new DataGridView();
-            panel1 = new Panel();
-            btnComplete = new FontAwesome.Sharp.IconButton();
-            btnDelete = new FontAwesome.Sharp.IconButton();
-            btnEdit = new FontAwesome.Sharp.IconButton();
-            btnSave = new FontAwesome.Sharp.IconButton();
-            panel2 = new Panel();
-            panelInput = new Panel();
-            groupBox2 = new GroupBox();
-            txtLocation = new TextBox();
-            label10 = new Label();
-            dtpExpectedComplete = new DateTimePicker();
-            txtContact = new TextBox();
+            cmbStatusFilter = new ComboBox();
+            lblStatusFilter = new Label();
+            statusStrip = new StatusStrip();
+            lblStatusBar = new ToolStripStatusLabel();
+            panelDetails = new Panel();
+            txtNotes = new RichTextBox();
+            txtMechanicPhone = new TextBox();
+            txtMechanicName = new TextBox();
             txtCost = new TextBox();
+            txtMileage = new TextBox();
+            txtDescription = new TextBox();
             cmbMaintenanceType = new ComboBox();
-            label9 = new Label();
-            txtProvider = new TextBox();
-            label11 = new Label();
-            rtbDescription = new RichTextBox();
-            label8 = new Label();
-            label7 = new Label();
-            label5 = new Label();
-            dtpDate = new DateTimePicker();
-            label4 = new Label();
-            label6 = new Label();
-            groupBox1 = new GroupBox();
+            dtpScheduledDate = new DateTimePicker();
             cmbVehicle = new ComboBox();
-            lblLastService = new Label();
-            txtCurrentMilage = new TextBox();
-            label2 = new Label();
-            label1 = new Label();
-            label3 = new Label();
-            panelHeader = new Panel();
-            lblFormTitle = new Label();
-            cmbStatus = new ComboBox();
-            label12 = new Label();
-            panelTools = new Panel();
-            ((System.ComponentModel.ISupportInitialize)dgvMaintenance).BeginInit();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panelInput.SuspendLayout();
-            groupBox2.SuspendLayout();
-            groupBox1.SuspendLayout();
-            panelHeader.SuspendLayout();
-            panelTools.SuspendLayout();
+            lblNotes = new Label();
+            lblMechanicPhone = new Label();
+            lblMechanicName = new Label();
+            lblCost = new Label();
+            lblMileage = new Label();
+            lblDescription = new Label();
+            lblMaintenanceType = new Label();
+            lblScheduledDate = new Label();
+            lblVehicle = new Label();
+            btnSave = new FontAwesome.Sharp.IconButton();
+            btnCancel = new FontAwesome.Sharp.IconButton();
+            ((System.ComponentModel.ISupportInitialize)dgvMaintenances).BeginInit();
+            statusStrip.SuspendLayout();
+            panelDetails.SuspendLayout();
             SuspendLayout();
             // 
-            // lblStatus
+            // dgvMaintenances
             // 
-            lblStatus.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblStatus.ForeColor = Color.FromArgb(230, 230, 235);
-            lblStatus.Location = new Point(565, 24);
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(201, 29);
-            lblStatus.TabIndex = 29;
-            lblStatus.Text = "0 maintenance(s)";
-            lblStatus.Click += lblStatus_Click_1;
+            dgvMaintenances.AllowUserToAddRows = false;
+            dgvMaintenances.AllowUserToDeleteRows = false;
+            dgvMaintenances.Anchor = AnchorStyles.None;
+            dgvMaintenances.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvMaintenances.BackgroundColor = Color.FromArgb(45, 45, 65);
+            dgvMaintenances.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMaintenances.Location = new Point(883, 120);
+            dgvMaintenances.Name = "dgvMaintenances";
+            dgvMaintenances.ReadOnly = true;
+            dgvMaintenances.RowHeadersWidth = 62;
+            dgvMaintenances.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvMaintenances.Size = new Size(1251, 878);
+            dgvMaintenances.TabIndex = 0;
+    
+            // 
+            // btnAddMaintenance
+            // 
+            btnAddMaintenance.Anchor = AnchorStyles.Bottom;
+            btnAddMaintenance.BackColor = Color.RoyalBlue;
+            btnAddMaintenance.FlatStyle = FlatStyle.Flat;
+            btnAddMaintenance.Font = new Font("Segoe UI", 9F);
+            btnAddMaintenance.ForeColor = Color.White;
+            btnAddMaintenance.IconChar = FontAwesome.Sharp.IconChar.CirclePlus;
+            btnAddMaintenance.IconColor = Color.White;
+            btnAddMaintenance.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnAddMaintenance.IconSize = 25;
+            btnAddMaintenance.Location = new Point(513, 1085);
+            btnAddMaintenance.Name = "btnAddMaintenance";
+            btnAddMaintenance.Size = new Size(150, 50);
+            btnAddMaintenance.TabIndex = 1;
+            btnAddMaintenance.Text = "Add New";
+            btnAddMaintenance.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAddMaintenance.UseVisualStyleBackColor = false;
+     
+            // 
+            // btnEditMaintenance
+            // 
+            btnEditMaintenance.Anchor = AnchorStyles.Bottom;
+            btnEditMaintenance.BackColor = Color.MediumSeaGreen;
+            btnEditMaintenance.FlatStyle = FlatStyle.Flat;
+            btnEditMaintenance.Font = new Font("Segoe UI", 9F);
+            btnEditMaintenance.ForeColor = Color.White;
+            btnEditMaintenance.IconChar = FontAwesome.Sharp.IconChar.Edit;
+            btnEditMaintenance.IconColor = Color.White;
+            btnEditMaintenance.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnEditMaintenance.IconSize = 25;
+            btnEditMaintenance.Location = new Point(679, 1085);
+            btnEditMaintenance.Name = "btnEditMaintenance";
+            btnEditMaintenance.Size = new Size(150, 50);
+            btnEditMaintenance.TabIndex = 2;
+            btnEditMaintenance.Text = "Edit";
+            btnEditMaintenance.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnEditMaintenance.UseVisualStyleBackColor = false;
+       
+            // 
+            // btnDeleteMaintenance
+            // 
+            btnDeleteMaintenance.Anchor = AnchorStyles.Bottom;
+            btnDeleteMaintenance.BackColor = Color.IndianRed;
+            btnDeleteMaintenance.FlatStyle = FlatStyle.Flat;
+            btnDeleteMaintenance.Font = new Font("Segoe UI", 9F);
+            btnDeleteMaintenance.ForeColor = Color.White;
+            btnDeleteMaintenance.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
+            btnDeleteMaintenance.IconColor = Color.White;
+            btnDeleteMaintenance.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnDeleteMaintenance.IconSize = 25;
+            btnDeleteMaintenance.Location = new Point(844, 1085);
+            btnDeleteMaintenance.Name = "btnDeleteMaintenance";
+            btnDeleteMaintenance.Size = new Size(150, 50);
+            btnDeleteMaintenance.TabIndex = 3;
+            btnDeleteMaintenance.Text = "Delete";
+            btnDeleteMaintenance.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnDeleteMaintenance.UseVisualStyleBackColor = false;
+       
+            // 
+            // btnViewHistory
+            // 
+            btnViewHistory.Anchor = AnchorStyles.Bottom;
+            btnViewHistory.BackColor = Color.DarkOrchid;
+            btnViewHistory.FlatStyle = FlatStyle.Flat;
+            btnViewHistory.Font = new Font("Segoe UI", 9F);
+            btnViewHistory.ForeColor = Color.White;
+            btnViewHistory.IconChar = FontAwesome.Sharp.IconChar.ClockRotateLeft;
+            btnViewHistory.IconColor = Color.White;
+            btnViewHistory.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnViewHistory.IconSize = 25;
+            btnViewHistory.Location = new Point(1011, 1085);
+            btnViewHistory.Name = "btnViewHistory";
+            btnViewHistory.Size = new Size(193, 50);
+            btnViewHistory.TabIndex = 4;
+            btnViewHistory.Text = "View History";
+            btnViewHistory.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnViewHistory.UseVisualStyleBackColor = false;
+     
+            // 
+            // btnCompleteMaintenance
+            // 
+            btnCompleteMaintenance.Anchor = AnchorStyles.Bottom;
+            btnCompleteMaintenance.BackColor = Color.MediumSeaGreen;
+            btnCompleteMaintenance.FlatStyle = FlatStyle.Flat;
+            btnCompleteMaintenance.Font = new Font("Segoe UI", 9F);
+            btnCompleteMaintenance.ForeColor = Color.White;
+            btnCompleteMaintenance.IconChar = FontAwesome.Sharp.IconChar.CheckCircle;
+            btnCompleteMaintenance.IconColor = Color.White;
+            btnCompleteMaintenance.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnCompleteMaintenance.IconSize = 25;
+            btnCompleteMaintenance.Location = new Point(1220, 1085);
+            btnCompleteMaintenance.Name = "btnCompleteMaintenance";
+            btnCompleteMaintenance.Size = new Size(169, 50);
+            btnCompleteMaintenance.TabIndex = 5;
+            btnCompleteMaintenance.Text = "Complete";
+            btnCompleteMaintenance.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCompleteMaintenance.UseVisualStyleBackColor = false;
+    
+            // 
+            // btnStartMaintenance
+            // 
+            btnStartMaintenance.Anchor = AnchorStyles.Bottom;
+            btnStartMaintenance.BackColor = Color.Orange;
+            btnStartMaintenance.FlatStyle = FlatStyle.Flat;
+            btnStartMaintenance.Font = new Font("Segoe UI", 9F);
+            btnStartMaintenance.ForeColor = Color.White;
+            btnStartMaintenance.IconChar = FontAwesome.Sharp.IconChar.PlayCircle;
+            btnStartMaintenance.IconColor = Color.White;
+            btnStartMaintenance.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnStartMaintenance.IconSize = 25;
+            btnStartMaintenance.Location = new Point(1403, 1085);
+            btnStartMaintenance.Name = "btnStartMaintenance";
+            btnStartMaintenance.Size = new Size(150, 50);
+            btnStartMaintenance.TabIndex = 6;
+            btnStartMaintenance.Text = "Start";
+            btnStartMaintenance.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnStartMaintenance.UseVisualStyleBackColor = false;
+ 
+            // btnCancelMaintenance
+            // 
+            btnCancelMaintenance.Anchor = AnchorStyles.Bottom;
+            btnCancelMaintenance.BackColor = Color.Crimson;
+            btnCancelMaintenance.FlatStyle = FlatStyle.Flat;
+            btnCancelMaintenance.Font = new Font("Segoe UI", 9F);
+            btnCancelMaintenance.ForeColor = Color.White;
+            btnCancelMaintenance.IconChar = FontAwesome.Sharp.IconChar.XmarkCircle;
+            btnCancelMaintenance.IconColor = Color.White;
+            btnCancelMaintenance.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnCancelMaintenance.IconSize = 25;
+            btnCancelMaintenance.Location = new Point(1568, 1085);
+            btnCancelMaintenance.Name = "btnCancelMaintenance";
+            btnCancelMaintenance.Size = new Size(150, 50);
+            btnCancelMaintenance.TabIndex = 7;
+            btnCancelMaintenance.Text = "Cancel";
+            btnCancelMaintenance.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCancelMaintenance.UseVisualStyleBackColor = false;
+         
             // 
             // txtSearch
             // 
-            txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtSearch.Font = new Font("Trebuchet MS", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearch.Location = new Point(12, 16);
+            txtSearch.BackColor = Color.FromArgb(45, 45, 65);
+            txtSearch.Font = new Font("Segoe UI", 10F);
+            txtSearch.ForeColor = Color.White;
+            txtSearch.Location = new Point(883, 50);
             txtSearch.Name = "txtSearch";
-            txtSearch.PlaceholderText = "Search by vehicle, type, or status...";
-            txtSearch.Size = new Size(512, 39);
-            txtSearch.TabIndex = 24;
-            txtSearch.TextChanged += txtSearch_TextChanged_1;
+            txtSearch.PlaceholderText = "Search by vehicle plate, description, or mechanic...";
+            txtSearch.Size = new Size(715, 43);
+            txtSearch.TabIndex = 8;
+ 
             // 
-            // dgvMaintenance
+            // cmbStatusFilter
             // 
-            dgvMaintenance.AllowUserToAddRows = false;
-            dgvMaintenance.AllowUserToDeleteRows = false;
-            dgvMaintenance.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvMaintenance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvMaintenance.BackgroundColor = Color.FromArgb(30, 30, 44);
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(124, 77, 255);
-            dataGridViewCellStyle4.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dgvMaintenance.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dgvMaintenance.ColumnHeadersHeight = 46;
-            dgvMaintenance.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(30, 30, 44);
-            dataGridViewCellStyle5.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(230, 230, 235);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(124, 77, 255);
-            dataGridViewCellStyle5.SelectionForeColor = Color.White;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            dgvMaintenance.DefaultCellStyle = dataGridViewCellStyle5;
-            dgvMaintenance.GridColor = Color.FromArgb(55, 55, 70);
-            dgvMaintenance.Location = new Point(559, 82);
-            dgvMaintenance.Name = "dgvMaintenance";
-            dgvMaintenance.ReadOnly = true;
-            dgvMaintenance.RowHeadersVisible = false;
-            dgvMaintenance.RowHeadersWidth = 82;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(30, 30, 44);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(230, 230, 235);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(124, 77, 255);
-            dataGridViewCellStyle6.SelectionForeColor = Color.White;
-            dgvMaintenance.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            dgvMaintenance.RowTemplate.Height = 36;
-            dgvMaintenance.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvMaintenance.Size = new Size(1414, 694);
-            dgvMaintenance.TabIndex = 25;
-            dgvMaintenance.CellContentClick += dgvMaintenance_CellContentClick_1;
+            cmbStatusFilter.BackColor = Color.FromArgb(45, 45, 65);
+            cmbStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatusFilter.FlatStyle = FlatStyle.Flat;
+            cmbStatusFilter.Font = new Font("Segoe UI", 10F);
+            cmbStatusFilter.ForeColor = Color.White;
+            cmbStatusFilter.FormattingEnabled = true;
+            cmbStatusFilter.Items.AddRange(new object[] { "All", "Scheduled", "In Progress", "Completed", "Cancelled" });
+            cmbStatusFilter.Location = new Point(1884, 47);
+            cmbStatusFilter.Name = "cmbStatusFilter";
+            cmbStatusFilter.Size = new Size(250, 45);
+            cmbStatusFilter.TabIndex = 10;
+
             // 
-            // panel1
+            // lblStatusFilter
             // 
-            panel1.Controls.Add(btnComplete);
-            panel1.Controls.Add(btnDelete);
-            panel1.Controls.Add(btnEdit);
-            panel1.Controls.Add(btnSave);
-            panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 799);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1988, 94);
-            panel1.TabIndex = 36;
+            lblStatusFilter.AutoSize = true;
+            lblStatusFilter.Font = new Font("Segoe UI", 10F);
+            lblStatusFilter.ForeColor = Color.White;
+            lblStatusFilter.Location = new Point(1764, 50);
+            lblStatusFilter.Name = "lblStatusFilter";
+            lblStatusFilter.Size = new Size(94, 37);
+            lblStatusFilter.TabIndex = 11;
+            lblStatusFilter.Text = "Status:";
             // 
-            // btnComplete
+            // statusStrip
             // 
-            btnComplete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnComplete.FlatStyle = FlatStyle.Flat;
-            btnComplete.Font = new Font("Trebuchet MS", 10.125F);
-            btnComplete.IconChar = FontAwesome.Sharp.IconChar.CheckCircle;
-            btnComplete.IconColor = Color.White;
-            btnComplete.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnComplete.Location = new Point(1420, 20);
-            btnComplete.Name = "btnComplete";
-            btnComplete.Size = new Size(200, 60);
-            btnComplete.TabIndex = 35;
-            btnComplete.Text = "Complete";
-            btnComplete.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnComplete.UseVisualStyleBackColor = true;
-            btnComplete.Click += btnComplete_Click_1;
+            statusStrip.BackColor = Color.FromArgb(64, 64, 64);
+            statusStrip.ImageScalingSize = new Size(24, 24);
+            statusStrip.Items.AddRange(new ToolStripItem[] { lblStatusBar });
+            statusStrip.Location = new Point(0, 1138);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(2179, 42);
+            statusStrip.TabIndex = 12;
+            statusStrip.Text = "statusStrip1";
             // 
-            // btnDelete
+            // lblStatusBar
             // 
-            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Trebuchet MS", 10.125F);
-            btnDelete.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
-            btnDelete.IconColor = Color.White;
-            btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnDelete.Location = new Point(1160, 22);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(200, 60);
-            btnDelete.TabIndex = 34;
-            btnDelete.Text = "Delete";
-            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += btnDelete_Click_1;
+            lblStatusBar.Name = "lblStatusBar";
+            lblStatusBar.Size = new Size(78, 32);
+            lblStatusBar.Text = "Ready";
             // 
-            // btnEdit
+            // panelDetails
             // 
-            btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEdit.FlatStyle = FlatStyle.Flat;
-            btnEdit.Font = new Font("Trebuchet MS", 10.125F);
-            btnEdit.IconChar = FontAwesome.Sharp.IconChar.Edit;
-            btnEdit.IconColor = Color.White;
-            btnEdit.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnEdit.Location = new Point(900, 22);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(200, 60);
-            btnEdit.TabIndex = 33;
-            btnEdit.Text = "Edit";
-            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnEdit.UseVisualStyleBackColor = true;
-            btnEdit.Click += btnEdit_Click_1;
+            panelDetails.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            panelDetails.BackColor = Color.FromArgb(45, 45, 65);
+            panelDetails.BorderStyle = BorderStyle.FixedSingle;
+            panelDetails.Controls.Add(txtNotes);
+            panelDetails.Controls.Add(txtMechanicPhone);
+            panelDetails.Controls.Add(txtMechanicName);
+            panelDetails.Controls.Add(txtCost);
+            panelDetails.Controls.Add(txtMileage);
+            panelDetails.Controls.Add(txtDescription);
+            panelDetails.Controls.Add(cmbMaintenanceType);
+            panelDetails.Controls.Add(dtpScheduledDate);
+            panelDetails.Controls.Add(cmbVehicle);
+            panelDetails.Controls.Add(lblNotes);
+            panelDetails.Controls.Add(lblMechanicPhone);
+            panelDetails.Controls.Add(lblMechanicName);
+            panelDetails.Controls.Add(lblCost);
+            panelDetails.Controls.Add(lblMileage);
+            panelDetails.Controls.Add(lblDescription);
+            panelDetails.Controls.Add(lblMaintenanceType);
+            panelDetails.Controls.Add(lblScheduledDate);
+            panelDetails.Controls.Add(lblVehicle);
+            panelDetails.Controls.Add(btnSave);
+            panelDetails.Controls.Add(btnCancel);
+            panelDetails.Location = new Point(88, 47);
+            panelDetails.Name = "panelDetails";
+            panelDetails.Size = new Size(761, 951);
+            panelDetails.TabIndex = 13;
+            panelDetails.Visible = false;
             // 
-            // btnSave
+            // txtNotes
             // 
-            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Trebuchet MS", 10.125F);
-            btnSave.IconChar = FontAwesome.Sharp.IconChar.Save;
-            btnSave.IconColor = Color.White;
-            btnSave.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnSave.Location = new Point(656, 20);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(200, 60);
-            btnSave.TabIndex = 32;
-            btnSave.Text = "Save";
-            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnSave.UseVisualStyleBackColor = true;
-            btnSave.Click += btnSave_Click_1;
+            txtNotes.BackColor = Color.FromArgb(45, 45, 65);
+            txtNotes.Font = new Font("Segoe UI", 9F);
+            txtNotes.ForeColor = Color.White;
+            txtNotes.Location = new Point(265, 565);
+            txtNotes.Name = "txtNotes";
+            txtNotes.Size = new Size(450, 80);
+            txtNotes.TabIndex = 20;
+            txtNotes.Text = "";
             // 
-            // panel2
+            // txtMechanicPhone
             // 
-            panel2.Controls.Add(panelInput);
-            panel2.Controls.Add(panelHeader);
-            panel2.Location = new Point(16, 12);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(528, 768);
-            panel2.TabIndex = 37;
+            txtMechanicPhone.BackColor = Color.FromArgb(45, 45, 65);
+            txtMechanicPhone.Font = new Font("Segoe UI", 9F);
+            txtMechanicPhone.ForeColor = Color.White;
+            txtMechanicPhone.Location = new Point(265, 505);
+            txtMechanicPhone.Name = "txtMechanicPhone";
+            txtMechanicPhone.Size = new Size(450, 39);
+            txtMechanicPhone.TabIndex = 19;
             // 
-            // panelInput
+            // txtMechanicName
             // 
-            panelInput.Controls.Add(groupBox2);
-            panelInput.Controls.Add(groupBox1);
-            panelInput.Dock = DockStyle.Fill;
-            panelInput.Location = new Point(0, 70);
-            panelInput.Name = "panelInput";
-            panelInput.Size = new Size(528, 698);
-            panelInput.TabIndex = 39;
-            // 
-            // groupBox2
-            // 
-            groupBox2.Controls.Add(txtLocation);
-            groupBox2.Controls.Add(label10);
-            groupBox2.Controls.Add(dtpExpectedComplete);
-            groupBox2.Controls.Add(txtContact);
-            groupBox2.Controls.Add(txtCost);
-            groupBox2.Controls.Add(cmbMaintenanceType);
-            groupBox2.Controls.Add(label9);
-            groupBox2.Controls.Add(txtProvider);
-            groupBox2.Controls.Add(label11);
-            groupBox2.Controls.Add(rtbDescription);
-            groupBox2.Controls.Add(label8);
-            groupBox2.Controls.Add(label7);
-            groupBox2.Controls.Add(label5);
-            groupBox2.Controls.Add(dtpDate);
-            groupBox2.Controls.Add(label4);
-            groupBox2.Controls.Add(label6);
-            groupBox2.ForeColor = Color.FromArgb(230, 230, 235);
-            groupBox2.Location = new Point(19, 237);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(493, 458);
-            groupBox2.TabIndex = 37;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Maintenance Information";
-            // 
-            // txtLocation
-            // 
-            txtLocation.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtLocation.Location = new Point(172, 288);
-            txtLocation.Name = "txtLocation";
-            txtLocation.Size = new Size(302, 35);
-            txtLocation.TabIndex = 51;
-            txtLocation.TextChanged += txtLocation_TextChanged_1;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label10.Location = new Point(15, 291);
-            label10.Name = "label10";
-            label10.Size = new Size(115, 29);
-            label10.TabIndex = 50;
-            label10.Text = "Location:";
-            // 
-            // dtpExpectedComplete
-            // 
-            dtpExpectedComplete.CalendarFont = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpExpectedComplete.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpExpectedComplete.Location = new Point(172, 77);
-            dtpExpectedComplete.Name = "dtpExpectedComplete";
-            dtpExpectedComplete.Size = new Size(302, 35);
-            dtpExpectedComplete.TabIndex = 38;
-            dtpExpectedComplete.ValueChanged += dtpExpectedComplete_ValueChanged_1;
-            // 
-            // txtContact
-            // 
-            txtContact.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContact.Location = new Point(172, 245);
-            txtContact.Name = "txtContact";
-            txtContact.Size = new Size(302, 35);
-            txtContact.TabIndex = 49;
-            txtContact.TextChanged += txtContact_TextChanged_1;
+            txtMechanicName.BackColor = Color.FromArgb(45, 45, 65);
+            txtMechanicName.Font = new Font("Segoe UI", 9F);
+            txtMechanicName.ForeColor = Color.White;
+            txtMechanicName.Location = new Point(265, 446);
+            txtMechanicName.Name = "txtMechanicName";
+            txtMechanicName.Size = new Size(450, 39);
+            txtMechanicName.TabIndex = 18;
             // 
             // txtCost
             // 
-            txtCost.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCost.Location = new Point(172, 162);
+            txtCost.BackColor = Color.FromArgb(45, 45, 65);
+            txtCost.Font = new Font("Segoe UI", 9F);
+            txtCost.ForeColor = Color.White;
+            txtCost.Location = new Point(265, 385);
             txtCost.Name = "txtCost";
-            txtCost.Size = new Size(302, 35);
-            txtCost.TabIndex = 39;
-            txtCost.TextChanged += txtCost_TextChanged_1;
+            txtCost.Size = new Size(450, 39);
+            txtCost.TabIndex = 17;
+            // 
+            // txtMileage
+            // 
+            txtMileage.BackColor = Color.FromArgb(45, 45, 65);
+            txtMileage.Font = new Font("Segoe UI", 9F);
+            txtMileage.ForeColor = Color.White;
+            txtMileage.Location = new Point(265, 327);
+            txtMileage.Name = "txtMileage";
+            txtMileage.Size = new Size(450, 39);
+            txtMileage.TabIndex = 16;
+            // 
+            // txtDescription
+            // 
+            txtDescription.BackColor = Color.FromArgb(45, 45, 65);
+            txtDescription.Font = new Font("Segoe UI", 9F);
+            txtDescription.ForeColor = Color.White;
+            txtDescription.Location = new Point(265, 266);
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(450, 39);
+            txtDescription.TabIndex = 15;
             // 
             // cmbMaintenanceType
             // 
-            cmbMaintenanceType.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbMaintenanceType.BackColor = Color.FromArgb(45, 45, 65);
+            cmbMaintenanceType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbMaintenanceType.FlatStyle = FlatStyle.Flat;
+            cmbMaintenanceType.Font = new Font("Segoe UI", 9F);
+            cmbMaintenanceType.ForeColor = Color.White;
             cmbMaintenanceType.FormattingEnabled = true;
-            cmbMaintenanceType.Location = new Point(172, 34);
+            cmbMaintenanceType.Items.AddRange(new object[] { "Regular Service", "Oil Change", "Brake Service", "Tire Replacement", "Engine Repair", "Accident Repair", "Electrical Repair", "Body Work", "Other" });
+            cmbMaintenanceType.Location = new Point(265, 73);
             cmbMaintenanceType.Name = "cmbMaintenanceType";
-            cmbMaintenanceType.Size = new Size(302, 37);
-            cmbMaintenanceType.TabIndex = 36;
-            cmbMaintenanceType.SelectedIndexChanged += cmbMaintenanceType_SelectedIndexChanged_1;
+            cmbMaintenanceType.Size = new Size(450, 40);
+            cmbMaintenanceType.TabIndex = 14;
             // 
-            // label9
+            // dtpScheduledDate
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(15, 248);
-            label9.Name = "label9";
-            label9.Size = new Size(107, 29);
-            label9.TabIndex = 48;
-            label9.Text = "Contact:";
-            // 
-            // txtProvider
-            // 
-            txtProvider.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtProvider.Location = new Point(172, 203);
-            txtProvider.Name = "txtProvider";
-            txtProvider.Size = new Size(302, 35);
-            txtProvider.TabIndex = 47;
-            txtProvider.Text = "Local Garage";
-            txtProvider.TextChanged += txtProvider_TextChanged_1;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label11.Location = new Point(15, 206);
-            label11.Name = "label11";
-            label11.Size = new Size(110, 29);
-            label11.TabIndex = 46;
-            label11.Text = "Provider:";
-            label11.Click += label11_Click;
-            // 
-            // rtbDescription
-            // 
-            rtbDescription.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            rtbDescription.Location = new Point(172, 332);
-            rtbDescription.Name = "rtbDescription";
-            rtbDescription.Size = new Size(302, 114);
-            rtbDescription.TabIndex = 41;
-            rtbDescription.Text = "";
-            rtbDescription.TextChanged += rtbDescription_TextChanged_1;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label8.Location = new Point(15, 335);
-            label8.Name = "label8";
-            label8.Size = new Size(144, 29);
-            label8.TabIndex = 40;
-            label8.Text = "Description:";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(18, 163);
-            label7.Name = "label7";
-            label7.Size = new Size(69, 29);
-            label7.TabIndex = 38;
-            label7.Text = "Cost:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(15, 77);
-            label5.Name = "label5";
-            label5.Size = new Size(158, 29);
-            label5.TabIndex = 37;
-            label5.Text = "Complete By:";
-            // 
-            // dtpDate
-            // 
-            dtpDate.CalendarFont = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpDate.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpDate.Location = new Point(172, 121);
-            dtpDate.Name = "dtpDate";
-            dtpDate.Size = new Size(302, 35);
-            dtpDate.TabIndex = 36;
-            dtpDate.ValueChanged += dtpDate_ValueChanged_1;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(15, 120);
-            label4.Name = "label4";
-            label4.Size = new Size(73, 29);
-            label4.TabIndex = 32;
-            label4.Text = "Date:";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(18, 39);
-            label6.Name = "label6";
-            label6.Size = new Size(71, 29);
-            label6.TabIndex = 30;
-            label6.Text = "Type:";
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(cmbVehicle);
-            groupBox1.Controls.Add(lblLastService);
-            groupBox1.Controls.Add(txtCurrentMilage);
-            groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(label3);
-            groupBox1.ForeColor = Color.FromArgb(230, 230, 235);
-            groupBox1.Location = new Point(19, 13);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(493, 218);
-            groupBox1.TabIndex = 36;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Vehicle Information";
+            dtpScheduledDate.CalendarMonthBackground = Color.FromArgb(45, 45, 65);
+            dtpScheduledDate.CalendarTitleBackColor = Color.FromArgb(30, 30, 47);
+            dtpScheduledDate.CalendarTitleForeColor = Color.White;
+            dtpScheduledDate.CalendarTrailingForeColor = Color.Gray;
+            dtpScheduledDate.Font = new Font("Segoe UI", 9F);
+            dtpScheduledDate.Format = DateTimePickerFormat.Short;
+            dtpScheduledDate.Location = new Point(265, 137);
+            dtpScheduledDate.Name = "dtpScheduledDate";
+            dtpScheduledDate.Size = new Size(450, 39);
+            dtpScheduledDate.TabIndex = 13;
             // 
             // cmbVehicle
             // 
-            cmbVehicle.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbVehicle.BackColor = Color.FromArgb(45, 45, 65);
+            cmbVehicle.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbVehicle.FlatStyle = FlatStyle.Flat;
+            cmbVehicle.Font = new Font("Segoe UI", 9F);
+            cmbVehicle.ForeColor = Color.White;
             cmbVehicle.FormattingEnabled = true;
-            cmbVehicle.Location = new Point(172, 58);
+            cmbVehicle.Location = new Point(265, 201);
             cmbVehicle.Name = "cmbVehicle";
-            cmbVehicle.Size = new Size(302, 37);
-            cmbVehicle.TabIndex = 37;
-            cmbVehicle.SelectedIndexChanged += cmbVehicle_SelectedIndexChanged_1;
+            cmbVehicle.Size = new Size(450, 40);
+            cmbVehicle.TabIndex = 12;
             // 
-            // lblLastService
+            // lblNotes
             // 
-            lblLastService.AutoSize = true;
-            lblLastService.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblLastService.Location = new Point(172, 175);
-            lblLastService.Name = "lblLastService";
-            lblLastService.Size = new Size(55, 29);
-            lblLastService.TabIndex = 36;
-            lblLastService.Text = "N/A";
-            lblLastService.Click += lblLastService_Click_1;
+            lblNotes.AutoSize = true;
+            lblNotes.Font = new Font("Segoe UI", 9F);
+            lblNotes.ForeColor = Color.White;
+            lblNotes.Location = new Point(50, 565);
+            lblNotes.Name = "lblNotes";
+            lblNotes.Size = new Size(82, 32);
+            lblNotes.TabIndex = 10;
+            lblNotes.Text = "Notes:";
             // 
-            // txtCurrentMilage
+            // lblMechanicPhone
             // 
-            txtCurrentMilage.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCurrentMilage.Location = new Point(172, 119);
-            txtCurrentMilage.Name = "txtCurrentMilage";
-            txtCurrentMilage.Size = new Size(302, 35);
-            txtCurrentMilage.TabIndex = 35;
-            txtCurrentMilage.TextChanged += txtCurrentMilage_TextChanged_1;
+            lblMechanicPhone.AutoSize = true;
+            lblMechanicPhone.Font = new Font("Segoe UI", 9F);
+            lblMechanicPhone.ForeColor = Color.White;
+            lblMechanicPhone.Location = new Point(50, 505);
+            lblMechanicPhone.Name = "lblMechanicPhone";
+            lblMechanicPhone.Size = new Size(197, 32);
+            lblMechanicPhone.TabIndex = 9;
+            lblMechanicPhone.Text = "Mechanic Phone:";
             // 
-            // label2
+            // lblMechanicName
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(15, 175);
-            label2.Name = "label2";
-            label2.Size = new Size(152, 29);
-            label2.TabIndex = 32;
-            label2.Text = "Last Service:";
+            lblMechanicName.AutoSize = true;
+            lblMechanicName.Font = new Font("Segoe UI", 9F);
+            lblMechanicName.ForeColor = Color.White;
+            lblMechanicName.Location = new Point(50, 446);
+            lblMechanicName.Name = "lblMechanicName";
+            lblMechanicName.Size = new Size(193, 32);
+            lblMechanicName.TabIndex = 8;
+            lblMechanicName.Text = "Mechanic Name:";
             // 
-            // label1
+            // lblCost
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(15, 120);
-            label1.Name = "label1";
-            label1.Size = new Size(104, 29);
-            label1.TabIndex = 31;
-            label1.Text = "Mileage:";
+            lblCost.AutoSize = true;
+            lblCost.Font = new Font("Segoe UI", 9F);
+            lblCost.ForeColor = Color.White;
+            lblCost.Location = new Point(50, 385);
+            lblCost.Name = "lblCost";
+            lblCost.Size = new Size(100, 32);
+            lblCost.TabIndex = 7;
+            lblCost.Text = "Cost ($):";
             // 
-            // label3
+            // lblMileage
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(15, 61);
-            label3.Name = "label3";
-            label3.Size = new Size(99, 29);
-            label3.TabIndex = 30;
-            label3.Text = "Vehicle:";
+            lblMileage.AutoSize = true;
+            lblMileage.Font = new Font("Segoe UI", 9F);
+            lblMileage.ForeColor = Color.White;
+            lblMileage.Location = new Point(50, 327);
+            lblMileage.Name = "lblMileage";
+            lblMileage.Size = new Size(105, 32);
+            lblMileage.TabIndex = 6;
+            lblMileage.Text = "Mileage:";
             // 
-            // panelHeader
+            // lblDescription
             // 
-            panelHeader.Controls.Add(lblFormTitle);
-            panelHeader.Dock = DockStyle.Top;
-            panelHeader.Location = new Point(0, 0);
-            panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(528, 70);
-            panelHeader.TabIndex = 38;
+            lblDescription.AutoSize = true;
+            lblDescription.Font = new Font("Segoe UI", 9F);
+            lblDescription.ForeColor = Color.White;
+            lblDescription.Location = new Point(50, 266);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(140, 32);
+            lblDescription.TabIndex = 5;
+            lblDescription.Text = "Description:";
             // 
-            // lblFormTitle
+            // lblMaintenanceType
             // 
-            lblFormTitle.AutoSize = true;
-            lblFormTitle.BackColor = Color.Transparent;
-            lblFormTitle.Font = new Font("Trebuchet MS", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFormTitle.ForeColor = Color.FromArgb(230, 230, 235);
-            lblFormTitle.Location = new Point(114, 16);
-            lblFormTitle.Name = "lblFormTitle";
-            lblFormTitle.Size = new Size(295, 40);
-            lblFormTitle.TabIndex = 0;
-            lblFormTitle.Text = "Maintenance Form";
-            lblFormTitle.Click += lblFormTitle_Click_1;
+            lblMaintenanceType.AutoSize = true;
+            lblMaintenanceType.Font = new Font("Segoe UI", 9F);
+            lblMaintenanceType.ForeColor = Color.White;
+            lblMaintenanceType.Location = new Point(50, 73);
+            lblMaintenanceType.Name = "lblMaintenanceType";
+            lblMaintenanceType.Size = new Size(70, 32);
+            lblMaintenanceType.TabIndex = 4;
+            lblMaintenanceType.Text = "Type:";
             // 
-            // cmbStatus
+            // lblScheduledDate
             // 
-            cmbStatus.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmbStatus.FormattingEnabled = true;
-            cmbStatus.Location = new Point(172, 113);
-            cmbStatus.Name = "cmbStatus";
-            cmbStatus.Size = new Size(302, 37);
-            cmbStatus.TabIndex = 52;
+            lblScheduledDate.AutoSize = true;
+            lblScheduledDate.Font = new Font("Segoe UI", 9F);
+            lblScheduledDate.ForeColor = Color.White;
+            lblScheduledDate.Location = new Point(50, 137);
+            lblScheduledDate.Name = "lblScheduledDate";
+            lblScheduledDate.Size = new Size(131, 32);
+            lblScheduledDate.TabIndex = 3;
+            lblScheduledDate.Text = "Scheduled:";
             // 
-            // label12
+            // lblVehicle
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label12.ForeColor = Color.FromArgb(230, 230, 235);
-            label12.Location = new Point(15, 116);
-            label12.Name = "label12";
-            label12.Size = new Size(74, 30);
-            label12.TabIndex = 53;
-            label12.Text = "Status:";
+            lblVehicle.AutoSize = true;
+            lblVehicle.Font = new Font("Segoe UI", 9F);
+            lblVehicle.ForeColor = Color.White;
+            lblVehicle.Location = new Point(50, 204);
+            lblVehicle.Name = "lblVehicle";
+            lblVehicle.Size = new Size(102, 32);
+            lblVehicle.TabIndex = 2;
+            lblVehicle.Text = "Vehicle: ";
             // 
-            // panelTools
+            // btnSave
             // 
-            panelTools.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panelTools.Controls.Add(txtSearch);
-            panelTools.Controls.Add(lblStatus);
-            panelTools.Location = new Point(550, 12);
-            panelTools.Name = "panelTools";
-            panelTools.Size = new Size(1426, 70);
-            panelTools.TabIndex = 38;
+            btnSave.BackColor = Color.MediumSeaGreen;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 9F);
+            btnSave.ForeColor = Color.White;
+            btnSave.IconChar = FontAwesome.Sharp.IconChar.Save;
+            btnSave.IconColor = Color.White;
+            btnSave.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnSave.IconSize = 25;
+            btnSave.Location = new Point(565, 848);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(150, 50);
+            btnSave.TabIndex = 1;
+            btnSave.Text = "Save";
+            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnSave.UseVisualStyleBackColor = false;
+       
+            // 
+            // btnCancel
+            // 
+            btnCancel.BackColor = Color.IndianRed;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI", 9F);
+            btnCancel.ForeColor = Color.White;
+            btnCancel.IconChar = FontAwesome.Sharp.IconChar.Close;
+            btnCancel.IconColor = Color.White;
+            btnCancel.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnCancel.IconSize = 25;
+            btnCancel.Location = new Point(362, 848);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(150, 50);
+            btnCancel.TabIndex = 0;
+            btnCancel.Text = "Cancel";
+            btnCancel.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCancel.UseVisualStyleBackColor = false;
+       
             // 
             // MaintenanceForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 27, 39);
-            ClientSize = new Size(1988, 893);
-            Controls.Add(panelTools);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
-            Controls.Add(dgvMaintenance);
+            BackColor = Color.FromArgb(30, 30, 47);
+            ClientSize = new Size(2179, 1180);
+            Controls.Add(panelDetails);
+            Controls.Add(statusStrip);
+            Controls.Add(lblStatusFilter);
+            Controls.Add(cmbStatusFilter);
+            Controls.Add(txtSearch);
+            Controls.Add(btnCancelMaintenance);
+            Controls.Add(btnStartMaintenance);
+            Controls.Add(btnCompleteMaintenance);
+            Controls.Add(btnViewHistory);
+            Controls.Add(btnDeleteMaintenance);
+            Controls.Add(btnEditMaintenance);
+            Controls.Add(btnAddMaintenance);
+            Controls.Add(dgvMaintenances);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "MaintenanceForm";
-            Text = "Maintenance Management";
+            Text = "MaintenanceForm";
             Load += MaintenanceForm_Load;
-            ((System.ComponentModel.ISupportInitialize)dgvMaintenance).EndInit();
-            panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panelInput.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            panelHeader.ResumeLayout(false);
-            panelHeader.PerformLayout();
-            panelTools.ResumeLayout(false);
-            panelTools.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvMaintenances).EndInit();
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
+            panelDetails.ResumeLayout(false);
+            panelDetails.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Label lblStatus;
+        private DataGridView dgvMaintenances;
+        private FontAwesome.Sharp.IconButton btnAddMaintenance;
+        private FontAwesome.Sharp.IconButton btnEditMaintenance;
+        private FontAwesome.Sharp.IconButton btnDeleteMaintenance;
+        private FontAwesome.Sharp.IconButton btnViewHistory;
+        private FontAwesome.Sharp.IconButton btnCompleteMaintenance;
+        private FontAwesome.Sharp.IconButton btnStartMaintenance;
+        private FontAwesome.Sharp.IconButton btnCancelMaintenance;
         private TextBox txtSearch;
-        private DataGridView dgvMaintenance;
-        private Panel panel1;
-        private FontAwesome.Sharp.IconButton btnComplete;
-        private FontAwesome.Sharp.IconButton btnDelete;
-        private FontAwesome.Sharp.IconButton btnEdit;
-        private FontAwesome.Sharp.IconButton btnSave;
-        private Panel panel2;
-        private Panel panelInput;
-        private GroupBox groupBox2;
-        private RichTextBox rtbDescription;
-        private Label label8;
+        private ComboBox cmbStatusFilter;
+        private Label lblStatusFilter;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel lblStatusBar;
+        private Panel panelDetails;
+        private RichTextBox txtNotes;
+        private TextBox txtMechanicPhone;
+        private TextBox txtMechanicName;
         private TextBox txtCost;
-        private DateTimePicker dtpExpectedComplete;
-        private Label label7;
-        private Label label5;
+        private TextBox txtMileage;
+        private TextBox txtDescription;
         private ComboBox cmbMaintenanceType;
-        private DateTimePicker dtpDate;
-        private Label label4;
-        private Label label6;
-        private GroupBox groupBox1;
+        private DateTimePicker dtpScheduledDate;
         private ComboBox cmbVehicle;
-        private Label lblLastService;
-        private TextBox txtCurrentMilage;
-        private Label label2;
-        private Label label1;
-        private Label label3;
-        private Panel panelHeader;
-        private Label lblFormTitle;
-        private Panel panelTools;
-        private TextBox txtProvider;
-        private Label label11;
-        private TextBox txtContact;
-        private Label label9;
-        private TextBox txtLocation;
-        private Label label10;
-        private ComboBox cmbStatus;
-        private Label label12;
+        private Label lblNotes;
+        private Label lblMechanicPhone;
+        private Label lblMechanicName;
+        private Label lblCost;
+        private Label lblMileage;
+        private Label lblDescription;
+        private Label lblMaintenanceType;
+        private Label lblScheduledDate;
+        private Label lblVehicle;
+        private FontAwesome.Sharp.IconButton btnSave;
+        private FontAwesome.Sharp.IconButton btnCancel;
     }
 }
